@@ -1,5 +1,20 @@
 [
   {
+    "id": "app-guia-2025",
+    "slug": "guia-pratico-desenvolvimento-app-empresas",
+    "title": "Guia Prático: Desenvolvimento de Apps para Empresas",
+    "description": "Explique as etapas do desenvolvimento de apps para empresas, destacando desde o planejamento até a publicação em lojas.",
+    "publication_date": 1735576800,
+    "featured_image": {
+      "url": "/assets/blog-images/capa-guia-apps.png",
+      "alt_text": "Equipe empresarial analisando protótipo de app em mesa de trabalho moderna"
+    },
+    "category": {
+      "id": "aplicativos",
+      "name": "Aplicativos"
+    }
+  },
+  {
     "id": "sim-123",
     "slug": "artigo-simulado-pelo-teste",
     "title": "Artigo de Teste Via Simulação",
