@@ -47,56 +47,56 @@
         </button>
     </div>
 
-    <!-- Mobile Menu Drawer -->
-    <div id="mobile-menu"
-        class="md:hidden fixed inset-0 bg-white z-[60] translate-x-full transition-transform duration-500 ease-in-out flex flex-col pt-32 px-10 gap-8">
-
-        <a href="/#expertise" onclick="toggleMenu()"
-            class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Serviços</a>
-        <a href="/#cases" onclick="toggleMenu()"
-            class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Cases</a>
-        <a href="/#process" onclick="toggleMenu()"
-            class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Fluxo</a>
-        <a href="/blog/" onclick="toggleMenu()"
-            class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Blog</a>
-        <a href="/#contact" onclick="toggleMenu()"
-            class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Contato</a>
-
-        <div class="mt-8 flex flex-col gap-4">
-            <a href="#contact" onclick="toggleMenu()"
-                class="w-full py-4 bg-slate-100 text-slate-900 text-center font-bold uppercase tracking-widest rounded-xl">Alocação
-                Squad</a>
-            <a href="#contact" onclick="toggleMenu()"
-                class="w-full py-4 bg-slate-900 text-white text-center font-bold uppercase tracking-widest rounded-xl">Nova
-                Consultoria</a>
-        </div>
-    </div>
-
-    <script>
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const hamburgerIcon = document.getElementById('hamburger-icon');
-        const closeIcon = document.getElementById('close-icon');
-
-        function toggleMenu() {
-            const isOpen = !mobileMenu.classList.contains('translate-x-full');
-            if (isOpen) {
-                mobileMenu.classList.add('translate-x-full');
-                hamburgerIcon.classList.remove('hidden');
-                closeIcon.classList.add('hidden');
-                document.body.style.overflow = '';
-            } else {
-                mobileMenu.classList.remove('translate-x-full');
-                hamburgerIcon.classList.add('hidden');
-                closeIcon.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        menuBtn.addEventListener('click', toggleMenu);
-    </script>
-
     <!-- SCROLL PROGRESS BAR -->
     <div class="absolute bottom-0 left-0 h-1 bg-brand-red w-0 transition-all duration-100 ease-out"
         id="scroll-progress"></div>
 </header>
+
+<!-- Mobile Menu Drawer (Solid background, high z-index) -->
+<div id="mobile-menu"
+    class="md:hidden fixed inset-0 bg-white z-[100] translate-x-full transition-transform duration-500 ease-in-out flex flex-col pt-32 px-10 gap-8">
+
+    <a href="/#expertise" onclick="toggleMenu()"
+        class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Serviços</a>
+    <a href="/#cases" onclick="toggleMenu()"
+        class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Cases</a>
+    <a href="/#process" onclick="toggleMenu()"
+        class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Fluxo</a>
+    <a href="/blog/" onclick="toggleMenu()"
+        class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Blog</a>
+    <a href="/#contact" onclick="toggleMenu()"
+        class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Contato</a>
+
+    <div class="mt-8 flex flex-col gap-4">
+        <a href="#contact" onclick="toggleMenu()"
+            class="w-full py-4 bg-slate-100 text-slate-900 text-center font-bold uppercase tracking-widest rounded-xl">Alocação
+            Squad</a>
+        <a href="#contact" onclick="toggleMenu()"
+            class="w-full py-4 bg-slate-900 text-white text-center font-bold uppercase tracking-widest rounded-xl">Nova
+            Consultoria</a>
+    </div>
+</div>
+
+<script>
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    function toggleMenu() {
+        const isOpen = !mobileMenu.classList.contains('translate-x-full');
+        if (isOpen) {
+            mobileMenu.classList.add('translate-x-full');
+            hamburgerIcon.classList.remove('hidden');
+            closeIcon.classList.add('hidden');
+            document.body.style.overflow = '';
+        } else {
+            mobileMenu.classList.remove('translate-x-full');
+            hamburgerIcon.classList.add('hidden');
+            closeIcon.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    menuBtn.addEventListener('click', toggleMenu);
+</script>
