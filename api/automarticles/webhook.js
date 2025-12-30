@@ -4,7 +4,7 @@ const GITHUB_REPO = process.env.GITHUB_REPO || 'pontoumdigital.v3';
 const BRANCH = 'main';
 
 // Segredo que aparece na sua tela do Automarticles em caso de falha na Vercel
-const FALLBACK_TOKEN = '9f7d07b2715ce7985c5ced166c066aaa';
+const FALLBACK_TOKEN = '179055f650fb3e03b140e1522d77e70e';
 
 async function ghCall(url, method = 'GET', body = null) {
     const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${url}`, {
