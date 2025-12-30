@@ -1,134 +1,126 @@
-const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const GITHUB_OWNER = process.env.GITHUB_OWNER || 'toolspontoum';
-const GITHUB_REPO = process.env.GITHUB_REPO || 'pontoumdigital.v3';
-const BRANCH = 'main';
+const fs = require('fs');
+const path = require('path');
 
-// Segredo que aparece na sua tela do Automarticles em caso de falha na Vercel
-const FALLBACK_TOKEN = '179055f650fb3e03b140e1522d77e70e';
+// Paths to storage
+const BLOG_DIR = path.join(process.cwd(), 'public', 'content', 'blog');
+const POSTS_DIR = path.join(BLOG_DIR, 'posts');
+const POSTS_INDEX = path.join(BLOG_DIR, 'posts.index.json');
+const CATEGORIES_INDEX = path.join(BLOG_DIR, 'categories.index.json');
 
-async function ghCall(url, method = 'GET', body = null) {
-    const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${url}`, {
-        method,
-        headers: {
-            'Authorization': `token ${GITHUB_TOKEN}`,
-            'Accept': 'application/vnd.github.v3+json',
-            'Content-Type': 'application/json'
-        },
-        body: body ? JSON.stringify(body) : null
-    });
-    return res;
+// Ensure directories exist
+if (!fs.existsSync(POSTS_DIR)) fs.mkdirSync(POSTS_DIR, { recursive: true });
+
+function readJsonFile(filePath, defaultValue = []) {
+    if (!fs.existsSync(filePath)) return defaultValue;
+    try {
+        return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    } catch (e) {
+        return defaultValue;
+    }
 }
 
-async function getFile(path) {
-    const res = await ghCall(path);
-    if (res.status === 404) return { content: null, sha: null };
-    const data = await res.json();
-    if (!data.content) return { content: null, sha: data.sha };
-    return {
-        content: JSON.parse(Buffer.from(data.content, 'base64').toString('utf8')),
-        sha: data.sha
-    };
-}
-
-async function commitFile(path, content, message, sha = null) {
-    const body = {
-        message,
-        content: Buffer.from(JSON.stringify(content, null, 2)).toString('base64'),
-        branch: BRANCH
-    };
-    if (sha) body.sha = sha;
-    return await ghCall(path, 'PUT', body);
+function writeJsonFile(filePath, data) {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
 }
 
 module.exports = async (req, res) => {
-    // 0. Permite GET apenas para teste manual no navegador
-    if (req.method === 'GET') {
-        return res.status(200).send('Webhook Online! Por favor, utilize o método POST para integração.');
-    }
-
-    // 1. Autenticação
     const accessToken = req.headers['access-token'];
-    const expectedToken = process.env.AUTOMARTICLES_TOKEN || FALLBACK_TOKEN;
+    const expectedToken = process.env.AUTOMARTICLES_TOKEN || 'ponto1_secure_token_2024';
 
-    if (!accessToken || accessToken !== expectedToken) {
-        console.error('Falha de Autenticação: Token recebido:', accessToken);
-        return res.status(401).json({ error: 'Unauthorized', message: 'Token de autenticação inválido ou ausente.' });
+    // 1. Authentication
+    if (accessToken !== expectedToken) {
+        return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    // 2. Extração do corpo de forma segura
-    const body = req.body || {};
+    const body = req.body;
     const event = body.event;
 
-    // 3. Verificação de Integração (Resposta rápida)
+    // 2. CHECK_INTEGRATION
     if (event === 'CHECK_INTEGRATION') {
-        return res.status(200).json({ token: expectedToken, status: 'ok' });
+        return res.status(200).json({ token: expectedToken });
     }
 
-    // 4. Verificação do GitHub Token para os eventos reais
-    if (!GITHUB_TOKEN) {
-        console.error('Configuração ausente: GITHUB_TOKEN');
-        return res.status(500).json({ error: 'GITHUB_TOKEN_MISSING', message: 'Configuração do GitHub não encontrada na Vercel.' });
-    }
+    // Load Indexes
+    let postsIndex = readJsonFile(POSTS_INDEX);
+    let categoriesIndex = readJsonFile(CATEGORIES_INDEX);
 
-    try {
-        console.log(`Processando evento: ${event}`);
+    switch (event) {
+        case 'POST_CREATED':
+        case 'POST_UPDATED':
+            const post = body.post;
+            if (!post || !post.id) break;
 
-        // Carrega os índices do GitHub
-        const { content: postsIndex, sha: postsSha } = await getFile('public/content/blog/posts.index.json');
-        const currentPosts = postsIndex || [];
+            // Save individual post file
+            writeJsonFile(path.join(POSTS_DIR, `${post.slug}.json`), post);
 
-        switch (event) {
-            case 'POST_CREATED':
-            case 'POST_UPDATED':
-                const post = body.post;
-                if (!post || !post.slug) {
-                    return res.status(400).json({ error: 'Invalid Post Data' });
-                }
+            // Update Index (only if status is publish)
+            postsIndex = postsIndex.filter(p => p.id !== post.id);
+            if (post.status === 'publish') {
+                postsIndex.unshift({
+                    id: post.id,
+                    slug: post.slug,
+                    title: post.title,
+                    description: post.description,
+                    publication_date: post.publication_date,
+                    featured_image: post.featured_image,
+                    category: post.category
+                });
+                // Sort by date desc
+                postsIndex.sort((a, b) => b.publication_date - a.publication_date);
+            }
+            writeJsonFile(POSTS_INDEX, postsIndex);
+            break;
 
-                // Salva o arquivo do post
-                const { sha: postFileSha } = await getFile(`public/content/blog/posts/${post.slug}.json`);
-                await commitFile(`public/content/blog/posts/${post.slug}.json`, post, `Automarticles: ${event} - ${post.title}`, postFileSha);
+        case 'POST_DELETED':
+            const deleteId = body.post?.id;
+            const postToDelete = postsIndex.find(p => p.id === deleteId);
+            if (postToDelete) {
+                const filePath = path.join(POSTS_DIR, `${postToDelete.slug}.json`);
+                if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+                postsIndex = postsIndex.filter(p => p.id !== deleteId);
+                writeJsonFile(POSTS_INDEX, postsIndex);
+            }
+            break;
 
-                // Atualiza o Índice principal
-                let updatedPosts = currentPosts.filter(p => p.id !== post.id);
-                if (post.status === 'publish') {
-                    updatedPosts.unshift({
-                        id: post.id,
-                        slug: post.slug,
-                        title: post.title,
-                        description: post.description,
-                        publication_date: post.publication_date,
-                        featured_image: post.featured_image,
-                        category: post.category
-                    });
-                    updatedPosts.sort((a, b) => b.publication_date - a.publication_date);
-                }
-                await commitFile('public/content/blog/posts.index.json', updatedPosts, `Automarticles: Index Update - ${post.title}`, postsSha);
-                break;
+        case 'CATEGORY_CREATED':
+        case 'CATEGORY_UPDATED':
+            const category = body.category;
+            if (!category || !category.id) break;
+            categoriesIndex = categoriesIndex.filter(c => c.id !== category.id);
+            categoriesIndex.push(category);
+            writeJsonFile(CATEGORIES_INDEX, categoriesIndex);
 
-            case 'POST_DELETED':
-                const delId = body.post?.id;
-                const delPost = currentPosts.find(p => p.id === delId);
-                if (delPost) {
-                    const { sha: delSha } = await getFile(`public/content/blog/posts/${delPost.slug}.json`);
-                    if (delSha) {
-                        await ghCall(`public/content/blog/posts/${delPost.slug}.json`, 'DELETE', {
-                            message: `Automarticles: DELETE ${delPost.title}`,
-                            sha: delSha,
-                            branch: BRANCH
-                        });
+            // If updated, reflect name changes in posts index
+            if (event === 'CATEGORY_UPDATED') {
+                postsIndex.forEach(p => {
+                    if (p.category && p.category.id === category.id) {
+                        p.category.name = category.name;
                     }
-                    const newPosts = currentPosts.filter(p => p.id !== delId);
-                    await commitFile('public/content/blog/posts.index.json', newPosts, `Automarticles: Remove Index ${delPost.title}`, postsSha);
+                });
+                writeJsonFile(POSTS_INDEX, postsIndex);
+            }
+            break;
+
+        case 'CATEGORY_DELETED':
+            const catId = body.category?.id;
+            const replaceTo = body.replace_to;
+
+            categoriesIndex = categoriesIndex.filter(c => c.id !== catId);
+            writeJsonFile(CATEGORIES_INDEX, categoriesIndex);
+
+            // Update posts that belonged to this category
+            postsIndex.forEach(p => {
+                if (p.category && p.category.id === catId) {
+                    if (replaceTo) {
+                        p.category = replaceTo;
+                    } else {
+                        p.category = { id: 'uncategorized', name: 'Sem categoria' };
+                    }
                 }
-                break;
-        }
-
-        return res.status(200).json({ success: true, event });
-    } catch (err) {
-        console.error('Erro no Webhook:', err);
-        return res.status(500).json({ error: 'Integration Error', details: err.message });
+            });
+            writeJsonFile(POSTS_INDEX, postsIndex);
+            break;
     }
+
+    return res.status(200).json({ success: true, event });
 };
-
-
