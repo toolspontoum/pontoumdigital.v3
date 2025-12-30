@@ -1,0 +1,19 @@
+{
+    "id": "test-post-1",
+    "slug": "futuro-da-engenharia-de-software-2025",
+    "status": "publish",
+    "title": "O Futuro da Engenharia de Software em 2025",
+    "content": {
+        "html": "<h2>A Revolução Silenciosa</h2><p>A engenharia de software está passando por uma transformação sem precedentes. Não se trata apenas de escrever código mais rápido, mas de construir sistemas que são inerentemente mais inteligentes e resilientes.</p><p>Em nossa jornada na Ponto Um Digital, observamos que a integração de LLMs e automação de infraestrutura está permitindo que squads reduzidos entreguem produtos com a escala que antes exigia departamentos inteiros.</p><h2>Arquiteturas Modernas</h2><p>O foco em 2025 será a edge computing e o processamento distribuído levado ao limite. O usuário final não tolera mais latência, e a engenharia de elite foca em reduzir cada milissegundo de resposta.</p><p>Concluímos que a simplicidade operacional é a nova sofisticação. Menos abstrações inúteis, mais entrega de valor real através de código limpo e processos de CI/CD impecáveis.</p>"
+    },
+    "description": "Explorando as tendências que vão moldar o desenvolvimento de software nos próximos anos, da IA generativa a arquiteturas ultra-escaláveis.",
+    "featured_image": {
+        "url": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80",
+        "alt_text": "Tecnologia e Engenharia"
+    },
+    "category": {
+        "id": "cat-eng",
+        "name": "Engenharia"
+    },
+    "publication_date": 1735564800
+}

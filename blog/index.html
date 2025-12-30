@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Ponto Um Digital - Engenharia de Software</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- FONTS -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+
+<body class="bg-white text-slate-900 overflow-x-hidden selection:bg-brand-red selection:text-white">
+
+    <load src="/src/components/header.html" />
+
+    <main class="pt-32 pb-20">
+        <!-- Hero Blog -->
+        <section class="container mx-auto px-6 mb-20 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">Insights de <span
+                    class="text-red-600">Engenharia</span></h1>
+            <p class="text-zinc-400 max-w-2xl mx-auto text-lg mb-12">
+                Explorando tecnologia, estratégia digital e o futuro do desenvolvimento de software.
+            </p>
+            <load src="/src/components/blog/search-bar.html" />
+        </section>
+
+        <!-- Featured Section -->
+        <section class="container mx-auto px-6 mb-24 max-w-grid">
+            <div id="latest-posts-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Posts will be injected here -->
+                <div class="col-span-full py-20 text-center text-slate-400">Carregando artigos...</div>
+            </div>
+            <div class="mt-16 text-center">
+                <a href="/blog/search.html"
+                    class="inline-flex items-center gap-4 text-xs font-bold uppercase tracking-[0.3em] hover:text-red-600 transition-colors group">
+                    Explorar todos os artigos
+                    <span class="w-12 h-[1px] bg-red-600 group-hover:w-20 transition-all"></span>
+                </a>
+            </div>
+        </section>
+
+        <!-- CTA Band -->
+        <load src="/src/components/blog/cta-band.html" />
+    </main>
+
+    <load src="/src/components/footer.html" />
+
+    <script type="module" src="/src/scripts/main.js"></script>
+
+    <script type="module">
+        import { BlogStore } from '/src/js/blog/blog-store.js';
+
+        async function init() {
+            const posts = await BlogStore.fetchIndex();
+            const grid = document.getElementById('latest-posts-grid');
+
+            if (posts.length === 0) {
+                grid.innerHTML = '<div class="col-span-full py-20 text-center text-zinc-500">Nenhum artigo publicado ainda.</div>';
+                return;
+            }
+
+            // Render first 3 posts
+            const latest = posts.slice(0, 3);
+            grid.innerHTML = latest.map(post => BlogStore.renderPostCard(post)).join('');
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

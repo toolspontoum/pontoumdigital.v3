@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artigo | Ponto Um Digital</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- FONTS -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/src/styles/main.css">
+    <style>
+        .prose h2 {
+            color: #0f172a;
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .prose p {
+            color: #475569;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .prose ul {
+            list-style: disc;
+            padding-left: 1.5rem;
+            color: #475569;
+            margin-bottom: 1.5rem;
+        }
+
+        .prose strong {
+            color: #0f172a;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-900 overflow-x-hidden selection:bg-brand-red selection:text-white">
+    <load src="/src/components/header.html" />
+
+    <main class="pt-32 pb-20">
+        <article id="post-container" class="opacity-0 transition-opacity duration-700">
+            <!-- Header do Post -->
+            <header class="container mx-auto px-6 max-w-4xl text-center mb-16">
+                <div id="post-meta" class="flex items-center justify-center gap-4 mb-6">
+                    <!-- Gerado via JS -->
+                </div>
+                <h1 id="post-title"
+                    class="text-3xl md:text-6xl font-extrabold mb-8 leading-tight tracking-tight text-slate-950">
+                    <!-- Gerado via JS -->
+                </h1>
+                <div id="post-image-container"
+                    class="rounded-3xl overflow-hidden aspect-video shadow-2xl border border-slate-100 bg-slate-50">
+                    <!-- Gerado via JS -->
+                </div>
+            </header>
+
+            <!-- Conteúdo -->
+            <div class="container mx-auto px-6 max-w-3xl mb-24">
+                <div id="post-content" class="prose max-w-none">
+                    <!-- Gerado via JS -->
+                </div>
+
+                <!-- CTA Final -->
+                <div class="mt-20 p-12 bg-slate-950 rounded-3xl text-center text-white relative overflow-hidden group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-red-600/20 to-transparent opacity-50"></div>
+                    <div class="relative z-10">
+                        <span class="text-[10px] uppercase tracking-[0.3em] text-red-500 font-bold mb-4 block">Próximo
+                            Passo</span>
+                        <h3 class="text-3xl font-bold mb-4">Gostou desse insight?</h3>
+                        <p class="text-slate-400 mb-10 max-w-md mx-auto text-lg leading-relaxed">Leve essa expertise de
+                            engenharia para o seu próximo projeto digital.</p>
+                        <a href="/#contato"
+                            class="inline-block px-10 py-5 bg-red-600 text-white font-bold uppercase tracking-widest text-xs hover:bg-red-700 transition-all shadow-xl shadow-red-600/20 transform hover:-translate-y-1">Falar
+                            com engenharia</a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </main>
+
+    <load src="/src/components/footer.html" />
+
+    <script type="module" src="/src/scripts/main.js"></script>
+
+    <script type="module">
+        import { BlogStore } from '/src/js/blog/blog-store.js';
+
+        async function init() {
+            const params = new URLSearchParams(window.location.search);
+            const slug = params.get('slug');
+
+            if (!slug) {
+                window.location.href = '/blog/';
+                return;
+            }
+
+            const post = await BlogStore.fetchPost(slug);
+            if (!post) {
+                document.getElementById('post-container').innerHTML = '<div class="py-40 text-center text-slate-400 font-bold">Artigo não encontrado.</div>';
+                document.getElementById('post-container').classList.remove('opacity-0');
+                document.getElementById('post-container').classList.add('opacity-100');
+                return;
+            }
+
+            // Update Meta Tags
+            document.title = `${post.title} | Ponto Um Digital`;
+
+            // Fill Data
+            document.getElementById('post-title').innerText = post.title;
+            document.getElementById('post-meta').innerHTML = `
+                <span class="text-[10px] uppercase tracking-[0.2em] text-red-600 font-bold bg-red-600/5 px-3 py-1.5 rounded">${post.category.name}</span>
+                <span class="text-[10px] uppercase tracking-[0.1em] text-slate-400">${BlogStore.formatDate(post.publication_date)}</span>
+            `;
+            document.getElementById('post-image-container').innerHTML = `<img src="${post.featured_image.url}" alt="${post.featured_image.alt_text}" class="w-full h-full object-cover">`;
+
+            // Injeção de Conteúdo com CTA no 1/3
+            const rawHtml = post.content.html;
+            const paragraphs = rawHtml.split('</p>');
+            const ctaIndex = Math.floor(paragraphs.length / 3);
+
+            if (paragraphs.length > 3) {
+                const ctaHtml = `
+                <div class="my-12 py-1 bg-red-600/10 rounded-sm"></div>
+                <div class="my-10 flex flex-col md:flex-row items-center justify-between gap-8 p-10 border border-slate-100 bg-slate-50 rounded-2xl">
+                    <div class="flex-1">
+                        <p class="text-xl font-bold text-slate-900 mb-2">Estratégia digital na prática.</p>
+                        <p class="text-slate-500 text-sm mb-0">Veja como aplicamos esses conceitos em cases reais.</p>
+                    </div>
+                    <a href="/#cases" class="px-6 py-3 bg-slate-900 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-red-600 transition-colors whitespace-nowrap">Conhecer portfólio →</a>
+                </div>
+                <div class="my-12 py-1 bg-red-600/10 rounded-sm"></div>
+                `;
+                paragraphs.splice(ctaIndex, 0, ctaHtml);
+            }
+
+            document.getElementById('post-content').innerHTML = paragraphs.join('</p>');
+            document.getElementById('post-container').classList.add('opacity-100');
+            document.getElementById('post-container').classList.remove('opacity-0');
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

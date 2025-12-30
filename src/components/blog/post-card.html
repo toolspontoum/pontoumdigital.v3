@@ -1,0 +1,28 @@
+<article
+    class="group bg-zinc-900/50 border border-white/5 rounded-2xl overflow-hidden hover:border-red-600/50 transition-all duration-500 flex flex-col h-full">
+    <a href="/blog/post.html?slug={{slug}}" class="block aspect-video overflow-hidden">
+        <img src="{{featured_image}}" alt="{{title}}"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+    </a>
+    <div class="p-6 flex flex-col flex-grow">
+        <div class="flex items-center gap-3 mb-4">
+            <span class="text-[10px] uppercase tracking-[0.2em] text-red-600 font-bold bg-red-600/10 px-2 py-1 rounded">
+                {{category}}
+            </span>
+            <span class="text-[10px] uppercase tracking-[0.1em] text-zinc-500">
+                {{date}}
+            </span>
+        </div>
+        <h3 class="text-xl font-medium text-white mb-3 group-hover:text-red-500 transition-colors leading-tight">
+            {{title}}
+        </h3>
+        <p class="text-zinc-400 text-sm line-clamp-2 mb-6 flex-grow leading-relaxed">
+            {{description}}
+        </p>
+        <a href="/blog/post.html?slug={{slug}}"
+            class="text-xs uppercase tracking-[0.2em] text-white flex items-center gap-2 group/link">
+            Ler artigo
+            <span class="w-8 h-[1px] bg-red-600 group-hover/link:w-12 transition-all duration-300"></span>
+        </a>
+    </div>
+</article>

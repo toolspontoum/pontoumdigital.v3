@@ -1,0 +1,32 @@
+[
+  {
+    "id": "sim-123",
+    "slug": "artigo-simulado-pelo-teste",
+    "title": "Artigo de Teste Via Simulação",
+    "description": "Se este post aparecer no site, a conexão simulada funcionou perfeitamente.",
+    "publication_date": 1767103145,
+    "featured_image": {
+      "url": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80",
+      "alt_text": "Código no monitor"
+    },
+    "category": {
+      "id": "cat-1",
+      "name": "Tecnologia"
+    }
+  },
+  {
+    "id": "test-post-1",
+    "slug": "futuro-da-engenharia-de-software-2025",
+    "title": "O Futuro da Engenharia de Software em 2025",
+    "description": "Explorando as tendências que vão moldar o desenvolvimento de software nos próximos anos, da IA generativa a arquiteturas ultra-escaláveis.",
+    "publication_date": 1735564800,
+    "featured_image": {
+      "url": "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80",
+      "alt_text": "Tecnologia e Engenharia"
+    },
+    "category": {
+      "id": "cat-eng",
+      "name": "Engenharia"
+    }
+  }
+]

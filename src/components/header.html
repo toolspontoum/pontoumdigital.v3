@@ -1,0 +1,101 @@
+<!-- HEADER (CLEAN ORIGINAL) -->
+<header class="fixed w-full top-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-md" id="main-header">
+    <div class="max-w-grid mx-auto px-6 h-20 flex items-center justify-between relative">
+
+        <!-- Logo (Left) -->
+        <a href="#" class="flex-shrink-0 relative z-50 w-32 md:w-48">
+            <img src="/logo.png" alt=".i<digital>" class="h-8 md:h-10 w-auto object-contain">
+        </a>
+
+        <!-- Desktop Menu (Hidden on Mobile) -->
+        <nav class="hidden md:flex items-center justify-center gap-8 flex-1 px-4">
+            <a href="/#expertise"
+                class="text-xs font-bold text-slate-600 uppercase tracking-widest hover:text-brand-red transition-colors whitespace-nowrap">Serviços</a>
+            <a href="/#cases"
+                class="text-xs font-bold text-slate-600 uppercase tracking-widest hover:text-brand-red transition-colors whitespace-nowrap">Cases</a>
+            <a href="/#process"
+                class="text-xs font-bold text-slate-600 uppercase tracking-widest hover:text-brand-red transition-colors whitespace-nowrap">Como
+                Trabalhamos</a>
+            <a href="/blog/"
+                class="text-xs font-bold text-slate-600 uppercase tracking-widest hover:text-brand-red transition-colors whitespace-nowrap">Blog</a>
+            <a href="/#contact"
+                class="text-xs font-bold text-slate-600 uppercase tracking-widest hover:text-brand-red transition-colors whitespace-nowrap">Contato</a>
+        </nav>
+
+        <!-- Action Buttons (Hidden on Mobile) -->
+        <div class="hidden md:flex items-center gap-3 ml-auto relative z-20 flex-shrink-0">
+            <a href="#contact"
+                class="px-5 py-2.5 bg-slate-100 text-slate-700 text-xs font-bold uppercase tracking-widest rounded-lg hover:bg-slate-200 transition-colors whitespace-nowrap">
+                Montar DevTeam
+            </a>
+            <a href="#contact"
+                class="px-5 py-2.5 bg-slate-900 text-white text-xs font-bold uppercase tracking-widest rounded-lg hover:bg-brand-red transition-colors shadow-lg shadow-slate-900/10 whitespace-nowrap">
+                Solicitar Orçamento
+            </a>
+        </div>
+
+        <!-- Mobile Menu Toggle (Hamburger) -->
+        <button id="mobile-menu-btn" class="md:hidden relative z-50 p-2 text-slate-900 focus:outline-none">
+            <svg id="hamburger-icon" class="w-8 h-8 transition-all duration-300" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
+            </svg>
+            <svg id="close-icon" class="w-8 h-8 hidden transition-all duration-300" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Mobile Menu Drawer -->
+    <div id="mobile-menu"
+        class="md:hidden fixed inset-0 bg-white z-40 translate-x-full transition-transform duration-500 ease-in-out flex flex-col pt-32 px-10 gap-8">
+        <a href="/#expertise" onclick="toggleMenu()"
+            class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Serviços</a>
+        <a href="/#cases" onclick="toggleMenu()"
+            class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Cases</a>
+        <a href="/#process" onclick="toggleMenu()"
+            class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Fluxo</a>
+        <a href="/blog/" onclick="toggleMenu()"
+            class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Blog</a>
+        <a href="/#contact" onclick="toggleMenu()"
+            class="text-2xl font-bold text-slate-900 uppercase tracking-tighter hover:text-brand-red">Contato</a>
+
+        <div class="mt-8 flex flex-col gap-4">
+            <a href="#contact" onclick="toggleMenu()"
+                class="w-full py-4 bg-slate-100 text-slate-900 text-center font-bold uppercase tracking-widest rounded-xl">Alocação
+                Squad</a>
+            <a href="#contact" onclick="toggleMenu()"
+                class="w-full py-4 bg-slate-900 text-white text-center font-bold uppercase tracking-widest rounded-xl">Nova
+                Consultoria</a>
+        </div>
+    </div>
+
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        function toggleMenu() {
+            const isOpen = !mobileMenu.classList.contains('translate-x-full');
+            if (isOpen) {
+                mobileMenu.classList.add('translate-x-full');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                document.body.style.overflow = '';
+            } else {
+                mobileMenu.classList.remove('translate-x-full');
+                hamburgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+    </script>
+
+    <!-- SCROLL PROGRESS BAR -->
+    <div class="absolute bottom-0 left-0 h-1 bg-brand-red w-0 transition-all duration-100 ease-out"
+        id="scroll-progress"></div>
+</header>

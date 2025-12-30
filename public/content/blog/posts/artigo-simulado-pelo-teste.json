@@ -1,0 +1,19 @@
+{
+  "id": "sim-123",
+  "slug": "artigo-simulado-pelo-teste",
+  "status": "publish",
+  "title": "Artigo de Teste Via Simulação",
+  "description": "Se este post aparecer no site, a conexão simulada funcionou perfeitamente.",
+  "content": {
+    "html": "<h2>Sucesso!</h2><p>Este conteúdo foi inserido via script de teste.</p>"
+  },
+  "featured_image": {
+    "url": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=800&q=80",
+    "alt_text": "Código no monitor"
+  },
+  "category": {
+    "id": "cat-1",
+    "name": "Tecnologia"
+  },
+  "publication_date": 1767103145
+}

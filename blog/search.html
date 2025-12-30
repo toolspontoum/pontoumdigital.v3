@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisar Artigos | Ponto Um Digital</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- FONTS -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+
+<body class="bg-white text-slate-900 overflow-x-hidden selection:bg-brand-red selection:text-white">
+
+    <load src="/src/components/header.html" />
+
+    <main class="pt-32 pb-20">
+        <section class="container mx-auto px-6 mb-12 max-w-grid">
+            <h1 class="text-3xl md:text-5xl font-bold mb-8 text-center tracking-tight" id="search-title">Explorar
+                Artigos</h1>
+            <load src="/src/components/blog/search-bar.html" />
+        </section>
+
+        <section class="container mx-auto px-6 min-h-[50vh] max-w-grid">
+            <div id="search-results-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Resultados injetados aqui -->
+            </div>
+
+            <div id="empty-state" class="hidden py-20 text-center">
+                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-50 mb-6">
+                    <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-bold mb-2 text-slate-900">Nenhum resultado encontrado</h3>
+                <p class="text-slate-500 max-w-xs mx-auto">Tente buscar por termos diferentes ou navegue por categorias.
+                </p>
+                <button onclick="location.reload()"
+                    class="mt-8 text-xs font-bold uppercase tracking-widest text-red-600 hover:underline">Limpar
+                    filtros</button>
+            </div>
+        </section>
+    </main>
+
+    <load src="/src/components/footer.html" />
+
+    <script type="module" src="/src/scripts/main.js"></script>
+
+    <script type="module">
+        import { BlogStore } from '/src/js/blog/blog-store.js';
+
+        async function initSearch() {
+            const allPosts = await BlogStore.fetchIndex();
+            const grid = document.getElementById('search-results-grid');
+            const emptyState = document.getElementById('empty-state');
+            const searchInput = document.getElementById('blog-search-input');
+            const searchTitle = document.getElementById('search-title');
+
+            const params = new URLSearchParams(window.location.search);
+            let query = params.get('q') || '';
+
+            function renderResults(filtered) {
+                grid.innerHTML = '';
+                if (filtered.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
+                emptyState.classList.add('hidden');
+
+                let html = '';
+                filtered.forEach((post, index) => {
+                    // Adapt components for light theme if needed via custom render function or CSS overrides
+                    html += BlogStore.renderPostCard(post);
+                    // Injeta CTA Card após 6 itens
+                    if ((index + 1) === 6) {
+                        html += BlogStore.renderCTACard();
+                    }
+                });
+                grid.innerHTML = html;
+            }
+
+            function filterPosts(q) {
+                const term = q.toLowerCase();
+                const filtered = allPosts.filter(p =>
+                    p.title.toLowerCase().includes(term) ||
+                    p.description.toLowerCase().includes(term) ||
+                    p.category.name.toLowerCase().includes(term)
+                );
+                renderResults(filtered);
+                if (q) searchTitle.innerText = `Resultados para: "${q}"`;
+                else searchTitle.innerText = "Explorar Artigos";
+            }
+
+            if (searchInput) {
+                searchInput.value = query;
+                searchInput.addEventListener('input', (e) => filterPosts(e.target.value));
+            }
+
+            filterPosts(query);
+        }
+
+        initSearch();
+    </script>
+</body>
+
+</html>

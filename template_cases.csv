@@ -1,0 +1,5 @@
+ID,Titulo,Categoria,Ano,Descricao,Imagem_Desktop,Imagem_Mobile,Pagina
+1,Fintech App,mobile,2024,Reconstrução native focada em ultra-performance e UX bancária minimalista.,/src/assets/images/fintech-desktop.webp,/src/assets/images/fintech-mobile.webp,1
+2,E-commerce B2B,web saas,2023,Plataforma escalável com integração profunda de estoque via SAP HANA.,/src/assets/images/b2b-desktop.webp,/src/assets/images/agro-mobile.webp,1
+3,Health Dashboard,saas,2023,Gestão clínica de alta complexidade com processamento em tempo real.,/src/assets/images/fintech-desktop.webp,/src/assets/images/health-mobile.webp,1
+4,Logística On-Demand,mobile,2022,Roteirização inteligente baseada em IA para frotas de última milha.,/src/assets/images/logistics-desktop.webp,/src/assets/images/logistics-mobile.webp,1

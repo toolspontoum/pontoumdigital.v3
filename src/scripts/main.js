@@ -1,0 +1,314 @@
+import * as THREE from 'three';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+console.log(">> X-APPS SYSTEM: V8.0 (MODULAR) INITIALIZING...");
+
+gsap.registerPlugin(ScrollTrigger);
+
+document.addEventListener('DOMContentLoaded', () => {
+    initDigitalWave();
+    initScrollAnimations();
+});
+
+/* -------------------------------------------------------------------------- */
+/* 1. DIGITAL WAVE (Round Dots Texture)                                       */
+/* -------------------------------------------------------------------------- */
+function initDigitalWave() {
+    const container = document.getElementById('canvas-lattice');
+    if (!container) return;
+
+    // SCENE
+    const scene = new THREE.Scene();
+
+    // CAMERA
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+    // Adjusted angle for panoramic view
+    camera.position.set(0, 15, 45);
+    camera.lookAt(0, 0, 0);
+
+    // RENDERER
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.innerHTML = '';
+    container.appendChild(renderer.domElement);
+
+    // GENERATE CIRCLE TEXTURE
+    function getCircleTexture() {
+        const size = 32;
+        const canvas = document.createElement('canvas');
+        canvas.width = size;
+        canvas.height = size;
+        const ctx = canvas.getContext('2d');
+
+        ctx.fillStyle = '#ffffff';
+        ctx.beginPath();
+        ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        const texture = new THREE.CanvasTexture(canvas);
+        return texture;
+    }
+
+    // GRID
+    const SEPARATION = 1.6;
+    const AMOUNTX = 140;
+    const AMOUNTY = 50;
+
+    const numParticles = AMOUNTX * AMOUNTY;
+    const positions = new Float32Array(numParticles * 3);
+    const scales = new Float32Array(numParticles);
+
+    let i = 0;
+    for (let ix = 0; ix < AMOUNTX; ix++) {
+        for (let iy = 0; iy < AMOUNTY; iy++) {
+            positions[i] = (ix * SEPARATION) - ((AMOUNTX * SEPARATION) / 2); // x
+            positions[i + 1] = 0; // y
+            positions[i + 2] = (iy * SEPARATION) - ((AMOUNTY * SEPARATION) / 2); // z
+            scales[i] = 1;
+            i += 3;
+        }
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('scale', new THREE.BufferAttribute(scales, 1));
+
+    // MATERIAL
+    const material = new THREE.PointsMaterial({
+        color: 0xDC2626, // Brand Red
+        size: 0.25,
+        map: getCircleTexture(),
+        alphaTest: 0.5,
+        transparent: true,
+        opacity: 0.6,
+    });
+
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    // MOUSE
+    let count = 0;
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (event) => {
+        mouseX = (event.clientX - window.innerWidth / 2) * 0.1;
+        mouseY = (event.clientY - window.innerHeight / 2) * 0.1;
+    });
+
+    // ANIMATE
+    const animate = () => {
+        requestAnimationFrame(animate);
+
+        const positions = particles.geometry.attributes.position.array;
+
+        let i = 0;
+        for (let ix = 0; ix < AMOUNTX; ix++) {
+            for (let iy = 0; iy < AMOUNTY; iy++) {
+
+                // Sine Wave
+                const xVal = (ix + count) * 0.3;
+                const zVal = (iy + count) * 0.5;
+                let waveHeight = (Math.sin(xVal) * 1.5) + (Math.sin(zVal) * 1.2);
+
+                // Interactive Dip
+                const pX = positions[i];
+                const pZ = positions[i + 2];
+                const dist = Math.sqrt((pX - mouseX * 2) ** 2 + (pZ - mouseY * 3) ** 2);
+
+                if (dist < 15) {
+                    const depth = (15 - dist) * 0.8;
+                    waveHeight -= depth;
+                }
+
+                positions[i + 1] = waveHeight;
+                i += 3;
+            }
+        }
+
+        particles.geometry.attributes.position.needsUpdate = true;
+        count += 0.05;
+
+        renderer.render(scene, camera);
+    };
+
+    animate();
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+}
+
+// Global Process Switcher Logic
+window.switchProcess = function (role) {
+    const trackClient = document.getElementById('track-client');
+    const trackPartner = document.getElementById('track-partner');
+    const toggleBg = document.getElementById('toggle-bg');
+    const btnClient = document.getElementById('btn-client');
+    const btnPartner = document.getElementById('btn-partner');
+
+    if (!trackClient || !trackPartner) return; // Safety check
+
+    if (role === 'client') {
+        // UI Visuals
+        toggleBg.style.left = '4px'; // 1 (padding)
+
+        // Force Instant Color Change via Style (Bulletproof)
+        btnClient.className = "relative z-10 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest w-48 text-white";
+
+        // Reset Partner to Gray
+        btnPartner.className = "relative z-10 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest w-48 text-slate-500 hover:text-slate-900";
+
+        // Tracks Animation
+        trackClient.classList.remove('opacity-0', 'translate-y-8', 'scale-95', 'pointer-events-none');
+        trackClient.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+
+        trackPartner.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
+        trackPartner.classList.add('opacity-0', 'translate-y-8', 'scale-95', 'pointer-events-none');
+
+    } else {
+        // UI Visuals
+        // Width of button is w-48 (12rem = 192px). Padding is 4px.
+        // Approx calc for right side.
+        toggleBg.style.left = 'calc(100% - 196px)';
+
+        // Force Instant Color Change via Style (Bulletproof)
+        // Reset Client to Gray
+        btnClient.className = "relative z-10 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest w-48 text-slate-500 hover:text-slate-900";
+
+        // Set Partner to White
+        btnPartner.className = "relative z-10 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest w-48 text-white";
+
+        // Tracks Animation
+        trackPartner.classList.remove('opacity-0', 'translate-y-8', 'scale-95', 'pointer-events-none');
+        trackPartner.classList.add('opacity-100', 'translate-y-0', 'scale-100');
+
+        trackClient.classList.remove('opacity-100', 'translate-y-0', 'scale-100');
+        trackClient.classList.add('opacity-0', 'translate-y-8', 'scale-95', 'pointer-events-none');
+    }
+};
+
+// Mobile Menu Toggle
+function mobileMenuToggle() {
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    // ... (rest of menu logic if any)
+}
+
+function initDynamicDates() {
+    const quarterText = document.getElementById('quarter-text');
+    const dateText = document.getElementById('date-text');
+
+    if (!quarterText || !dateText) return;
+
+    const now = new Date();
+    const month = now.getMonth(); // 0-11
+    const day = now.getDate();
+    const year = now.getFullYear();
+
+    // Determine current quarter (1-4)
+    let currentQ = Math.floor(month / 3) + 1;
+    let targetQ = currentQ;
+    let targetYear = year;
+
+    // Check if it is the last week of the quarter
+    // Quarters end in: March (2), June (5), Sept (8), Dec (11)
+    const quarterEndMonths = [2, 5, 8, 11];
+
+    // Logic: If current month is a quarter ending month AND we are in the last 7 days
+    if (quarterEndMonths.includes(month)) {
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        if (day > daysInMonth - 7) {
+            // Roll over to next quarter
+            targetQ++;
+            if (targetQ > 4) {
+                targetQ = 1;
+                targetYear++;
+            }
+        }
+    }
+
+    // Update Badge Text
+    quarterText.textContent = `Agenda do ${targetQ}º trimestre/${targetYear} aberta`;
+
+    // Update Current Date Text
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    const dateString = now.toLocaleDateString('pt-BR', options);
+    // Capitalize first letter of date
+    dateText.textContent = dateString.charAt(0).toUpperCase() + dateString.slice(1);
+}
+
+// Initialize everything on load
+window.addEventListener('load', () => {
+    initScrollAnimations();
+    initDynamicDates();
+    // Re-run animation loop if needed for canvas (managed inside script.js usually)
+});
+
+// Contact Form Logic
+window.updateProgress = function () {
+    const name = document.getElementById('input-name');
+    const email = document.getElementById('input-email');
+    const phone = document.getElementById('input-phone');
+    const type = document.querySelector('input[name="user-type"]:checked');
+    const bar = document.getElementById('form-progress');
+
+    if (!name || !email || !phone) return;
+
+    let progress = 0;
+    if (name.value.length > 0) progress += 25;
+    if (email.value.length > 0) progress += 25;
+    if (phone.value.length > 0) progress += 25;
+    if (type) progress += 25;
+
+    if (bar) {
+        bar.style.width = progress + '%';
+    }
+};
+
+window.handleFormSubmit = function (e) {
+    e.preventDefault();
+
+    const form = document.getElementById('project-form');
+    const overlay = document.getElementById('success-overlay');
+
+    if (form && overlay) {
+        // Fade out form content (visual only, keep layout)
+        form.style.opacity = '0';
+        form.style.pointerEvents = 'none';
+
+        // Fade in Overlay
+        overlay.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+        overlay.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+
+        // Max out progress bar just in case
+        const bar = document.getElementById('form-progress');
+        if (bar) bar.style.width = '100%';
+    }
+};
+
+function initScrollAnimations() {
+    // Header Shadow on Scroll
+    if (document.querySelector('#main-header')) {
+        ScrollTrigger.create({
+            start: 'top -50',
+            end: 99999,
+            toggleClass: { className: 'shadow-md', targets: '#main-header' }
+        });
+    }
+
+    // Progress Bar Logic
+    const progressBar = document.getElementById('scroll-progress');
+    if (progressBar) {
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            progressBar.style.width = `${scrollPercent}%`;
+        });
+    }
+}

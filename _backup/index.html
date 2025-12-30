@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ponto Um Digital</title>
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- TAILWIND CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            navy: '#0f172a',   // Darker Slate
+                            red: '#DC2626',    // Vibrant Red
+                            green: '#059669',
+                            blue: '#1e40af',
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-red': 'linear-gradient(90deg, #DC2626 0%, #B91C1C 100%)',
+                    },
+                    fontFamily: {
+                        sans: ['Inter Tight', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    maxWidth: {
+                        'grid': '1280px',
+                    },
+                    container: {
+                        center: true,
+                        padding: '1.5rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- LIBS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        body {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        #canvas-lattice {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #DC2626;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .tech-pattern {
+            background-image: radial-gradient(#94a3b8 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-900 overflow-x-hidden selection:bg-brand-red selection:text-white">
+
+    <!-- HEADER -->
+    <header
+        class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 transition-all duration-300"
+        id="main-header">
+        <div class="max-w-grid mx-auto px-6 h-24 flex items-center justify-between">
+            <!-- LOGO IMAGE -->
+            <a href="#" class="flex items-center select-none">
+                <img src="logo.png" alt=".i<digital>" class="h-10 md:h-12 w-auto object-contain">
+            </a>
+
+            <nav class="hidden md:flex gap-8 text-sm font-semibold text-slate-600">
+                <a href="#expertise" class="nav-link hover:text-black transition-colors">O que fazemos</a>
+                <a href="#process" class="nav-link hover:text-black transition-colors">Como entregamos</a>
+                <a href="#cases" class="nav-link hover:text-black transition-colors">Cases</a>
+                <a href="#stack" class="nav-link hover:text-black transition-colors">Stack</a>
+            </nav>
+            <div class="flex gap-4">
+                <a href="#contact"
+                    class="hidden md:block text-slate-900 border border-slate-900 px-6 py-2.5 rounded-full text-sm font-bold hover:bg-slate-900 hover:text-white transition-colors">
+                    Falar com Consultor
+                </a>
+                <a href="#contact"
+                    class="hidden md:block bg-gradient-red text-white px-6 py-2.5 rounded-full text-sm font-bold hover:shadow-lg hover:shadow-red-500/30 transition-all transform hover:-translate-y-0.5">
+                    Orçamento Rápido
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24">
+
+        <!-- 1. HERO CLEAN -->
+        <section class="relative min-h-[85vh] flex items-center overflow-hidden bg-slate-50 border-b border-gray-200">
+
+            <div id="canvas-lattice"></div>
+
+            <div class="relative z-10 w-full max-w-grid mx-auto px-6">
+                <!-- Center/Left Alignment Container - No Right Column -->
+                <div class="max-w-4xl">
+
+
+
+                    <!-- Title: 2 Lines Forced -->
+                    <h1
+                        class="font-sans font-extrabold text-6xl md:text-7xl leading-[1.0] tracking-tighter mb-6 text-slate-900">
+                        Engenharia que<br>
+                        <span class="text-transparent bg-clip-text bg-gradient-red">escala o futuro.</span>
+                    </h1>
+
+                    <!-- Subtitle: 1 Line Forced (max-w-full) -->
+                    <p
+                        class="text-xl text-slate-600 leading-relaxed mb-10 font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+                        Design e desenvolvimento de software de alta performance, sem débito técnico.
+                    </p>
+
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact"
+                            class="bg-slate-900 text-white px-10 py-4 rounded-full font-bold hover:bg-brand-red transition-all shadow-xl text-lg">
+                            Iniciar Projeto
+                        </a>
+                    </div>
+
+                    <!-- Metrics Row -->
+                    <div class="mt-16 pt-6 border-t border-slate-200/60 flex gap-12 font-mono text-xs text-slate-500">
+                        <div>
+                            <span class="block text-slate-900 font-bold text-sm mb-1">TEMPO_ATIVO</span>
+                            <span>Desde 2018</span>
+                        </div>
+                        <div>
+                            <span class="block text-slate-900 font-bold text-sm mb-1">TOTAL_CASES</span>
+                            <span>+ 300 Entregues</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. EXPERTISE -->
+        <section id="expertise" class="py-32 bg-white border-b border-gray-200">
+            <div class="max-w-grid mx-auto px-6">
+                <div class="mb-20 max-w-2xl">
+                    <span
+                        class="font-mono text-xs text-brand-red font-bold tracking-widest uppercase mb-3 block">01_ESCOPO</span>
+                    <h2 class="font-sans font-bold text-4xl text-slate-900 tracking-tight">Capacidades Técnicas</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div
+                        class="p-6 border border-slate-100 hover:border-brand-red/50 hover:shadow-lg transition-all rounded-lg group bg-slate-50 hover:bg-white">
+                        <div
+                            class="font-mono text-2xl text-brand-red mb-4 group-hover:scale-110 transition-transform origin-left">
+                            {}</div>
+                        <h3 class="font-bold text-lg text-slate-900 mb-2">Software Custom</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Desenvolvimento de core systems proprietários.
+                            Arquitetura limpa e desacoplada.</p>
+                    </div>
+                    <div
+                        class="p-6 border border-slate-100 hover:border-brand-red/50 hover:shadow-lg transition-all rounded-lg group bg-slate-50 hover:bg-white">
+                        <div
+                            class="font-mono text-2xl text-brand-red mb-4 group-hover:scale-110 transition-transform origin-left">
+                            ::</div>
+                        <h3 class="font-bold text-lg text-slate-900 mb-2">Squads Dedicadas</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Times de elite integrados ao seu fluxo.
+                            Onboarding técnico em D+1.</p>
+                    </div>
+                    <div
+                        class="p-6 border border-slate-100 hover:border-brand-red/50 hover:shadow-lg transition-all rounded-lg group bg-slate-50 hover:bg-white">
+                        <div
+                            class="font-mono text-2xl text-brand-red mb-4 group-hover:scale-110 transition-transform origin-left">
+                            /></div>
+                        <h3 class="font-bold text-lg text-slate-900 mb-2">Consultoria</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Auditoria de código, otimização de cloud e
+                            resolução de gargalos.</p>
+                    </div>
+                    <div
+                        class="p-6 border border-slate-100 hover:border-brand-red/50 hover:shadow-lg transition-all rounded-lg group bg-slate-50 hover:bg-white">
+                        <div
+                            class="font-mono text-2xl text-brand-red mb-4 group-hover:scale-110 transition-transform origin-left">
+                            AI</div>
+                        <h3 class="font-bold text-lg text-slate-900 mb-2">IA Enterprise</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">RAG e Fine-tuning de LLMs para automação
+                            inteligente de processos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. PROCESS -->
+        <section id="process" class="py-32 bg-slate-50 border-b border-gray-200">
+            <div class="max-w-grid mx-auto px-6">
+                <div class="mb-20">
+                    <span
+                        class="font-mono text-xs text-brand-red font-bold tracking-widest uppercase mb-3 block">02_WORKFLOW</span>
+                    <h2 class="font-sans font-bold text-4xl text-slate-900 tracking-tight">Engenharia, não Sorte.</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                    <div class="pl-6 border-l-2 border-gray-200 hover:border-brand-red transition-colors">
+                        <span class="font-mono text-6xl font-bold text-slate-300 mb-6 block">01</span>
+                        <h4 class="font-bold text-xl text-slate-900 mb-3">Diagnóstico (RFC)</h4>
+                        <p class="text-slate-600">Documentamos a arquitetura antes de codar. Nenhuma linha é escrita sem
+                            validação.</p>
+                    </div>
+                    <div class="pl-6 border-l-2 border-gray-200 hover:border-brand-red transition-colors">
+                        <span class="font-mono text-6xl font-bold text-slate-300 mb-6 block">02</span>
+                        <h4 class="font-bold text-xl text-slate-900 mb-3">Execução Ágil</h4>
+                        <p class="text-slate-600">Sprints quinzenais. CI/CD pipeline automatizado garantindo
+                            estabilidade.</p>
+                    </div>
+                    <div class="pl-6 border-l-2 border-gray-200 hover:border-brand-red transition-colors">
+                        <span class="font-mono text-6xl font-bold text-slate-300 mb-6 block">03</span>
+                        <h4 class="font-bold text-xl text-slate-900 mb-3">Observabilidade</h4>
+                        <p class="text-slate-600">Monitoramento 24/7. Painéis de métricas e logs estruturados em tempo
+                            real.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. CASES -->
+        <section id="cases" class="py-32 bg-white border-b border-gray-200">
+            <div class="max-w-grid mx-auto px-6">
+                <div class="mb-20 flex flex-col md:flex-row justify-between md:items-end">
+                    <div>
+                        <span
+                            class="font-mono text-xs text-brand-red font-bold tracking-widest uppercase mb-3 block">03_PROOF</span>
+                        <h2 class="font-sans font-semibold text-3xl text-slate-900 tracking-tight">Código em Produção
+                        </h2>
+                    </div>
+                    <a href="#contact"
+                        class="hidden md:block font-mono text-xs font-bold text-slate-500 hover:text-brand-red mt-4 md:mt-0">VER
+                        TODOS OS CASES -></a>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div
+                        class="bg-white border border-gray-200 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+                        <div class="tech-pattern absolute top-0 right-0 w-32 h-32 opacity-20"></div>
+                        <span
+                            class="font-mono text-xs text-brand-red bg-red-50 px-2 py-1 rounded mb-6 inline-block">MOBILE
+                            RETAIL</span>
+                        <h3 class="font-bold text-2xl text-slate-900 mb-2">Polishop App</h3>
+                        <p class="text-slate-600 text-sm mb-8">Reconstrução da arquitetura mobile para suportar picos de
+                            tráfego televisivo.</p>
+                        <div class="grid grid-cols-2 gap-6 border-t border-gray-100 pt-6">
+                            <div><span class="block text-3xl font-bold text-slate-900 tracking-tight">+40%</span><span
+                                    class="text-xs text-slate-500 font-mono">CONVERSÃO</span></div>
+                            <div><span class="block text-3xl font-bold text-slate-900 tracking-tight">0ms</span><span
+                                    class="text-xs text-slate-500 font-mono">DOWNTIME</span></div>
+                        </div>
+                    </div>
+                    <div
+                        class="bg-white border border-gray-200 p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow group relative overflow-hidden">
+                        <div class="tech-pattern absolute top-0 right-0 w-32 h-32 opacity-20"></div>
+                        <span
+                            class="font-mono text-xs text-green-600 bg-green-50 px-2 py-1 rounded mb-6 inline-block">FINTECH
+                            CORE</span>
+                        <h3 class="font-bold text-2xl text-slate-900 mb-2">Conciliação Financeira</h3>
+                        <p class="text-slate-600 text-sm mb-8">Automatização de processos manuais críticos com
+                            integridade de dados bancários.</p>
+                        <div class="grid grid-cols-2 gap-6 border-t border-gray-100 pt-6">
+                            <div><span class="block text-3xl font-bold text-slate-900 tracking-tight">-90%</span><span
+                                    class="text-xs text-slate-500 font-mono">TEMPO OPERACIONAL</span></div>
+                            <div><span class="block text-3xl font-bold text-slate-900 tracking-tight">100%</span><span
+                                    class="text-xs text-slate-500 font-mono">ACURACIDADE</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. STACK -->
+        <section id="stack" class="py-32 bg-slate-50 border-b border-gray-200">
+            <div class="max-w-grid mx-auto px-6">
+                <div class="mb-16">
+                    <span
+                        class="font-mono text-xs text-brand-red font-bold tracking-widest uppercase mb-3 block">04_STACK</span>
+                    <h2 class="font-sans font-semibold text-3xl text-slate-900">Tecnologias Core</h2>
+                </div>
+                <!-- Stack content similar -->
+                <div class="border-t border-gray-200">
+                    <div class="grid grid-cols-1 md:grid-cols-4 py-6 border-b border-gray-200 items-start">
+                        <div class="font-mono text-xs font-bold text-brand-red uppercase mb-2 md:mb-0">Frontend</div>
+                        <div class="md:col-span-3 text-slate-700 font-mono text-sm">React, Next.js, TypeScript, Tailwind
+                            CSS, Three.js</div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 py-6 border-b border-gray-200 items-start">
+                        <div class="font-mono text-xs font-bold text-brand-red uppercase mb-2 md:mb-0">Backend</div>
+                        <div class="md:col-span-3 text-slate-700 font-mono text-sm">Node.js, Python (FastAPI), Go,
+                            PostgreSQL, Redis</div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-4 py-6 border-b border-gray-200 items-start">
+                        <div class="font-mono text-xs font-bold text-brand-red uppercase mb-2 md:mb-0">Infra</div>
+                        <div class="md:col-span-3 text-slate-700 font-mono text-sm">AWS (ECS/Lambda), Docker,
+                            Kubernetes, Terraform</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer id="contact" class="bg-slate-900 text-white py-24">
+            <div class="max-w-grid mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-8 tracking-tight">Engenharia Sênior<br>para desafios reais.
+                </h2>
+                <div class="flex flex-col md:flex-row justify-center gap-6">
+                    <a href="mailto:contato@pontoumdigital.com.br"
+                        class="inline-block bg-white text-slate-900 px-10 py-5 rounded-full font-bold hover:bg-slate-200 transition-colors text-lg shadow-lg">
+                        Falar com Consultor
+                    </a>
+                </div>
+                <div class="mt-24 pt-8 border-t border-slate-800 flex justify-between text-xs font-mono text-slate-500">
+                    <span>PONTO UM DIGITAL © 2024</span>
+                    <span>SÃO PAULO // BRASIL</span>
+                </div>
+            </div>
+        </footer>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
