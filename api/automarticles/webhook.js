@@ -1,126 +1,125 @@
-const fs = require('fs');
-const path = require('path');
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_OWNER = process.env.GITHUB_OWNER || 'toolspontoum';
+const GITHUB_REPO = process.env.GITHUB_REPO || 'pontoumdigital.v3';
+const BRANCH = 'main';
 
-// Paths to storage
-const BLOG_DIR = path.join(process.cwd(), 'public', 'content', 'blog');
-const POSTS_DIR = path.join(BLOG_DIR, 'posts');
-const POSTS_INDEX = path.join(BLOG_DIR, 'posts.index.json');
-const CATEGORIES_INDEX = path.join(BLOG_DIR, 'categories.index.json');
-
-// Ensure directories exist
-if (!fs.existsSync(POSTS_DIR)) fs.mkdirSync(POSTS_DIR, { recursive: true });
-
-function readJsonFile(filePath, defaultValue = []) {
-    if (!fs.existsSync(filePath)) return defaultValue;
-    try {
-        return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    } catch (e) {
-        return defaultValue;
-    }
+// Helper to interact with GitHub API
+async function ghCall(url, method = 'GET', body = null) {
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${url}`, {
+        method,
+        headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'Content-Type': 'application/json'
+        },
+        body: body ? JSON.stringify(body) : null
+    });
+    return res;
 }
 
-function writeJsonFile(filePath, data) {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
+async function getFile(path) {
+    const res = await ghCall(path);
+    if (res.status === 404) return { content: null, sha: null };
+    const data = await res.json();
+    return {
+        content: JSON.parse(Buffer.from(data.content, 'base64').toString('utf8')),
+        sha: data.sha
+    };
+}
+
+async function commitFile(path, content, message, sha = null) {
+    const body = {
+        message,
+        content: Buffer.from(JSON.stringify(content, null, 2)).toString('base64'),
+        branch: BRANCH
+    };
+    if (sha) body.sha = sha;
+    await ghCall(path, 'PUT', body);
 }
 
 module.exports = async (req, res) => {
+    // 1. Authentication with Automarticles
     const accessToken = req.headers['access-token'];
     const expectedToken = process.env.AUTOMARTICLES_TOKEN || 'ponto1_secure_token_2024';
 
-    // 1. Authentication
     if (accessToken !== expectedToken) {
         return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    const body = req.body;
-    const event = body.event;
+    const { body } = req;
+    const { event } = body;
 
     // 2. CHECK_INTEGRATION
     if (event === 'CHECK_INTEGRATION') {
         return res.status(200).json({ token: expectedToken });
     }
 
-    // Load Indexes
-    let postsIndex = readJsonFile(POSTS_INDEX);
-    let categoriesIndex = readJsonFile(CATEGORIES_INDEX);
-
-    switch (event) {
-        case 'POST_CREATED':
-        case 'POST_UPDATED':
-            const post = body.post;
-            if (!post || !post.id) break;
-
-            // Save individual post file
-            writeJsonFile(path.join(POSTS_DIR, `${post.slug}.json`), post);
-
-            // Update Index (only if status is publish)
-            postsIndex = postsIndex.filter(p => p.id !== post.id);
-            if (post.status === 'publish') {
-                postsIndex.unshift({
-                    id: post.id,
-                    slug: post.slug,
-                    title: post.title,
-                    description: post.description,
-                    publication_date: post.publication_date,
-                    featured_image: post.featured_image,
-                    category: post.category
-                });
-                // Sort by date desc
-                postsIndex.sort((a, b) => b.publication_date - a.publication_date);
-            }
-            writeJsonFile(POSTS_INDEX, postsIndex);
-            break;
-
-        case 'POST_DELETED':
-            const deleteId = body.post?.id;
-            const postToDelete = postsIndex.find(p => p.id === deleteId);
-            if (postToDelete) {
-                const filePath = path.join(POSTS_DIR, `${postToDelete.slug}.json`);
-                if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-                postsIndex = postsIndex.filter(p => p.id !== deleteId);
-                writeJsonFile(POSTS_INDEX, postsIndex);
-            }
-            break;
-
-        case 'CATEGORY_CREATED':
-        case 'CATEGORY_UPDATED':
-            const category = body.category;
-            if (!category || !category.id) break;
-            categoriesIndex = categoriesIndex.filter(c => c.id !== category.id);
-            categoriesIndex.push(category);
-            writeJsonFile(CATEGORIES_INDEX, categoriesIndex);
-
-            // If updated, reflect name changes in posts index
-            if (event === 'CATEGORY_UPDATED') {
-                postsIndex.forEach(p => {
-                    if (p.category && p.category.id === category.id) {
-                        p.category.name = category.name;
-                    }
-                });
-                writeJsonFile(POSTS_INDEX, postsIndex);
-            }
-            break;
-
-        case 'CATEGORY_DELETED':
-            const catId = body.category?.id;
-            const replaceTo = body.replace_to;
-
-            categoriesIndex = categoriesIndex.filter(c => c.id !== catId);
-            writeJsonFile(CATEGORIES_INDEX, categoriesIndex);
-
-            // Update posts that belonged to this category
-            postsIndex.forEach(p => {
-                if (p.category && p.category.id === catId) {
-                    if (replaceTo) {
-                        p.category = replaceTo;
-                    } else {
-                        p.category = { id: 'uncategorized', name: 'Sem categoria' };
-                    }
-                }
-            });
-            writeJsonFile(POSTS_INDEX, postsIndex);
-            break;
+    if (!GITHUB_TOKEN) {
+        return res.status(500).json({ error: 'GITHUB_TOKEN not configured' });
     }
 
-    return res.status(200).json({ success: true, event });
+    try {
+        // Load Indexes from GitHub
+        const { content: postsIndex, sha: postsSha } = await getFile('public/content/blog/posts.index.json');
+        const { content: categoriesIndex, sha: categoriesSha } = await getFile('public/content/blog/categories.index.json');
+
+        const currentPosts = postsIndex || [];
+        const currentCategories = categoriesIndex || [];
+
+        switch (event) {
+            case 'POST_CREATED':
+            case 'POST_UPDATED':
+                const post = body.post;
+                if (!post || !post.slug) break;
+
+                // 1. Save individual post file
+                const { sha: postFileSha } = await getFile(`public/content/blog/posts/${post.slug}.json`);
+                await commitFile(`public/content/blog/posts/${post.slug}.json`, post, `Automarticles: ${event} - ${post.title}`, postFileSha);
+
+                // 2. Update Index
+                let updatedPosts = currentPosts.filter(p => p.id !== post.id);
+                if (post.status === 'publish') {
+                    updatedPosts.unshift({
+                        id: post.id,
+                        slug: post.slug,
+                        title: post.title,
+                        description: post.description,
+                        publication_date: post.publication_date,
+                        featured_image: post.featured_image,
+                        category: post.category
+                    });
+                    updatedPosts.sort((a, b) => b.publication_date - a.publication_date);
+                }
+                await commitFile('public/content/blog/posts.index.json', updatedPosts, `Automarticles: Update Index for ${post.title}`, postsSha);
+                break;
+
+            case 'POST_DELETED':
+                const delPost = currentPosts.find(p => p.id === body.post?.id);
+                if (delPost) {
+                    const { sha: delSha } = await getFile(`public/content/blog/posts/${delPost.slug}.json`);
+                    if (delSha) {
+                        await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/public/content/blog/posts/${delPost.slug}.json`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Authorization': `token ${GITHUB_TOKEN}`,
+                                'Accept': 'application/vnd.github.v3+json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ message: `Automarticles: DELETE ${delPost.title}`, sha: delSha, branch: BRANCH })
+                        });
+                    }
+                    const newPosts = currentPosts.filter(p => p.id !== delPost.id);
+                    await commitFile('public/content/blog/posts.index.json', newPosts, `Automarticles: Remove from Index ${delPost.title}`, postsSha);
+                }
+                break;
+
+            // ... Lógica similar para categorias poderia ser expandida aqui se necessário ...
+        }
+
+        return res.status(200).json({ success: true, event });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Internal Error during GitHub Sync', details: err.message });
+    }
 };
+
