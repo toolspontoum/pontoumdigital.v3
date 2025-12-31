@@ -114,13 +114,15 @@
                         <div class="group">
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-3">Eu
                                 sou:</label>
-                            <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <label class="cursor-pointer">
                                     <input type="radio" name="user-type" value="cliente" class="peer hidden" checked
                                         onchange="updateProgress()">
                                     <div
-                                        class="flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/30 text-slate-400 peer-checked:border-brand-red peer-checked:bg-brand-red/5 peer-checked:text-white transition-all">
-                                        <span class="text-sm font-bold uppercase tracking-wide">Cliente Final</span>
+                                        class="h-full flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/30 text-slate-400 peer-checked:border-brand-red peer-checked:bg-brand-red/5 peer-checked:text-white transition-all text-center">
+                                        <span
+                                            class="text-sm font-bold uppercase tracking-wide break-words w-full">Cliente
+                                            Final</span>
                                         <span class="text-[10px] opacity-60 mt-1">Preciso de um projeto</span>
                                     </div>
                                 </label>
@@ -128,8 +130,10 @@
                                     <input type="radio" name="user-type" value="agencia" class="peer hidden"
                                         onchange="updateProgress()">
                                     <div
-                                        class="flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/30 text-slate-400 peer-checked:border-brand-red peer-checked:bg-brand-red/5 peer-checked:text-white transition-all">
-                                        <span class="text-sm font-bold uppercase tracking-wide">Agência de MKT</span>
+                                        class="h-full flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/30 text-slate-400 peer-checked:border-brand-red peer-checked:bg-brand-red/5 peer-checked:text-white transition-all text-center">
+                                        <span
+                                            class="text-sm font-bold uppercase tracking-wide break-words w-full">Agência
+                                            de MKT</span>
                                         <span class="text-[10px] opacity-60 mt-1">Quero outsourcing</span>
                                     </div>
                                 </label>
