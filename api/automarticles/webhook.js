@@ -1,126 +1,247 @@
-const fs = require('fs');
-const path = require('path');
+/**
+ * Automarticles Webhook for Ponto Um Digital (CJS Version)
+ * 
+ * This webhook receives blog posts from Automarticles and commits them directly
+ * to the GitHub repository using the GitHub API. This triggers a Vercel redeploy
+ * and ensures data persistence.
+ */
 
-// Paths to storage
-const BLOG_DIR = path.join(process.cwd(), 'public', 'content', 'blog');
-const POSTS_DIR = path.join(BLOG_DIR, 'posts');
-const POSTS_INDEX = path.join(BLOG_DIR, 'posts.index.json');
-const CATEGORIES_INDEX = path.join(BLOG_DIR, 'categories.index.json');
+// Use global fetch (Node 18+)
+const fetch = global.fetch;
 
-// Ensure directories exist
-if (!fs.existsSync(POSTS_DIR)) fs.mkdirSync(POSTS_DIR, { recursive: true });
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_REPO = process.env.GITHUB_REPO; // e.g. "user/repo"
+const AUTOMARTICLES_TOKEN = process.env.AUTOMARTICLES_TOKEN;
 
-function readJsonFile(filePath, defaultValue = []) {
-    if (!fs.existsSync(filePath)) return defaultValue;
-    try {
-        return JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    } catch (e) {
-        return defaultValue;
-    }
-}
-
-function writeJsonFile(filePath, data) {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
-}
+// Paths within the repository
+const BASE_PATH = 'public/content/blog';
+const POSTS_DIR = `${BASE_PATH}/posts`;
+const POSTS_INDEX_PATH = `${BASE_PATH}/posts.index.json`;
+const CATEGORIES_INDEX_PATH = `${BASE_PATH}/categories.index.json`;
 
 module.exports = async (req, res) => {
-    const accessToken = req.headers['access-token'];
-    const expectedToken = process.env.AUTOMARTICLES_TOKEN || 'ponto1_secure_token_2024';
+    // 1. Validate Method
+    if (req.method !== 'POST') {
+        return res.status(405).json({ error: 'Method not allowed' });
+    }
 
-    // 1. Authentication
-    if (accessToken !== expectedToken) {
+    // 2. Validate Token
+    const accessToken = req.headers['access-token'];
+
+    // Automation check logic: Automarticles sends the token they generated.
+    // We compare it against the AUTOMARTICLES_TOKEN env var.
+    if (!AUTOMARTICLES_TOKEN || accessToken !== AUTOMARTICLES_TOKEN) {
+        console.error('Unauthorized access attempt. Expected:', AUTOMARTICLES_TOKEN, 'Got:', accessToken);
         return res.status(401).json({ error: 'Unauthorized' });
     }
 
-    const body = req.body;
-    const event = body.event;
+    const { event, post, category, replace_to } = req.body;
 
-    // 2. CHECK_INTEGRATION
+    // 3. Handle Integration Check
     if (event === 'CHECK_INTEGRATION') {
-        return res.status(200).json({ token: expectedToken });
+        return res.status(200).json({ token: AUTOMARTICLES_TOKEN });
     }
 
-    // Load Indexes
-    let postsIndex = readJsonFile(POSTS_INDEX);
-    let categoriesIndex = readJsonFile(CATEGORIES_INDEX);
+    if (!GITHUB_TOKEN || !GITHUB_REPO) {
+        console.error('GITHUB_TOKEN or GITHUB_REPO missing in environment variables');
+        return res.status(500).json({ error: 'Server configuration error' });
+    }
 
-    switch (event) {
-        case 'POST_CREATED':
-        case 'POST_UPDATED':
-            const post = body.post;
-            if (!post || !post.id) break;
+    try {
+        console.log(`Processing event: ${event}`);
 
-            // Save individual post file
-            writeJsonFile(path.join(POSTS_DIR, `${post.slug}.json`), post);
+        switch (event) {
+            case 'POST_CREATED':
+            case 'POST_UPDATED':
+                if (!post || !post.id) return res.status(400).json({ error: 'Missing post data' });
+                await handleUpsertPost(post);
+                break;
 
-            // Update Index (only if status is publish)
-            postsIndex = postsIndex.filter(p => p.id !== post.id);
-            if (post.status === 'publish') {
-                postsIndex.unshift({
-                    id: post.id,
-                    slug: post.slug,
-                    title: post.title,
-                    description: post.description,
-                    publication_date: post.publication_date,
-                    featured_image: post.featured_image,
-                    category: post.category
-                });
-                // Sort by date desc
-                postsIndex.sort((a, b) => b.publication_date - a.publication_date);
-            }
-            writeJsonFile(POSTS_INDEX, postsIndex);
-            break;
+            case 'POST_DELETED':
+                if (!post || !post.id) return res.status(400).json({ error: 'Missing post data' });
+                await handleDeletePost(post);
+                break;
 
-        case 'POST_DELETED':
-            const deleteId = body.post?.id;
-            const postToDelete = postsIndex.find(p => p.id === deleteId);
-            if (postToDelete) {
-                const filePath = path.join(POSTS_DIR, `${postToDelete.slug}.json`);
-                if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-                postsIndex = postsIndex.filter(p => p.id !== deleteId);
-                writeJsonFile(POSTS_INDEX, postsIndex);
-            }
-            break;
+            case 'CATEGORY_CREATED':
+            case 'CATEGORY_UPDATED':
+                if (!category || !category.id) return res.status(400).json({ error: 'Missing category data' });
+                await handleUpsertCategory(category, event === 'CATEGORY_UPDATED');
+                break;
 
-        case 'CATEGORY_CREATED':
-        case 'CATEGORY_UPDATED':
-            const category = body.category;
-            if (!category || !category.id) break;
-            categoriesIndex = categoriesIndex.filter(c => c.id !== category.id);
-            categoriesIndex.push(category);
-            writeJsonFile(CATEGORIES_INDEX, categoriesIndex);
+            case 'CATEGORY_DELETED':
+                if (!category || !category.id) return res.status(400).json({ error: 'Missing category data' });
+                await handleDeleteCategory(category.id, replace_to);
+                break;
 
-            // If updated, reflect name changes in posts index
-            if (event === 'CATEGORY_UPDATED') {
-                postsIndex.forEach(p => {
-                    if (p.category && p.category.id === category.id) {
-                        p.category.name = category.name;
-                    }
-                });
-                writeJsonFile(POSTS_INDEX, postsIndex);
-            }
-            break;
+            default:
+                console.log(`Event ${event} not handled`);
+        }
 
-        case 'CATEGORY_DELETED':
-            const catId = body.category?.id;
-            const replaceTo = body.replace_to;
+        return res.status(200).json({ success: true, event });
+    } catch (error) {
+        console.error('Webhook Error:', error);
+        return res.status(500).json({ error: error.message });
+    }
+};
 
-            categoriesIndex = categoriesIndex.filter(c => c.id !== catId);
-            writeJsonFile(CATEGORIES_INDEX, categoriesIndex);
+/**
+ * GitHub API Helpers
+ */
 
-            // Update posts that belonged to this category
-            postsIndex.forEach(p => {
-                if (p.category && p.category.id === catId) {
-                    if (replaceTo) {
-                        p.category = replaceTo;
-                    } else {
-                        p.category = { id: 'uncategorized', name: 'Sem categoria' };
-                    }
+async function getFile(path) {
+    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`;
+    const res = await fetch(url, {
+        headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Accept': 'application/vnd.github.v3+json',
+            'User-Agent': 'Vercel-Serverless-Function'
+        }
+    });
+
+    if (res.status === 404) return null;
+    if (!res.ok) throw new Error(`GitHub API GET Error: ${res.statusText}`);
+
+    const data = await res.json();
+    return {
+        content: JSON.parse(Buffer.from(data.content, 'base64').toString('utf8')),
+        sha: data.sha
+    };
+}
+
+async function commitFile(path, content, message, sha = null) {
+    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`;
+    const body = {
+        message,
+        content: Buffer.from(JSON.stringify(content, null, 2)).toString('base64')
+    };
+    if (sha) body.sha = sha;
+
+    const res = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json',
+            'User-Agent': 'Vercel-Serverless-Function'
+        },
+        body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(`GitHub Commit Error: ${err.message}`);
+    }
+}
+
+async function deleteFile(path, sha, message) {
+    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`;
+    const res = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `token ${GITHUB_TOKEN}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/vnd.github.v3+json',
+            'User-Agent': 'Vercel-Serverless-Function'
+        },
+        body: JSON.stringify({ message, sha })
+    });
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(`GitHub Delete Error: ${err.message}`);
+    }
+}
+
+/**
+ * Logic Handlers
+ */
+
+async function handleUpsertPost(post) {
+    // 1. Update Post JSON
+    const postPath = `${POSTS_DIR}/${post.slug}.json`;
+    const existingPostFile = await getFile(postPath);
+    await commitFile(postPath, post, `cms: ${existingPostFile ? 'update' : 'create'} post ${post.slug}`, existingPostFile?.sha);
+
+    // 2. Update Index
+    const indexFile = await getFile(POSTS_INDEX_PATH);
+    let posts = indexFile ? indexFile.content : [];
+
+    // Remove if exists
+    posts = posts.filter(p => p.id !== post.id);
+
+    // Add if published
+    if (post.status === 'publish') {
+        posts.unshift({
+            id: post.id,
+            slug: post.slug,
+            title: post.title,
+            description: post.description,
+            publication_date: post.publication_date,
+            featured_image: post.featured_image,
+            category: post.category
+        });
+        posts.sort((a, b) => b.publication_date - a.publication_date);
+    }
+
+    await commitFile(POSTS_INDEX_PATH, posts, `cms: sync index for ${post.slug}`, indexFile?.sha);
+}
+
+async function handleDeletePost(post) {
+    // 1. Remove JSON
+    const postPath = `${POSTS_DIR}/${post.slug}.json`;
+    const postFile = await getFile(postPath);
+    if (postFile) {
+        await deleteFile(postPath, postFile.sha, `cms: delete post ${post.slug}`);
+    }
+
+    // 2. Update Index
+    const indexFile = await getFile(POSTS_INDEX_PATH);
+    if (indexFile) {
+        const posts = indexFile.content.filter(p => p.id !== post.id);
+        await commitFile(POSTS_INDEX_PATH, posts, `cms: remove ${post.slug} from index`, indexFile.sha);
+    }
+}
+
+async function handleUpsertCategory(category, isUpdate) {
+    const indexFile = await getFile(CATEGORIES_INDEX_PATH);
+    let categories = indexFile ? indexFile.content : [];
+
+    categories = categories.filter(c => c.id !== category.id);
+    categories.push(category);
+
+    await commitFile(CATEGORIES_INDEX_PATH, categories, `cms: category ${category.name}`, indexFile?.sha);
+
+    if (isUpdate) {
+        // Sync post index category names
+        const postIndex = await getFile(POSTS_INDEX_PATH);
+        if (postIndex) {
+            let changed = false;
+            postIndex.content.forEach(p => {
+                if (p.category && p.category.id === category.id) {
+                    p.category.name = category.name;
+                    changed = true;
                 }
             });
-            writeJsonFile(POSTS_INDEX, postsIndex);
-            break;
+            if (changed) {
+                await commitFile(POSTS_INDEX_PATH, postIndex.content, `cms: sync category rename in index`, postIndex.sha);
+            }
+        }
     }
+}
 
-    return res.status(200).json({ success: true, event });
-};
+async function handleDeleteCategory(catId, replaceTo) {
+    const indexFile = await getFile(CATEGORIES_INDEX_PATH);
+    if (!indexFile) return;
+
+    const categories = indexFile.content.filter(c => c.id !== catId);
+    await commitFile(CATEGORIES_INDEX_PATH, categories, `cms: delete category`, indexFile.sha);
+
+    const postIndex = await getFile(POSTS_INDEX_PATH);
+    if (postIndex) {
+        postIndex.content.forEach(p => {
+            if (p.category && p.category.id === catId) {
+                p.category = replaceTo || { id: 'uncategorized', name: 'Sem categoria' };
+            }
+        });
+        await commitFile(POSTS_INDEX_PATH, postIndex.content, `cms: reassign posts from deleted category`, postIndex.sha);
+    }
+}
