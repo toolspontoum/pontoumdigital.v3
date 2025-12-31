@@ -32,8 +32,15 @@ export const BlogStore = {
         }
     },
 
-    formatDate(timestamp) {
-        const date = new Date(timestamp * 1000);
+    formatDate(value) {
+        if (!value) return "";
+
+        // If it's a number appearing to be seconds (e.g. Automarticles timestamp), convert to ms
+        // 10000000000 is year 2286, so safe check for seconds vs ms
+        const date = new Date(typeof value === 'number' && value < 10000000000 ? value * 1000 : value);
+
+        if (isNaN(date.getTime())) return "";
+
         return date.toLocaleDateString('pt-BR', {
             day: '2-digit',
             month: 'long',
