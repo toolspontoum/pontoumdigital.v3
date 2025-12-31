@@ -11,8 +11,7 @@ const fetch = global.fetch;
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_REPO = process.env.GITHUB_REPO; // e.g. "user/repo"
-// TEMPORARY: Hardcoded token for debugging
-const AUTOMARTICLES_TOKEN = '179055f650fb3e03b140e1522d77e70e'; // process.env.AUTOMARTICLES_TOKEN;
+const AUTOMARTICLES_TOKEN = process.env.AUTOMARTICLES_TOKEN;
 
 // Paths within the repository
 const BASE_PATH = 'public/content/blog';
