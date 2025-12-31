@@ -11,7 +11,8 @@ const fetch = global.fetch;
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_REPO = process.env.GITHUB_REPO; // e.g. "user/repo"
-const AUTOMARTICLES_TOKEN = process.env.AUTOMARTICLES_TOKEN;
+// TEMPORARY: Hardcoded token for debugging
+const AUTOMARTICLES_TOKEN = '179055f650fb3e03b140e1522d77e70e'; // process.env.AUTOMARTICLES_TOKEN;
 
 // Paths within the repository
 const BASE_PATH = 'public/content/blog';
@@ -32,7 +33,13 @@ module.exports = async (req, res) => {
     // We compare it against the AUTOMARTICLES_TOKEN env var.
     if (!AUTOMARTICLES_TOKEN || accessToken !== AUTOMARTICLES_TOKEN) {
         console.error('Unauthorized access attempt. Expected:', AUTOMARTICLES_TOKEN, 'Got:', accessToken);
-        return res.status(401).json({ error: 'Unauthorized' });
+        // DEBUG: Return details to client to diagnose mismatch
+        return res.status(401).json({
+            error: 'Unauthorized',
+            got: accessToken,
+            expected: AUTOMARTICLES_TOKEN,
+            headers: req.headers
+        });
     }
 
     const { event, post, category, replace_to } = req.body;
