@@ -1,17 +1,18 @@
 [
   {
-    "id": "app-guia-2025",
-    "slug": "guia-pratico-desenvolvimento-app-empresas",
-    "title": "Guia Prático: Desenvolvimento de Apps para Empresas",
-    "description": "Explique as etapas do desenvolvimento de apps para empresas, destacando desde o planejamento até a publicação em lojas.",
-    "publication_date": 1735576800,
+    "id": "1767103554244x688184777895911600",
+    "slug": "guia-completo-software-tipos-funcoes-desenvolvimento",
+    "title": "Guia completo de software: tipos, funções e desenvolvimento\n",
+    "description": "Entenda tipos de software, SDLC, metodologias Agile e DevOps, licenciamento e tendências como SaaS, IA e nuvem.",
+    "publication_date": 1767165238,
     "featured_image": {
-      "url": "/assets/blog-images/capa-guia-apps.png",
-      "alt_text": "Equipe empresarial analisando protótipo de app em mesa de trabalho moderna"
+      "url": "https://ixymyhazbhztpjnlxmbd.supabase.co/storage/v1/object/images/generated/conceito-desenvolvimento-software-892.webp",
+      "filename": "conceito-desenvolvimento-software-892.webp",
+      "alt_text": "Tela com código de software e ícones de aplicativos em nuvens digitais "
     },
     "category": {
-      "id": "aplicativos",
-      "name": "Aplicativos"
+      "id": "1767103228535x530788688868220500",
+      "name": "Engenharia de Software"
     }
   },
   {
@@ -27,6 +28,21 @@
     "category": {
       "id": "cat-1",
       "name": "Tecnologia"
+    }
+  },
+  {
+    "id": "app-guia-2025",
+    "slug": "guia-pratico-desenvolvimento-app-empresas",
+    "title": "Guia Prático: Desenvolvimento de Apps para Empresas",
+    "description": "Explique as etapas do desenvolvimento de apps para empresas, destacando desde o planejamento até a publicação em lojas.",
+    "publication_date": 1735576800,
+    "featured_image": {
+      "url": "/assets/blog-images/capa-guia-apps.png",
+      "alt_text": "Equipe empresarial analisando protótipo de app em mesa de trabalho moderna"
+    },
+    "category": {
+      "id": "aplicativos",
+      "name": "Aplicativos"
     }
   },
   {
