@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | Sistema Desconectado - Ponto Um Digital</title>
+    <!-- Tailwind & Custom Styles -->
+    <link href="/src/styles/index.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/favicon.png">
+</head>
+
+<body class="bg-slate-950 text-white overflow-hidden">
+
+    <!-- 1. Background: Canvas Wave (Hero Effect in DARK Mode) -->
+    <div id="canvas-lattice" class="absolute inset-0 overflow-hidden opacity-40 mix-blend-screen pointer-events-none">
+    </div>
+
+    <!-- 2. Glow Effect (Central) -->
+    <div
+        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/20 rounded-full blur-[120px] pointer-events-none">
+    </div>
+
+    <!-- 3. Main Content -->
+    <main class="relative z-10 min-h-screen flex flex-col items-center justify-center text-center px-6">
+
+        <!-- Glitch 404 Visual -->
+        <div class="relative group mb-8 select-none">
+            <!-- Main Layer -->
+            <h1
+                class="text-[120px] md:text-[200px] font-black tracking-tighter leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-800">
+                404
+            </h1>
+            <!-- Ghost Layer (Glitch) -->
+            <div
+                class="absolute inset-0 text-[120px] md:text-[200px] font-black tracking-tighter leading-none text-red-600 opacity-20 blur-[2px] animate-pulse">
+                404
+            </div>
+        </div>
+
+        <div class="space-y-8 max-w-lg mx-auto">
+            <!-- Status Badge -->
+            <div
+                class="inline-flex items-center gap-3 px-4 py-2 bg-red-950/30 border border-red-900/50 rounded-full text-red-500 text-xs font-mono uppercase tracking-[0.2em] backdrop-blur-sm">
+                <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-ping"></span>
+                Erro de Roteamento
+            </div>
+
+            <div class="space-y-4">
+                <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">
+                    Página Desconectada
+                </h2>
+                <p class="text-slate-400 text-lg leading-relaxed">
+                    O nó que você tenta acessar não existe na nossa rede neural ou foi movido para uma infraestrutura
+                    inalcançável.
+                </p>
+            </div>
+
+            <!-- "Reboot" CTA -->
+            <div class="pt-4">
+                <a href="/"
+                    class="relative overflow-hidden inline-flex items-center justify-center gap-3 px-10 py-5 bg-white text-slate-950 rounded-xl font-bold uppercase tracking-widest hover:bg-slate-200 transition-all shadow-[0_0_30px_rgba(255,255,255,0.15)] hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] group hover:-translate-y-1">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-transparent via-slate-300/50 to-transparent -translate-x-[100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out">
+                    </div>
+                    <svg class="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    <span class="relative z-10">Reiniciar Sistema</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Tech Footer Decoration -->
+        <div class="absolute bottom-12 left-0 w-full text-center">
+            <div class="flex flex-col gap-2 opacity-30">
+                <div class="h-[1px] w-24 bg-slate-500 mx-auto"></div>
+                <p class="text-[10px] text-slate-500 font-mono uppercase tracking-widest">System_ID: P1D_V3 //
+                    Error_Code: 0x404_NOT_FOUND</p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Essential Scripts -->
+    <script type="module" src="/src/scripts/main.js"></script>
+</body>
+
+</html>
