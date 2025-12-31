@@ -29,9 +29,15 @@
                     transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
                 }
 
-                .nav-link-underline:hover::after {
+                .nav-link-underline:hover::after,
+                .nav-link-underline.active::after {
                     transform: scaleX(1);
                     transform-origin: left;
+                }
+
+                .nav-link-underline.active {
+                    color: #0f172a;
+                    /* slate-900 */
                 }
             </style>
             <a href="/#expertise"

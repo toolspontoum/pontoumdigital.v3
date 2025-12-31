@@ -9,7 +9,56 @@ gsap.registerPlugin(ScrollTrigger);
 document.addEventListener('DOMContentLoaded', () => {
     initDigitalWave();
     initScrollAnimations();
+    initScrollSpy();
 });
+
+/**
+ * SCROLL SPY LOGIC
+ * Highlights the current section in the navigation menu.
+ */
+function initScrollSpy() {
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link-underline');
+
+    if (!sections.length || !navLinks.length) return;
+
+    const options = {
+        root: null,
+        rootMargin: '-30% 0px -40% 0px', // More balanced for section detection
+        threshold: 0
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute('id');
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const href = link.getAttribute('href');
+
+                    // Direct hash match OR special case for homepage blog section
+                    if (href.includes(`#${id}`) || (id === 'latest-blog' && href.includes('/blog/'))) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    }, options);
+
+    sections.forEach(section => observer.observe(section));
+
+    // Special case for Blog page
+    if (window.location.pathname.includes('/blog/')) {
+        navLinks.forEach(link => {
+            if (link.getAttribute('href').includes('/blog/')) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+}
 
 /* -------------------------------------------------------------------------- */
 /* 1. DIGITAL WAVE (Round Dots Texture)                                       */
