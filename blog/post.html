@@ -325,8 +325,7 @@
             // Text Data
             document.getElementById('post-title').innerHTML = post.title;
             document.getElementById('breadcrumb-category').textContent = post.category.name;
-            const dateStr = new Date(post.publication_date).toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
-            document.getElementById('post-date').textContent = `Atualizado em ${dateStr}`;
+            document.getElementById('post-date').textContent = `Atualizado em ${BlogStore.formatDate(post.publication_date)}`;
             document.getElementById('post-cat-badge').textContent = post.category.name;
 
             // 2. Content Injection with "Diluted" CTAs
