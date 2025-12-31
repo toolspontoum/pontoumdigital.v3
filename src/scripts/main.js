@@ -42,10 +42,10 @@ function initComboElite() {
         }
     });
 
-    // 2. Blur-to-Focus Card Stagger
-    const revealGrids = document.querySelectorAll('.grid');
+    // 2. Blur-to-Focus Card Stagger (Generalized)
+    const revealGrids = document.querySelectorAll('.grid, .flex-wrap, .inline-flex'); // Added inline-flex for process toggle
     revealGrids.forEach(grid => {
-        const cards = grid.querySelectorAll('.reveal-card');
+        const cards = grid.querySelectorAll('.reveal-card, button'); // Also target buttons inside inline-flex if they don't have reveal-card class
         if (cards.length) {
             gsap.to(cards, {
                 opacity: 1,
@@ -57,11 +57,40 @@ function initComboElite() {
                 ease: "power2.out",
                 scrollTrigger: {
                     trigger: grid,
-                    start: 'top 100%',
+                    start: 'top 95%', // Trigger slightly earlier
                 }
             });
         }
     });
+
+    // Special fallback for solo reveal cards (like in hero if container doesn't match above)
+    // This ensures HERO buttons are always visible even if ScrollTrigger fails
+    const heroButtons = document.querySelectorAll('.max-w-4xl .reveal-card');
+    if (heroButtons.length) {
+        gsap.to(heroButtons, {
+            opacity: 1,
+            filter: 'blur(0px)',
+            y: 0,
+            duration: 0.8,
+            delay: 0.5, // Wait for text
+            ease: "expo.out"
+        });
+    }
+
+    // Force Process Toggle Visibility
+    const processToggle = document.querySelectorAll('#process .reveal-card');
+    if (processToggle.length) {
+        gsap.to(processToggle, {
+            opacity: 1,
+            filter: 'blur(0px)',
+            y: 0,
+            duration: 0.8,
+            scrollTrigger: {
+                trigger: '#process',
+                start: 'top 80%'
+            }
+        });
+    }
 
     // 3. Border Drawing
     const borders = document.querySelectorAll('.reveal-border');
