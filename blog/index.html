@@ -88,7 +88,68 @@
                 <aside class="lg:col-span-4 space-y-12">
                     <div class="sticky top-32 space-y-12">
 
-                        <!-- WIDGET: SEARCH -->
+                        <!-- 1. BIG NUMBERS Authority -->
+                        <div class="bg-slate-900 p-8 rounded-2xl text-white relative overflow-hidden group">
+                            <div
+                                class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20">
+                            </div>
+                            <div class="relative z-10 text-center">
+                                <p
+                                    class="text-5xl font-bold tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-white mb-2">
+                                    +300</p>
+                                <p class="text-xs uppercase tracking-widest text-slate-400 mb-6">Projetos Entregues</p>
+                                <p class="text-xs text-slate-300 leading-relaxed mb-6">
+                                    Desde 2018 construindo softwares que faturam milhões.
+                                </p>
+                                <a href="/#cases"
+                                    class="text-[10px] font-bold uppercase tracking-widest border-b border-red-500 pb-1 hover:text-red-500 transition-colors">Conhecer
+                                    Cases</a>
+                            </div>
+                        </div>
+
+                        <!-- 2. Client Grid (Proof) -->
+                        <div>
+                            <h4 class="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-4 text-center">
+                                Quem confia</h4>
+                            <div
+                                class="grid grid-cols-3 gap-4 opacity-60 hover:opacity-100 transition-opacity duration-300">
+                                <div
+                                    class="aspect-square bg-slate-100 rounded-lg flex items-center justify-center text-[10px] font-bold text-slate-400">
+                                    <img src="https://logospng.org/download/sebrae/logo-sebrae-escudo-1024.png"
+                                        class="w-8 grayscale brightness-125">
+                                </div>
+                                <div
+                                    class="aspect-square bg-slate-100 rounded-lg flex items-center justify-center text-[10px] font-bold text-slate-400">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Walmart_logo.svg/2560px-Walmart_logo.svg.png"
+                                        class="w-8 grayscale">
+                                </div>
+                                <div
+                                    class="aspect-square bg-slate-100 rounded-lg flex items-center justify-center text-[10px] font-bold text-slate-400">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/77/Vtex-logo.png"
+                                        class="w-8 grayscale">
+                                </div>
+                                <div
+                                    class="aspect-square bg-slate-100 rounded-lg flex items-center justify-center text-[10px] font-bold text-slate-400">
+                                    +</div>
+                                <div
+                                    class="aspect-square bg-slate-100 rounded-lg flex items-center justify-center text-[10px] font-bold text-slate-400">
+                                    +</div>
+                                <div
+                                    class="aspect-square bg-slate-100 rounded-lg flex items-center justify-center text-[10px] font-bold text-slate-400">
+                                    +</div>
+                            </div>
+                        </div>
+
+                        <!-- 3. WIDGET: RECENT POSTS (Moved Up) -->
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-900 mb-8">Leitura
+                                Obrigatória</h3>
+                            <div id="sidebar-recent-posts" class="flex flex-col">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+
+                        <!-- 4. WIDGET: SEARCH -->
                         <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
                             <h3 class="text-xs font-bold uppercase tracking-widest text-slate-900 mb-6">Buscar Artigos
                             </h3>
@@ -103,7 +164,7 @@
                             </form>
                         </div>
 
-                        <!-- WIDGET: CATEGORIES -->
+                        <!-- 5. WIDGET: CATEGORIES -->
                         <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
                             <h3 class="text-xs font-bold uppercase tracking-widest text-slate-900 mb-6">Categorias</h3>
                             <div id="sidebar-categories" class="flex flex-wrap gap-2">
@@ -112,15 +173,7 @@
                             </div>
                         </div>
 
-                        <!-- WIDGET: RECENT POSTS -->
-                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
-                            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-900 mb-8">Em Alta</h3>
-                            <div id="sidebar-recent-posts" class="flex flex-col">
-                                <!-- Injected via JS -->
-                            </div>
-                        </div>
-
-                        <!-- WIDGET: CTA CARD -->
+                        <!-- 6. WIDGET: CTA CARD -->
                         <div id="sidebar-cta"></div>
 
                     </div>
