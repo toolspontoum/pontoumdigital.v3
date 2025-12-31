@@ -89,7 +89,7 @@ export const BlogStore = {
                 <p class="text-slate-400 text-sm mb-8 leading-relaxed">
                     Tem uma visão de Software, App ou IA? Não arrisque na execução. Agende uma consultoria estratégica.
                 </p>
-                <a href="/#contact" class="btn-premium cta-shine bg-gradient-to-r from-white to-slate-200 text-slate-900 px-6 py-4 rounded-xl font-bold hover:to-white transition-all shadow-xl text-xs inline-flex items-center justify-center gap-2 mx-auto uppercase tracking-widest w-full group-hover:shadow-white/20">
+                <a href="https://pontoumdigital.com.br/#contact" class="btn-premium cta-shine bg-gradient-to-r from-white to-slate-200 text-slate-900 px-6 py-4 rounded-xl font-bold hover:to-white transition-all shadow-xl text-xs inline-flex items-center justify-center gap-2 mx-auto uppercase tracking-widest w-full group-hover:shadow-white/20">
                     <span class="arrow-slide">Agendar Diagnóstico</span>
                     <svg class="arrow-icon w-4 h-4 text-red-600" viewBox="0 0 16 16"><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M1 8h13m0 0L10.5 4.5M14 8l-3.5 3.5"></path></svg>
                 </a>
