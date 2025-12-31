@@ -438,19 +438,74 @@ window.updateProgress = function () {
 window.handleFormSubmit = function (e) {
     e.preventDefault();
 
+    // --- CONFIGURATION ---
+    const PRIMARY_EMAIL = 'icaro.prudencio@pontoumdigital.com.br';
+    const CC_EMAILS = 'roberto@pontoumdigital.com.br,icarprudencio@gmail.com'; // Fixed typo gmai.com -> gmail.com
+    // ---------------------
+
+    // 1. Capture Data
+    const name = document.getElementById('input-name')?.value || 'N/A';
+    const company = document.getElementById('input-company')?.value || 'N/A';
+    const email = document.getElementById('input-email')?.value || 'N/A';
+    const phone = document.getElementById('input-phone')?.value || 'N/A';
+
+    // Get selected radio
+    const userTypeEl = document.querySelector('input[name="user-type"]:checked');
+    const userType = userTypeEl ? userTypeEl.value : 'N/A';
+    const userTypeLabel = userType === 'cliente' ? 'Cliente Final' : 'Agência/Parceiro';
+
+    // 2. Prepare Email Payload (FormSubmit)
+    const formData = new FormData();
+    formData.append('nome', name);
+    formData.append('empresa', company);
+    formData.append('perfil', userTypeLabel);
+    formData.append('email', email);
+    formData.append('telefone', phone);
+
+    // FormSubmit Settings
+    formData.append('_subject', `🚀 Novo Lead P1D: ${name}`);
+    formData.append('_cc', CC_EMAILS);
+    formData.append('_template', 'table');
+    formData.append('_captcha', 'false'); // Disable captcha for smoother UX
+
+    console.log(">> SENDING EMAIL TO:", PRIMARY_EMAIL);
+
+    // 3. Send via AJAX (Fire & Forget for speed)
+    fetch(`https://formsubmit.co/ajax/${PRIMARY_EMAIL}`, {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => response.json())
+        .then(data => console.log('Email sent successfully:', data))
+        .catch(error => console.error('Email failed:', error));
+
+    // 4. Construct WhatsApp Message (Redundancy)
+    const text = `🚀 *Nova Solicitação via Site*
+    
+👤 *Nome:* ${name}
+🏢 *Empresa:* ${company}
+🏷️ *Perfil:* ${userTypeLabel}
+📧 *Email:* ${email}
+📱 *Tel:* ${phone}
+
+Gostaria de solicitar uma proposta.`;
+
+    // 5. Update Success Overlay Button
+    const waLink = `https://wa.me/5513991014502?text=${encodeURIComponent(text)}`;
+    const successBtn = document.querySelector('#success-overlay a');
+    if (successBtn) successBtn.href = waLink;
+
+    // 6. UI Transition (Immediate)
     const form = document.getElementById('project-form');
     const overlay = document.getElementById('success-overlay');
 
     if (form && overlay) {
-        // Fade out form content (visual only, keep layout)
         form.style.opacity = '0';
         form.style.pointerEvents = 'none';
 
-        // Fade in Overlay
         overlay.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
         overlay.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
 
-        // Max out progress bar just in case
         const bar = document.getElementById('form-progress');
         if (bar) bar.style.width = '100%';
     }
