@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import '../styles/main.css';
 import { BlogStore } from '../js/blog/blog-store.js';
+import './lgpd.js';
 
 console.log(">> X-APPS SYSTEM: V8.0 (MODULAR) INITIALIZING...");
 
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollSpy();
     initComboElite();
     initHomeBlog();
+    initCookieConsent();
 });
 
 /**
