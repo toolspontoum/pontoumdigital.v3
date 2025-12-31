@@ -43,43 +43,56 @@ export const BlogStore = {
 
     renderPostCard(post) {
         return `
-        <article class="group bg-white border border-slate-200 rounded-2xl overflow-hidden hover:border-red-600/30 transition-all duration-500 flex flex-col h-full shadow-sm hover:shadow-xl">
-            <a href="/blog/post.html?slug=${post.slug}" class="block aspect-video overflow-hidden">
-                <img src="${post.featured_image.url}" alt="${post.featured_image.alt_text}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-            </a>
-            <div class="p-6 flex flex-col flex-grow">
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="text-[10px] uppercase tracking-[0.2em] text-red-600 font-bold bg-red-600/5 px-2 py-1 rounded">
-                        ${post.category.name}
-                    </span>
-                    <span class="text-[10px] uppercase tracking-[0.1em] text-slate-400">
-                        ${this.formatDate(post.publication_date)}
-                    </span>
-                </div>
-                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-red-600 transition-colors leading-tight">
-                    ${post.title}
-                </h3>
-                <p class="text-slate-500 text-sm line-clamp-2 mb-6 flex-grow leading-relaxed">
-                    ${post.description}
-                </p>
-                <a href="/blog/post.html?slug=${post.slug}" class="text-xs uppercase tracking-[0.2em] text-slate-900 font-bold flex items-center gap-2 group/link">
-                    Ler artigo 
-                    <span class="w-8 h-[1px] bg-red-600 group-hover/link:w-12 transition-all duration-300"></span>
-                </a>
+        <a href="/blog/post.html?slug=${post.slug}" class="blog-card-new group">
+            <div class="img-container">
+                <img src="${post.featured_image.url}" alt="${post.featured_image.alt_text}">
             </div>
-        </article>
+            <div class="flex items-center">
+                <span class="category">${post.category.name}</span>
+                <span class="date">${this.formatDate(post.publication_date)}</span>
+            </div>
+            <h3>${post.title}</h3>
+            <p class="excerpt">${post.description}</p>
+            <div class="explore">
+                Explorar <span class="explore-line"></span>
+            </div>
+        </a>
         `;
+    },
+
+    renderRecentPostsWidget(posts) {
+        return posts.map(post => `
+            <a href="/blog/post.html?slug=${post.slug}" class="group flex gap-4 items-start mb-6 last:mb-0">
+                <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                    <img src="${post.featured_image.url}" alt="${post.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                </div>
+                <div>
+                    <h4 class="text-sm font-bold text-slate-900 leading-tight mb-1 group-hover:text-red-600 transition-colors line-clamp-2">${post.title}</h4>
+                    <span class="text-[10px] font-mono text-slate-400 uppercase tracking-wider">${this.formatDate(post.publication_date)}</span>
+                </div>
+            </a>
+        `).join('');
     },
 
     renderCTACard() {
         return `
-        <div class="bg-gradient-to-br from-zinc-800 to-zinc-900 border border-red-600/30 rounded-2xl p-8 flex flex-col justify-center items-center text-center h-full relative overflow-hidden group">
-            <span class="text-[10px] uppercase tracking-[0.3em] text-red-500 font-bold mb-4 block">Parceiro Estratégico</span>
-            <h3 class="text-2xl font-bold text-white mb-4 leading-tight">Engenharia de Software sob demanda.</h3>
-            <p class="text-zinc-400 text-sm mb-8 leading-relaxed">Desenvolvemos soluções customizadas que escalam sua produtividade.</p>
-            <div class="flex flex-col w-full gap-3">
-                <a href="/#contato" class="w-full py-4 bg-red-600 text-white text-xs font-bold uppercase tracking-widest hover:bg-red-700 transition-colors">Falar com engenharia</a>
-                <a href="/#cases" class="w-full py-4 border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition-colors">Ver Portfólio</a>
+        <div class="relative overflow-hidden rounded-2xl bg-slate-900 p-8 text-center group h-full flex flex-col justify-center">
+            <!-- Background Abstract -->
+            <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-black opacity-100"></div>
+            <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+            
+            <div class="relative z-10">
+                <div class="w-12 h-12 mx-auto mb-6 group-hover:scale-110 transition-transform duration-500">
+                    <img src="/favicon.png" alt="Ponto Um Logo" class="w-full h-full object-contain brightness-0 invert">
+                </div>
+                <h3 class="text-xl font-bold text-white mb-4 leading-tight">Engenharia de Elite para Projetos Ambiciosos.</h3>
+                <p class="text-slate-400 text-sm mb-8 leading-relaxed">
+                    Tem uma visão de Software, App ou IA? Não arrisque na execução. Agende uma consultoria estratégica.
+                </p>
+                <a href="#contact" class="btn-premium cta-shine bg-white text-slate-900 px-6 py-3 rounded-xl font-bold hover:bg-brand-red hover:text-white transition-all shadow-xl text-xs inline-flex items-center justify-center gap-2 mx-auto uppercase tracking-widest w-full">
+                    <span class="arrow-slide">Agendar Diagnóstico</span>
+                    <svg class="arrow-icon w-4 h-4" viewBox="0 0 16 16"><path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M1 8h13m0 0L10.5 4.5M14 8l-3.5 3.5"></path></svg>
+                </a>
             </div>
         </div>
         `;

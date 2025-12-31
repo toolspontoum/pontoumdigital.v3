@@ -2,15 +2,21 @@ import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import '../styles/main.css';
+import { BlogStore } from '../js/blog/blog-store.js';
+
 console.log(">> X-APPS SYSTEM: V8.0 (MODULAR) INITIALIZING...");
 
 gsap.registerPlugin(ScrollTrigger);
+window.gsap = gsap;
+window.ScrollTrigger = ScrollTrigger;
 
 document.addEventListener('DOMContentLoaded', () => {
     initDigitalWave();
     initScrollAnimations();
     initScrollSpy();
     initComboElite();
+    initHomeBlog();
 });
 
 /**
@@ -440,5 +446,60 @@ function initScrollAnimations() {
             const scrollPercent = (scrollTop / docHeight) * 100;
             progressBar.style.width = `${scrollPercent}%`;
         });
+    }
+}
+
+async function initHomeBlog() {
+    const container = document.getElementById('home-blog-list');
+    if (!container) return;
+
+    try {
+        const posts = await BlogStore.fetchIndex();
+
+        if (!posts || posts.length === 0) {
+            container.innerHTML = '<div class="col-span-full py-10 text-center text-slate-400">Em breve, novos conteúdos técnicos.</div>';
+            return;
+        }
+
+        const latest = posts.slice(0, 3);
+        container.innerHTML = latest.map((post, index) => {
+            return `
+            <a href="/blog/post.html?slug=${post.slug}" class="blog-card-new group reveal-card opacity-0">
+                <div class="img-container">
+                    <img src="${post.featured_image.url}" alt="${post.title}">
+                </div>
+                <div class="flex items-center">
+                    <span class="category">${post.category.name}</span>
+                    <span class="date">${BlogStore.formatDate(post.publication_date)}</span>
+                </div>
+                <h3>${post.title}</h3>
+                <p class="excerpt">${post.description || 'Explorando as tendências que vão moldar o desenvolvimento de software nos próximos anos...'}</p>
+                <div class="explore">
+                    Explorar <span class="explore-line"></span>
+                </div>
+            </a>
+            `;
+        }).join('');
+
+        // Entrance Animation
+        const cards = container.querySelectorAll('.reveal-card');
+        if (cards.length && window.gsap) {
+            window.gsap.to(cards, {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+                scale: 1,
+                duration: 1,
+                stagger: 0.15,
+                ease: "expo.out",
+                scrollTrigger: {
+                    trigger: container,
+                    start: 'top 85%',
+                }
+            });
+        }
+    } catch (error) {
+        console.error("Erro ao carregar blog na home:", error);
+        container.innerHTML = '<div class="col-span-full py-10 text-center text-slate-400">Erro ao carregar conteúdos.</div>';
     }
 }

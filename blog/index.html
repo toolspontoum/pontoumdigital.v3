@@ -4,47 +4,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog | Ponto Um Digital - Engenharia de Software</title>
+    <title>Blog | Ponto Um Digital - Engenharia de Software Elite</title>
     <link rel="icon" type="image/png" href="/favicon.png">
+
     <!-- FONTS -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet">
+
+    <!-- STYLES -->
     <link rel="stylesheet" href="/src/styles/main.css">
 </head>
 
-<body class="bg-white text-slate-900 overflow-x-hidden selection:bg-brand-red selection:text-white">
+<body class="bg-slate-50/50 text-slate-900 overflow-x-hidden selection:bg-brand-red selection:text-white">
 
     <load src="/src/components/header.html" />
 
-    <main class="pt-32 pb-20">
-        <!-- Hero Blog -->
-        <section class="container mx-auto px-6 mb-20 text-center">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6 tracking-tight">Insights de <span
-                    class="text-red-600">Engenharia</span></h1>
-            <p class="text-zinc-400 max-w-2xl mx-auto text-lg mb-12">
-                Explorando tecnologia, estratégia digital e o futuro do desenvolvimento de software.
-            </p>
-            <load src="/src/components/blog/search-bar.html" />
-        </section>
+    <main class="pt-20 pb-0">
 
-        <!-- Featured Section -->
-        <section class="container mx-auto px-6 mb-24 max-w-grid">
-            <div id="latest-posts-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Posts will be injected here -->
-                <div class="col-span-full py-20 text-center text-slate-400">Carregando artigos...</div>
+        <!-- HERO SECTION WITH BACKGROUND -->
+        <section
+            class="relative h-[60vh] flex items-center justify-center text-center overflow-hidden mb-20 bg-slate-900">
+            <!-- Background Image -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=2070&auto=format&fit=crop"
+                    class="w-full h-full object-cover opacity-30" alt="Technology Background">
+                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-slate-900/50 to-slate-900/90"></div>
             </div>
-            <div class="mt-16 text-center">
-                <a href="/blog/search.html"
-                    class="inline-flex items-center gap-4 text-xs font-bold uppercase tracking-[0.3em] hover:text-red-600 transition-colors group">
-                    Explorar todos os artigos
-                    <span class="w-12 h-[1px] bg-red-600 group-hover:w-20 transition-all"></span>
-                </a>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <span class="text-[10px] uppercase tracking-[0.3em] text-red-500 font-bold mb-6 block fade-in">Knowledge
+                    Hub</span>
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tighter text-white fade-in">
+                    Insights de <span class="text-red-500">Engenharia</span>
+                </h1>
+                <p class="text-slate-300 max-w-2xl mx-auto text-lg fade-in leading-relaxed">
+                    Estratégias digitais e arquitetura de software para escalar seu negócio.
+                </p>
             </div>
         </section>
 
-        <!-- CTA Band -->
-        <load src="/src/components/blog/cta-band.html" />
+        <!-- MAIN CONTENT + SIDEBAR LAYOUT -->
+        <section class="container mx-auto px-6 mb-32 max-w-grid">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+
+                <!-- LEFT COLUMN: POSTS GRID (Span 8) -->
+                <div class="lg:col-span-8">
+                    <!-- Filter Status -->
+                    <div id="filter-status"
+                        class="hidden mb-8 p-4 bg-white border border-slate-200 rounded-lg flex items-center justify-between">
+                        <span class="text-sm font-bold text-slate-700">Filtrando por: <span id="filter-name"
+                                class="text-red-600">Categoria</span></span>
+                        <button onclick="window.location.href='/blog/index.html'"
+                            class="text-[10px] uppercase tracking-wider text-slate-400 hover:text-red-600 transition-colors">Limpar
+                            Filtros</button>
+                    </div>
+
+                    <div id="latest-posts-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Posts injected via JS -->
+                        <div class="col-span-full py-32 text-center">
+                            <div
+                                class="inline-block w-8 h-8 border-2 border-slate-200 border-t-red-600 rounded-full animate-spin">
+                            </div>
+                            <p class="text-xs font-mono text-slate-400 mt-4 uppercase tracking-widest">Carregando
+                                dados...</p>
+                        </div>
+                    </div>
+
+                    <!-- PAGINATION -->
+                    <div id="pagination-controls" class="mt-20 flex justify-center gap-2 hidden">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: SIDEBAR (Span 4) -->
+                <aside class="lg:col-span-4 space-y-12">
+                    <div class="sticky top-32 space-y-12">
+
+                        <!-- WIDGET: SEARCH -->
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-900 mb-6">Buscar Artigos
+                            </h3>
+                            <form action="/blog/index.html" method="GET" class="relative group">
+                                <input type="text" name="q" placeholder="Digite sua busca..."
+                                    class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 pl-12 text-sm font-medium focus:outline-none focus:border-red-600 focus:bg-white transition-all placeholder:text-slate-400">
+                                <svg class="w-4 h-4 text-slate-400 absolute left-4 top-3.5 group-focus-within:text-red-600 transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </form>
+                        </div>
+
+                        <!-- WIDGET: CATEGORIES -->
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-900 mb-6">Categorias</h3>
+                            <div id="sidebar-categories" class="flex flex-wrap gap-2">
+                                <!-- Injected via JS -->
+                                <span class="text-[10px] text-slate-400">Carregando...</span>
+                            </div>
+                        </div>
+
+                        <!-- WIDGET: RECENT POSTS -->
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-900 mb-8">Em Alta</h3>
+                            <div id="sidebar-recent-posts" class="flex flex-col">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+
+                        <!-- WIDGET: CTA CARD -->
+                        <div id="sidebar-cta"></div>
+
+                    </div>
+                </aside>
+
+            </div>
+        </section>
+
+        <!-- FOOTER AUTHORITY BANNER (STATIC) -->
+        <section class="py-32 bg-slate-900 border-t border-slate-800 text-center relative overflow-hidden">
+            <!-- Background Image (Fixado) -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+                    class="w-full h-full object-cover object-center opacity-20" alt="Tech Background">
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10">
+                <h2
+                    class="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tighter leading-tight max-w-4xl mx-auto">
+                    Não construa apenas código. <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 italic">Construa
+                        um legado.</span>
+                </h2>
+                <div class="flex flex-col md:flex-row gap-6 justify-center mt-12">
+                    <a href="#hero"
+                        class="btn-premium cta-shine bg-white text-slate-900 px-10 py-4 rounded-xl font-bold hover:bg-slate-200 transition-all shadow-xl text-lg inline-flex items-center gap-2">
+                        <span class="arrow-slide">Iniciar Projeto</span>
+                        <svg class="arrow-icon w-5 h-5" viewBox="0 0 16 16">
+                            <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" d="M1 8h13m0 0L10.5 4.5M14 8l-3.5 3.5"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <load src="/src/components/footer.html" />
@@ -54,21 +159,264 @@
     <script type="module">
         import { BlogStore } from '/src/js/blog/blog-store.js';
 
-        async function init() {
-            const posts = await BlogStore.fetchIndex();
-            const grid = document.getElementById('latest-posts-grid');
+        // State Management
+        const state = {
+            posts: [],
+            filteredPosts: [],
+            categories: [],
+            currentPage: 1,
+            postsPerPage: 6,
+            searchTerm: '',
+            filterCategory: null
+        };
 
-            if (posts.length === 0) {
-                grid.innerHTML = '<div class="col-span-full py-20 text-center text-zinc-500">Nenhum artigo publicado ainda.</div>';
+        async function initPage() {
+            // 1. Fetch Data
+            const [postsData, categoriesData] = await Promise.all([
+                BlogStore.fetchIndex(),
+                BlogStore.fetchCategories()
+            ]);
+
+            state.posts = postsData;
+            state.categories = categoriesData;
+
+            // 2. Parse URL Params
+            const params = new URLSearchParams(window.location.search);
+            state.searchTerm = params.get('q');
+            state.filterCategory = params.get('cat');
+
+            // Set initial search input value
+            const searchInput = document.querySelector('input[name="q"]');
+            if (searchInput && state.searchTerm) {
+                searchInput.value = state.searchTerm;
+            }
+
+            // 3. Setup Search Event Listener (SPA Behavior)
+            const searchForm = document.querySelector('form[action="/blog/index.html"]'); // Select by action to match existing form
+            if (searchForm) {
+                searchForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    // Get input by name 'q' inside the form
+                    const inputElement = searchForm.querySelector('input[name="q"]');
+                    state.searchTerm = inputElement ? inputElement.value : '';
+
+                    // Update URL without reload
+                    updateURL('q', state.searchTerm);
+
+                    applyFilters();
+                    renderGrid(false); // False = 轻 animation
+                    renderPagination();
+                });
+            }
+
+            // 4. Initial Render
+            applyFilters();
+            renderSidebar();
+            renderGrid(true); // True = Heavy initial animation
+            renderPagination();
+
+            // 5. Delegate Category Clicks for SPA
+            document.body.addEventListener('click', (e) => {
+                const link = e.target.closest('a[href^="/blog/index.html?cat="]');
+                if (link) {
+                    e.preventDefault();
+                    // Extract cat ID from URL
+                    const url = new URL(link.href);
+                    const catId = url.searchParams.get('cat');
+
+                    state.filterCategory = catId;
+                    state.searchTerm = ''; // reset search when clicking cat
+                    updateURL('cat', catId);
+
+                    // Update UI
+                    const searchInput = document.querySelector('input[name="q"]');
+                    if (searchInput) searchInput.value = '';
+
+                    applyFilters();
+                    renderSidebar(); // Re-render sidebar to update active state
+                    renderGrid(false); // Light animation
+                    renderPagination();
+                }
+            });
+
+            // 6. Handle "Limpar Filtros" button
+            const clearBtn = document.querySelector('#filter-status button');
+            if (clearBtn) {
+                clearBtn.onclick = (e) => {
+                    e.preventDefault();
+                    state.filterCategory = '';
+                    state.searchTerm = '';
+                    updateURL(null, null); // Clear all
+
+                    const searchInput = document.querySelector('input[name="q"]');
+                    if (searchInput) searchInput.value = '';
+
+                    applyFilters();
+                    renderSidebar();
+                    renderGrid(false);
+                    renderPagination();
+                }
+            }
+        }
+
+        function updateURL(key, value) {
+            const newUrl = new URL(window.location);
+            // Reset both first to be clean
+            if (key === null) {
+                newUrl.search = '';
+            } else {
+                // If we are setting one, we might want to unset the other for clarity,
+                // or keep them if we support mixed filtering.
+                // For now, let's assume mutually exclusive or mixed.
+                // Let's clear the other one to avoid state confusion in this simple logic if needed,
+                // BUT the user might want to search *within* a category.
+                // The current logic resets search when cat is clicked.
+
+                if (key === 'cat') {
+                    newUrl.searchParams.delete('q'); // Clear search when picking cat
+                    if (value) newUrl.searchParams.set('cat', value);
+                } else if (key === 'q') {
+                    // Start fresh search
+                    newUrl.searchParams.delete('cat');
+                    if (value) newUrl.searchParams.set('q', value);
+                }
+            }
+            window.history.pushState({}, '', newUrl);
+        }
+
+        function applyFilters() {
+            let temp = [...state.posts];
+
+            // Filter by Category
+            if (state.filterCategory) {
+                temp = temp.filter(p => p.category.id === state.filterCategory);
+                document.getElementById('filter-status').classList.remove('hidden');
+                // Find category name
+                const catName = state.categories.find(c => c.id === state.filterCategory)?.name || state.filterCategory;
+                document.getElementById('filter-name').textContent = catName;
+            } else if (!state.searchTerm) {
+                // Hide status if no category AND no search term
+                document.getElementById('filter-status').classList.add('hidden');
+            }
+
+            // Filter by Search
+            if (state.searchTerm) {
+                const q = state.searchTerm.toLowerCase();
+                temp = temp.filter(p =>
+                    p.title.toLowerCase().includes(q) ||
+                    p.description.toLowerCase().includes(q)
+                );
+                document.getElementById('filter-status').classList.remove('hidden');
+                document.getElementById('filter-name').textContent = `Busca "${state.searchTerm}"`;
+            }
+
+            state.filteredPosts = temp;
+            state.currentPage = 1; // Reset to page 1 on filter change
+        }
+
+        function renderGrid(isInitial = false) {
+            const grid = document.getElementById('latest-posts-grid');
+            if (!grid) return;
+
+            if (state.filteredPosts.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-20 text-center text-zinc-500">
+                        <p class="text-xl font-bold mb-2">Nenhum resultado encontrado.</p>
+                        <p class="text-sm">Tente ajustar seus filtros de busca.</p>
+                    </div>
+                `;
                 return;
             }
 
-            // Render first 3 posts
-            const latest = posts.slice(0, 3);
-            grid.innerHTML = latest.map(post => BlogStore.renderPostCard(post)).join('');
+            // Pagination Logic
+            const start = (state.currentPage - 1) * state.postsPerPage;
+            const end = start + state.postsPerPage;
+            const pagePosts = state.filteredPosts.slice(start, end);
+
+            // Render
+            grid.innerHTML = pagePosts.map(post => BlogStore.renderPostCard(post)).join('');
+
+            // Animations
+            if (window.gsap) {
+                if (isInitial) {
+                    // Heavy Entrance
+                    gsap.fromTo('.blog-card-new',
+                        { opacity: 0, y: 30, filter: 'blur(10px)' },
+                        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, stagger: 0.1, ease: 'power2.out' }
+                    );
+                } else {
+                    // Light Update (Quick fade)
+                    gsap.fromTo('.blog-card-new',
+                        { opacity: 0, filter: 'blur(0px)' }, // No Y movement, no blur
+                        { opacity: 1, duration: 0.4, stagger: 0.05, ease: 'power1.out' }
+                    );
+                }
+            }
         }
 
-        init();
+        function renderPagination() {
+            const container = document.getElementById('pagination-controls');
+            const totalPages = Math.ceil(state.filteredPosts.length / state.postsPerPage);
+
+            if (totalPages <= 1) {
+                container.classList.add('hidden');
+                return;
+            }
+            container.classList.remove('hidden');
+
+            let html = '';
+            for (let i = 1; i <= totalPages; i++) {
+                const isActive = i === state.currentPage;
+                const classes = isActive
+                    ? "bg-slate-900 text-white border-slate-900"
+                    : "bg-white text-slate-400 border-slate-200 hover:border-red-600 hover:text-red-600";
+
+                html += `<button onclick="changePage(${i})" class="w-10 h-10 flex items-center justify-center border rounded-full text-xs font-bold transition-all ${classes}">${i}</button>`;
+            }
+            container.innerHTML = html;
+        }
+
+        // Export to window for onclick handlers
+        window.changePage = (page) => {
+            state.currentPage = page;
+            renderGrid(false); // Change page is also a light update
+            renderPagination();
+            document.getElementById('latest-posts-grid').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        function renderSidebar() {
+            // Categories
+            const catContainer = document.getElementById('sidebar-categories');
+            if (catContainer && state.categories.length) {
+                catContainer.innerHTML = state.categories.map(cat => {
+                    const isActive = cat.id === state.filterCategory;
+                    const activeClass = isActive ? "bg-red-600 text-white border-red-600" : "bg-slate-50 text-slate-500 border-slate-200 hover:bg-red-600 hover:text-white hover:border-red-600";
+                    return `
+                    <a href="/blog/index.html?cat=${cat.id}" class="px-3 py-2 border rounded text-[10px] font-bold uppercase tracking-wider transition-all ${activeClass}">
+                        ${cat.name}
+                    </a>
+                    `;
+                }).join('');
+            }
+
+            // Recent Posts (Static Top 3 from All)
+            const recentContainer = document.getElementById('sidebar-recent-posts');
+            if (recentContainer && state.posts.length) {
+                recentContainer.innerHTML = BlogStore.renderRecentPostsWidget(state.posts.slice(0, 3));
+            }
+
+            // CTA Widget
+            const ctaContainer = document.getElementById('sidebar-cta');
+            if (ctaContainer) {
+                ctaContainer.innerHTML = BlogStore.renderCTACard();
+            }
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', initPage);
+        if (document.readyState === 'interactive' || document.readyState === 'complete') {
+            initPage();
+        }
     </script>
 </body>
 

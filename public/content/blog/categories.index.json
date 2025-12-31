@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "id": "aplicativos",
+        "name": "Aplicativos"
+    },
+    {
+        "id": "inteligencia-artificial",
+        "name": "Inteligência Artificial"
+    },
+    {
+        "id": "estrategia",
+        "name": "Estratégia Digital"
+    },
+    {
+        "id": "engenharia",
+        "name": "Engenharia de Software"
+    }
+]

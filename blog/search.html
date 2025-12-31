@@ -4,47 +4,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pesquisar Artigos | Ponto Um Digital</title>
+    <title>Blog | Ponto Um Digital - Engenharia de Software Elite</title>
     <link rel="icon" type="image/png" href="/favicon.png">
+
     <!-- FONTS -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/src/styles/main.css">
+
+    <!-- STYLES (Provided by main.js import in production, but good to link for dev if needed, typically handled by Vite) -->
 </head>
 
-<body class="bg-white text-slate-900 overflow-x-hidden selection:bg-brand-red selection:text-white">
+<body class="bg-slate-50/50 text-slate-900 overflow-x-hidden selection:bg-brand-red selection:text-white">
 
     <load src="/src/components/header.html" />
 
-    <main class="pt-32 pb-20">
-        <section class="container mx-auto px-6 mb-12 max-w-grid">
-            <h1 class="text-3xl md:text-5xl font-bold mb-8 text-center tracking-tight" id="search-title">Explorar
-                Artigos</h1>
-            <load src="/src/components/blog/search-bar.html" />
+    <main class="pt-32 pb-0">
+
+        <!-- HERO SECTION -->
+        <section class="container mx-auto px-6 mb-20 text-center relative z-10">
+            <span class="text-[10px] uppercase tracking-[0.3em] text-red-600 font-bold mb-6 block fade-in">Knowledge
+                Hub</span>
+            <h1 class="text-5xl md:text-7xl font-bold mb-8 tracking-tighter text-slate-900 fade-in">
+                Insights de <span class="text-red-600">Engenharia</span> & <br class="hidden md:block"> Tecnologia
+                Estratégica.
+            </h1>
+            <p class="text-slate-500 max-w-2xl mx-auto text-lg mb-12 fade-in leading-relaxed">
+                Aprofunde-se em arquitetura de software, inteligência artificial e estratégias digitais que definem o
+                mercado.
+            </p>
         </section>
 
-        <section class="container mx-auto px-6 min-h-[50vh] max-w-grid">
-            <div id="search-results-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Resultados injetados aqui -->
-            </div>
+        <!-- MAIN CONTENT + SIDEBAR LAYOUT -->
+        <section class="container mx-auto px-6 mb-32 max-w-grid">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
 
-            <div id="empty-state" class="hidden py-20 text-center">
-                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-50 mb-6">
-                    <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                        </path>
-                    </svg>
+                <!-- LEFT COLUMN: POSTS GRID (Span 8) -->
+                <div class="lg:col-span-8">
+                    <div id="latest-posts-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Posts injected via JS -->
+                        <div class="col-span-full py-32 text-center">
+                            <div
+                                class="inline-block w-8 h-8 border-2 border-slate-200 border-t-red-600 rounded-full animate-spin">
+                            </div>
+                            <p class="text-xs font-mono text-slate-400 mt-4 uppercase tracking-widest">Carregando
+                                dados...</p>
+                        </div>
+                    </div>
+
+                    <!-- PAGINATION (Mockup) -->
+                    <div class="mt-20 flex justify-center gap-2">
+                        <button
+                            class="w-10 h-10 flex items-center justify-center border border-slate-200 rounded-full text-xs font-bold hover:bg-red-600 hover:text-white hover:border-red-600 transition-all text-slate-400">1</button>
+                        <button
+                            class="w-10 h-10 flex items-center justify-center border border-slate-200 rounded-full text-xs font-bold hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all text-slate-900 bg-slate-100">2</button>
+                        <button
+                            class="w-10 h-10 flex items-center justify-center border border-slate-200 rounded-full text-xs font-bold hover:bg-red-600 hover:text-white hover:border-red-600 transition-all text-slate-400">3</button>
+                    </div>
                 </div>
-                <h3 class="text-2xl font-bold mb-2 text-slate-900">Nenhum resultado encontrado</h3>
-                <p class="text-slate-500 max-w-xs mx-auto">Tente buscar por termos diferentes ou navegue por categorias.
-                </p>
-                <button onclick="location.reload()"
-                    class="mt-8 text-xs font-bold uppercase tracking-widest text-red-600 hover:underline">Limpar
-                    filtros</button>
+
+                <!-- RIGHT COLUMN: SIDEBAR (Span 4) -->
+                <aside class="lg:col-span-4 space-y-12">
+                    <div class="sticky top-32 space-y-12">
+
+                        <!-- WIDGET: SEARCH -->
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-900 mb-6">Buscar Artigos
+                            </h3>
+                            <form action="/blog/search.html" method="GET" class="relative group">
+                                <input type="text" name="q" placeholder="Digite sua busca..."
+                                    class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 pl-12 text-sm font-medium focus:outline-none focus:border-red-600 focus:bg-white transition-all placeholder:text-slate-400">
+                                <svg class="w-4 h-4 text-slate-400 absolute left-4 top-3.5 group-focus-within:text-red-600 transition-colors"
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </form>
+                        </div>
+
+                        <!-- WIDGET: CATEGORIES -->
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-900 mb-6">Categorias v4.0
+                            </h3>
+                            <div id="sidebar-categories" class="flex flex-wrap gap-2">
+                                <!-- Injected via JS -->
+                                <span class="text-[10px] text-slate-400">Carregando...</span>
+                            </div>
+                        </div>
+
+                        <!-- WIDGET: RECENT POSTS -->
+                        <div class="bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+                            <h3 class="text-xs font-bold uppercase tracking-widest text-slate-900 mb-8">Em Alta</h3>
+                            <div id="sidebar-recent-posts" class="flex flex-col">
+                                <!-- Injected via JS -->
+                            </div>
+                        </div>
+
+                        <!-- WIDGET: CTA CARD -->
+                        <div class="relative overflow-hidden rounded-2xl bg-slate-900 p-8 text-center group">
+                            <!-- Background Abstract -->
+                            <div
+                                class="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-black opacity-100">
+                            </div>
+                            <div
+                                class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
+                            </div>
+
+                            <div class="relative z-10">
+                                <div
+                                    class="w-12 h-12 mx-auto bg-red-600 rounded-xl flex items-center justify-center mb-6 shadow-lg shadow-red-900/50 group-hover:scale-110 transition-transform duration-500">
+                                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-xl font-bold text-white mb-4 leading-tight">Engenharia de Elite para
+                                    Projetos Ambiciosos.</h3>
+                                <p class="text-slate-400 text-sm mb-8 leading-relaxed">
+                                    Tem uma visão de Software, App ou IA? Não arrisque na execução. Agende uma
+                                    consultoria estratégica.
+                                </p>
+                                <a href="/#contato"
+                                    class="inline-flex w-full justify-center py-4 bg-white text-slate-900 text-xs font-bold uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all duration-300 rounded-lg">
+                                    Agendar Diagnóstico
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </aside>
+
             </div>
         </section>
+
+        <!-- FOOTER AUTHORITY BANNER -->
+        <section class="h-[500px] relative flex items-center justify-center overflow-hidden border-t border-slate-200">
+            <!-- Parallax Background (Simulated via fixed attachment or simple img for now) -->
+            <div class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop"
+                    class="w-full h-full object-cover object-center grayscale brightness-[0.2]" alt="Tech Background">
+            </div>
+
+            <div class="container mx-auto px-6 relative z-10 text-center">
+                <span
+                    class="inline-block py-1 px-3 rounded border border-white/20 text-[10px] font-mono text-emerald-400 mb-8 uppercase tracking-widest bg-black/50 backdrop-blur-sm">System
+                    Ready</span>
+                <h2
+                    class="text-4xl md:text-6xl font-bold text-white mb-8 tracking-tighter leading-tight max-w-4xl mx-auto">
+                    Não construa apenas código. <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 italic">Construa
+                        um legado.</span>
+                </h2>
+                <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light">
+                    Combinamos design de classe mundial com engenharia de software robusta. Junte-se às empresas que
+                    estão redefinindo seus mercados.
+                </p>
+                <div class="flex flex-col md:flex-row gap-6 justify-center">
+                    <a href="/#contato"
+                        class="px-10 py-5 bg-red-600 text-white text-xs font-bold uppercase tracking-widest hover:bg-red-700 transition-all rounded-full shadow-lg shadow-red-900/40 hover:scale-105">
+                        Iniciar Projeto
+                    </a>
+                    <a href="/#cases"
+                        class="px-10 py-5 border border-white/20 text-white text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-all rounded-full hover:scale-105 backdrop-blur-sm">
+                        Ver Portfolio
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <load src="/src/components/footer.html" />
@@ -54,57 +182,60 @@
     <script type="module">
         import { BlogStore } from '/src/js/blog/blog-store.js';
 
-        async function initSearch() {
-            const allPosts = await BlogStore.fetchIndex();
-            const grid = document.getElementById('search-results-grid');
-            const emptyState = document.getElementById('empty-state');
-            const searchInput = document.getElementById('blog-search-input');
-            const searchTitle = document.getElementById('search-title');
+        async function initPage() {
+            // 1. Fetch Data
+            const [posts, categories] = await Promise.all([
+                BlogStore.fetchIndex(),
+                BlogStore.fetchCategories()
+            ]);
 
-            const params = new URLSearchParams(window.location.search);
-            let query = params.get('q') || '';
-
-            function renderResults(filtered) {
-                grid.innerHTML = '';
-                if (filtered.length === 0) {
-                    emptyState.classList.remove('hidden');
-                    return;
+            // 2. Render Categories (Sidebar)
+            const catContainer = document.getElementById('sidebar-categories');
+            if (catContainer) {
+                if (categories.length) {
+                    catContainer.innerHTML = categories.map(cat => `
+                        <a href="/blog/search.html?cat=${cat.id}" class="px-3 py-2 bg-slate-50 border border-slate-200 rounded text-[10px] font-bold uppercase tracking-wider text-slate-500 hover:bg-red-600 hover:text-white hover:border-red-600 transition-all">
+                            ${cat.name}
+                        </a>
+                    `).join('');
+                } else {
+                    catContainer.innerHTML = '<span class="text-[10px] text-slate-400">Padrão apenas.</span>';
                 }
-                emptyState.classList.add('hidden');
+            }
 
-                let html = '';
-                filtered.forEach((post, index) => {
-                    // Adapt components for light theme if needed via custom render function or CSS overrides
-                    html += BlogStore.renderPostCard(post);
-                    // Injeta CTA Card após 6 itens
-                    if ((index + 1) === 6) {
-                        html += BlogStore.renderCTACard();
+            // 3. Render Posts (Main Grid)
+            const grid = document.getElementById('latest-posts-grid');
+            if (grid) {
+                if (posts.length === 0) {
+                    grid.innerHTML = '<div class="col-span-full py-20 text-center text-zinc-500">Nenhum artigo publicado ainda.</div>';
+                } else {
+                    // Show all available posts (limit to 6 for pagination simulation)
+                    grid.innerHTML = posts.slice(0, 6).map(post => BlogStore.renderPostCard(post)).join('');
+
+                    // Entrance Animation for New Cards
+                    if (window.gsap) {
+                        gsap.fromTo('.blog-card-new',
+                            { opacity: 0, y: 30, filter: 'blur(10px)' },
+                            { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8, stagger: 0.1, ease: 'power2.out' }
+                        );
                     }
-                });
-                grid.innerHTML = html;
+                }
             }
 
-            function filterPosts(q) {
-                const term = q.toLowerCase();
-                const filtered = allPosts.filter(p =>
-                    p.title.toLowerCase().includes(term) ||
-                    p.description.toLowerCase().includes(term) ||
-                    p.category.name.toLowerCase().includes(term)
-                );
-                renderResults(filtered);
-                if (q) searchTitle.innerText = `Resultados para: "${q}"`;
-                else searchTitle.innerText = "Explorar Artigos";
+            // 4. Render Recent Posts (Sidebar)
+            const recentContainer = document.getElementById('sidebar-recent-posts');
+            if (recentContainer && posts.length) {
+                // Take top 3
+                const recent = posts.slice(0, 3);
+                recentContainer.innerHTML = BlogStore.renderRecentPostsWidget(recent);
             }
-
-            if (searchInput) {
-                searchInput.value = query;
-                searchInput.addEventListener('input', (e) => filterPosts(e.target.value));
-            }
-
-            filterPosts(query);
         }
 
-        initSearch();
+        // Init
+        document.addEventListener('DOMContentLoaded', initPage);
+        if (document.readyState === 'interactive' || document.readyState === 'complete') {
+            initPage();
+        }
     </script>
 </body>
 
