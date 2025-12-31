@@ -10,11 +10,11 @@
         <!-- Header & Toggle -->
         <div class="text-center mb-16">
             <h2 class="font-sans font-bold text-3xl md:text-4xl text-slate-900 tracking-tight mb-8">
-                Como trabalhamos
+                <div class="reveal-text"><span>Como trabalhamos</span></div>
             </h2>
 
             <!-- The Clean Toggle -->
-            <div class="inline-flex bg-white rounded-full p-1 relative shadow-sm border border-slate-200">
+            <div class="reveal-card inline-flex bg-white rounded-full p-1 relative shadow-sm border border-slate-200">
                 <!-- Gliding Background -->
                 <div id="toggle-bg"
                     class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-slate-900 rounded-full shadow-md transition-all duration-300 ease-out z-0">
@@ -42,10 +42,12 @@
                 <!-- Steps Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-5 gap-8 w-full relative mb-12">
                     <!-- Line -->
-                    <div class="hidden md:block absolute top-[22px] left-0 w-full h-[2px] bg-slate-200 -z-10"></div>
+                    <div
+                        class="hidden md:block absolute top-[22px] left-0 w-full h-[2px] bg-slate-200 -z-10 origin-left scale-x-0 reveal-border">
+                    </div>
 
                     <!-- Step 1 -->
-                    <div class="flex flex-col items-center text-center group">
+                    <div class="flex flex-col items-center text-center group reveal-card">
                         <div
                             class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-brand-red group-hover:text-brand-red transition-colors mb-4 z-10">
                             1</div>
@@ -54,7 +56,7 @@
                     </div>
 
                     <!-- Step 2 -->
-                    <div class="flex flex-col items-center text-center group">
+                    <div class="flex flex-col items-center text-center group reveal-card">
                         <div
                             class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-brand-red group-hover:text-brand-red transition-colors mb-4 z-10">
                             2</div>
@@ -63,7 +65,7 @@
                     </div>
 
                     <!-- Step 3 -->
-                    <div class="flex flex-col items-center text-center group">
+                    <div class="flex flex-col items-center text-center group reveal-card">
                         <div
                             class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-brand-red group-hover:text-brand-red transition-colors mb-4 z-10">
                             3</div>
@@ -72,7 +74,7 @@
                     </div>
 
                     <!-- Step 4 -->
-                    <div class="flex flex-col items-center text-center group">
+                    <div class="flex flex-col items-center text-center group reveal-card">
                         <div
                             class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-brand-red group-hover:text-brand-red transition-colors mb-4 z-10">
                             4</div>
@@ -81,7 +83,7 @@
                     </div>
 
                     <!-- Step 5 -->
-                    <div class="flex flex-col items-center text-center group">
+                    <div class="flex flex-col items-center text-center group reveal-card">
                         <div
                             class="w-12 h-12 bg-brand-red text-white border-2 border-brand-red rounded-full flex items-center justify-center font-bold mb-4 z-10 check-icon">
                             ✓</div>
@@ -91,14 +93,16 @@
                 </div>
 
                 <!-- CTA Button for Client -->
-                <a href="#contact"
-                    class="btn-premium cta-shine px-8 py-4 bg-brand-red text-white font-bold text-sm uppercase tracking-widest rounded-lg transition-all shadow-lg hover:shadow-xl">
-                    <span class="arrow-slide">Iniciar meu Projeto</span>
-                    <svg class="arrow-icon w-4 h-4" viewBox="0 0 16 16">
-                        <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
-                            d="M1 8h13m0 0L10.5 4.5M14 8l-3.5 3.5" />
-                    </svg>
-                </a>
+                <div class="reveal-card">
+                    <a href="#contact"
+                        class="btn-premium cta-shine px-8 py-4 bg-brand-red text-white font-bold text-sm uppercase tracking-widest rounded-lg transition-all shadow-lg hover:shadow-xl">
+                        <span class="arrow-slide">Iniciar meu Projeto</span>
+                        <svg class="arrow-icon w-4 h-4" viewBox="0 0 16 16">
+                            <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" d="M1 8h13m0 0L10.5 4.5M14 8l-3.5 3.5" />
+                        </svg>
+                    </a>
+                </div>
             </div>
 
             <!-- TRACK: AGÊNCIA (Hidden Initially) -->

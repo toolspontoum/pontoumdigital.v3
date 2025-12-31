@@ -10,7 +10,88 @@ document.addEventListener('DOMContentLoaded', () => {
     initDigitalWave();
     initScrollAnimations();
     initScrollSpy();
+    initComboElite();
 });
+
+/**
+ * COMBO ELITE ANIMATIONS
+ * Structural and architectural entrance for all major elements
+ */
+function initComboElite() {
+    // 1. Text Mask Reveal
+    const maskTexts = document.querySelectorAll('.reveal-text');
+    maskTexts.forEach(mask => {
+        const target = mask.querySelector('span, div');
+        if (target) {
+            gsap.to(target, {
+                y: '0%',
+                duration: 0.8,
+                ease: "expo.out",
+                scrollTrigger: {
+                    trigger: mask,
+                    start: 'top 98%',
+                    toggleActions: 'play none none none'
+                }
+            });
+        }
+    });
+
+    // 2. Blur-to-Focus Card Stagger
+    const revealGrids = document.querySelectorAll('.grid');
+    revealGrids.forEach(grid => {
+        const cards = grid.querySelectorAll('.reveal-card');
+        if (cards.length) {
+            gsap.to(cards, {
+                opacity: 1,
+                filter: 'blur(0px)',
+                scale: 1,
+                y: 0,
+                duration: 0.5,
+                stagger: 0.05,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: grid,
+                    start: 'top 100%',
+                }
+            });
+        }
+    });
+
+    // 3. Border Drawing
+    const borders = document.querySelectorAll('.reveal-border');
+    borders.forEach(border => {
+        gsap.to(border, {
+            scaleX: 1,
+            duration: 1.5,
+            ease: "expo.inOut",
+            scrollTrigger: {
+                trigger: border,
+                start: 'top 95%',
+            }
+        });
+    });
+
+    // 4. Hero Metrics Counter (Data-Stream Style)
+    const metrics = document.querySelectorAll('.metric-counter');
+    metrics.forEach(metric => {
+        const targetValue = parseInt(metric.getAttribute('data-value'));
+        const prefix = metric.getAttribute('data-prefix') || '';
+        const obj = { value: 0 };
+
+        gsap.to(obj, {
+            value: targetValue,
+            duration: 2,
+            ease: "power4.out",
+            scrollTrigger: {
+                trigger: metric,
+                start: 'top 90%',
+            },
+            onUpdate: () => {
+                metric.textContent = prefix + Math.floor(obj.value);
+            }
+        });
+    });
+}
 
 /**
  * SCROLL SPY LOGIC
