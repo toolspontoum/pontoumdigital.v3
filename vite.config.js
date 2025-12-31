@@ -11,6 +11,8 @@ export default defineConfig({
                 blog: resolve(__dirname, 'blog/index.html'),
                 blogPost: resolve(__dirname, 'blog/post.html'),
                 blogSearch: resolve(__dirname, 'blog/search.html'),
+                cookies: resolve(__dirname, 'cookies.html'),
+                privacy: resolve(__dirname, 'privacy.html'),
             },
         },
     },
