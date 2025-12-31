@@ -1,5 +1,21 @@
 [
   {
+    "id": "1767103553470x992666426739162900",
+    "slug": "plataforma-digital-como-escolher-a-melhor",
+    "title": "Plataforma Digital: Como Escolher a Melhor para Seu Projeto\n",
+    "description": "Descubra como escolher a plataforma ideal para seu projeto, considerando escalabilidade, customização e integração técnica.",
+    "publication_date": 1767173814,
+    "featured_image": {
+      "url": "https://ixymyhazbhztpjnlxmbd.supabase.co/storage/v1/object/images/generated/gestor-escolhendo-plataforma-digital-147.webp",
+      "filename": "gestor-escolhendo-plataforma-digital-147.webp",
+      "alt_text": "Gestor analisa opções de plataforma digital em painel com gráficos e integrações "
+    },
+    "category": {
+      "id": "1767103228535x530788688868220500",
+      "name": "Engenharia de Software"
+    }
+  },
+  {
     "id": "1767103554244x688184777895911600",
     "slug": "guia-completo-software-tipos-funcoes-desenvolvimento",
     "title": "Guia completo de software: tipos, funções e desenvolvimento\n",
