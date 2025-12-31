@@ -33,13 +33,7 @@ module.exports = async (req, res) => {
     // We compare it against the AUTOMARTICLES_TOKEN env var.
     if (!AUTOMARTICLES_TOKEN || accessToken !== AUTOMARTICLES_TOKEN) {
         console.error('Unauthorized access attempt. Expected:', AUTOMARTICLES_TOKEN, 'Got:', accessToken);
-        // DEBUG: Return details to client to diagnose mismatch
-        return res.status(401).json({
-            error: 'Unauthorized',
-            got: accessToken,
-            expected: AUTOMARTICLES_TOKEN,
-            headers: req.headers
-        });
+        return res.status(401).json({ error: 'Unauthorized' });
     }
 
     const { event, post, category, replace_to } = req.body;
