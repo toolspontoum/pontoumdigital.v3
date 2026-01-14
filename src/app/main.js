@@ -733,7 +733,7 @@ async function initDynamicPortfolio() {
 
     try {
         // Load projects data
-        const response = await fetch('/src/data/projects.json');
+        const response = await fetch('/data/projects.json');
         portfolioData = await response.json();
 
         // Render filters
