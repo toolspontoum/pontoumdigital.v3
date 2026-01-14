@@ -1,0 +1,184 @@
+<!-- 5. INTERACTIVE PROCESS (JOURNEY SELECTOR - REFINED CLEAN v3) -->
+<section id="process" class="py-24 bg-slate-50 border-t border-slate-200 relative overflow-hidden">
+    <!-- Orb Cliente Final (Vermelho) - Movimento Horizontal -->
+    <div id="orb-client"
+        class="absolute top-0 left-1/2 w-[600px] h-[600px] bg-brand-red/5 rounded-full blur-[100px] pointer-events-none transition-opacity duration-700 animate-drift opacity-100">
+    </div>
+
+    <!-- Orb Agência (Azul) - Movimento Horizontal -->
+    <div id="orb-partner"
+        class="absolute top-0 left-1/2 w-[600px] h-[600px] bg-brand-blue/5 rounded-full blur-[100px] pointer-events-none transition-opacity duration-700 animate-drift opacity-0">
+    </div>
+
+    <div class="max-w-grid mx-auto px-6 relative z-10">
+
+        <!-- Header & Toggle -->
+        <div class="text-center mb-16">
+            <h2 class="font-sans font-bold text-3xl md:text-4xl text-slate-900 tracking-tight mb-8">
+                <div class="reveal-text"><span>Como trabalhamos</span></div>
+            </h2>
+
+            <!-- The Clean Toggle -->
+            <div class="reveal-card inline-flex bg-white rounded-full p-1 relative shadow-sm border border-slate-200">
+                <!-- Gliding Background -->
+                <div id="toggle-bg"
+                    class="absolute top-1 left-1 bottom-1 w-[calc(50%-4px)] bg-slate-900 rounded-full shadow-md transition-all duration-300 ease-out z-0">
+                </div>
+
+                <button onclick="switchProcess('client')" id="btn-client"
+                    class="relative z-10 px-4 md:px-6 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest text-white w-[140px] md:w-48 transition-colors">
+                    Sou Cliente Final
+                </button>
+                <button onclick="switchProcess('partner')" id="btn-partner"
+                    class="relative z-10 px-4 md:px-6 py-3 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-slate-900 w-[140px] md:w-48 transition-colors">
+                    Sou Agência de MKT
+                </button>
+            </div>
+        </div>
+
+        <!-- PROCESS TRACKS (Visualização Clean) -->
+        <div class="relative">
+
+
+            <!-- TRACK: CLIENTE FINAL -->
+            <div id="track-client"
+                class="transition-all duration-500 ease-in-out relative w-full opacity-100 translate-y-0 scale-100 flex flex-col items-center">
+
+                <!-- Steps Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8 w-full relative mb-12">
+                    <!-- Line with gradient (left gray to right red) -->
+                    <div
+                        class="hidden md:block absolute top-[22px] left-0 w-full h-[2px] bg-gradient-to-r from-slate-300 to-brand-red -z-10">
+                    </div>
+
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center text-center group reveal-card">
+                        <div
+                            class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-brand-red group-hover:text-brand-red transition-colors mb-4 z-10">
+                            1</div>
+                        <h3 class="text-slate-900 font-bold text-sm mb-1">Briefing</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed px-2">Entendimento do desafio.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center text-center group reveal-card">
+                        <div
+                            class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-brand-red group-hover:text-brand-red transition-colors mb-4 z-10">
+                            2</div>
+                        <h3 class="text-slate-900 font-bold text-sm mb-1">Squad</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed px-2">Time alocado.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center text-center group reveal-card">
+                        <div
+                            class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-brand-red group-hover:text-brand-red transition-colors mb-4 z-10">
+                            3</div>
+                        <h3 class="text-slate-900 font-bold text-sm mb-1">Dev em Ondas</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed px-2">Atualizações constantes.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flex flex-col items-center text-center group reveal-card">
+                        <div
+                            class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-brand-red group-hover:text-brand-red transition-colors mb-4 z-10">
+                            4</div>
+                        <h3 class="text-slate-900 font-bold text-sm mb-1">Validação</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed px-2">Ajustes finos.</p>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="flex flex-col items-center text-center group reveal-card">
+                        <div
+                            class="w-12 h-12 bg-brand-red text-white border-2 border-brand-red rounded-full flex items-center justify-center font-bold mb-4 z-10 check-icon">
+                            ✓</div>
+                        <h3 class="text-slate-900 font-bold text-sm mb-1">Entrega Final</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed px-2">Software em produção.</p>
+                    </div>
+                </div>
+
+                <!-- CTA Button for Client -->
+                <div class="reveal-card">
+                    <a href="#contact"
+                        class="btn-premium cta-shine px-8 py-4 bg-brand-red text-white font-bold text-sm uppercase tracking-widest rounded-lg transition-all shadow-lg hover:shadow-xl">
+                        <span class="arrow-slide">Iniciar meu Projeto</span>
+                        <svg class="arrow-icon w-4 h-4" viewBox="0 0 16 16">
+                            <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" d="M1 8h13m0 0L10.5 4.5M14 8l-3.5 3.5" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- TRACK: AGÊNCIA (Hidden Initially) -->
+            <div id="track-partner"
+                class="transition-all duration-500 ease-in-out absolute top-0 left-0 w-full opacity-0 translate-y-8 scale-95 pointer-events-none flex flex-col items-center">
+
+
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-8 w-full relative mb-12">
+                    <!-- Line with gradient (left gray to right dark) -->
+                    <div
+                        class="hidden md:block absolute top-[22px] left-0 w-full h-[2px] bg-gradient-to-r from-slate-300 to-slate-800 -z-10">
+                    </div>
+
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center text-center group">
+                        <div
+                            class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-slate-800 group-hover:text-slate-800 transition-colors mb-4 z-10">
+                            1</div>
+                        <h3 class="text-slate-900 font-bold text-sm mb-1">Apresentação</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed px-2">Alinhamento de portfólio.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center text-center group">
+                        <div
+                            class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-slate-800 group-hover:text-slate-800 transition-colors mb-4 z-10">
+                            2</div>
+                        <h3 class="text-slate-900 font-bold text-sm mb-1">Canal Direto</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed px-2">Comunicação exclusiva.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center text-center group">
+                        <div
+                            class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-slate-800 group-hover:text-slate-800 transition-colors mb-4 z-10">
+                            3</div>
+                        <h3 class="text-slate-900 font-bold text-sm mb-1">Suporte Tech</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed px-2">Seu braço de engenharia.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flex flex-col items-center text-center group">
+                        <div
+                            class="w-12 h-12 bg-white border-2 border-slate-200 rounded-full flex items-center justify-center font-bold text-slate-400 group-hover:border-slate-800 group-hover:text-slate-800 transition-colors mb-4 z-10">
+                            4</div>
+                        <h3 class="text-slate-900 font-bold text-sm mb-1">Projetos</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed px-2">Execução White Label.</p>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="flex flex-col items-center text-center group">
+                        <div
+                            class="w-12 h-12 bg-slate-800 text-white border-2 border-slate-800 rounded-full flex items-center justify-center font-bold mb-4 z-10">
+                            $</div>
+                        <h3 class="text-slate-900 font-bold text-sm mb-1">Revenue Share</h3>
+                        <p class="text-slate-500 text-xs leading-relaxed px-2">Comissão recorrente.</p>
+                    </div>
+                </div>
+
+                <!-- CTA Button for Agency -->
+                <a href="#contact"
+                    class="btn-premium cta-shine px-8 py-4 bg-slate-800 text-white font-bold text-sm uppercase tracking-widest rounded-lg transition-all shadow-lg hover:shadow-xl">
+                    <span class="arrow-slide">Seja uma Agência Parceira</span>
+                    <svg class="arrow-icon w-4 h-4" viewBox="0 0 16 16">
+                        <path stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                            d="M1 8h13m0 0L10.5 4.5M14 8l-3.5 3.5" />
+                    </svg>
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+</section>

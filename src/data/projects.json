@@ -1,0 +1,142 @@
+{
+    "categories": [
+        {
+            "id": "all",
+            "label": "Todos"
+        },
+        {
+            "id": "sites",
+            "label": "Sites"
+        },
+        {
+            "id": "sistemas",
+            "label": "Sistemas"
+        },
+        {
+            "id": "apps",
+            "label": "Apps & Plataformas"
+        }
+    ],
+    "projects": [
+        {
+            "id": "plena-procedimentos",
+            "url": "https://procedimentos.clinicaplenasaude.com/",
+            "title": "Plena Saúde - Procedimentos",
+            "description": "Site catálogo com navegação por categorias de serviços e CTA de agendamento via WhatsApp.",
+            "category": "sites",
+            "year": "2025",
+            "desktopImage": null,
+            "mobileImage": null
+        },
+        {
+            "id": "plena-peleplena",
+            "url": "https://peleplena.clinicaplenasaude.com/",
+            "title": "Plena Saúde - Pele Plena",
+            "description": "Landing page de conversão com storytelling visual e integração direta com WhatsApp.",
+            "category": "sites",
+            "year": "2025",
+            "desktopImage": null,
+            "mobileImage": null
+        },
+        {
+            "id": "plena-mapa",
+            "url": "https://mapa.clinicaplenasaude.com/",
+            "title": "Plena Saúde - Mapa Facial",
+            "description": "Aplicação web interativa de jornada do paciente com ciclo de tratamento personalizado.",
+            "category": "sites",
+            "year": "2025",
+            "desktopImage": null,
+            "mobileImage": null
+        },
+        {
+            "id": "nuclear-mogi",
+            "url": "https://nuclearmogi.com.br/",
+            "title": "Nuclear Mogi - Medicina Nuclear",
+            "description": "Clínica referência em medicina nuclear com ecossistema digital integrado, incluindo plataforma proprietária para gestão e retirada de exames online.",
+            "category": "sistemas",
+            "year": "2024",
+            "desktopImage": null,
+            "mobileImage": null
+        },
+        {
+            "id": "congressosteelframe",
+            "url": "https://congressosteelframe.com.br/",
+            "title": "Congresso Latino-Americano de Steel Frame",
+            "description": "O maior congresso da América Latina do setor de construção a seco, reunindo as principais inovações e especialistas em sistemas construtivos.",
+            "category": "sites",
+            "year": "2024",
+            "desktopImage": null,
+            "mobileImage": null
+        },
+        {
+            "id": "anespp-summit",
+            "url": "https://anespp.org.br/summit/",
+            "title": "ANESPP Summit",
+            "description": "Evento estratégico focado em investimentos sustentáveis, ESG e o futuro da previdência complementar para servidores públicos.",
+            "category": "sites",
+            "year": "2024",
+            "desktopImage": null,
+            "mobileImage": null
+        },
+        {
+            "id": "tomasagostinho",
+            "url": "https://tomasagostinho.com.br/",
+            "title": "Colégio Tomás Agostinho",
+            "description": "Pilar educacional unindo tradição e vanguarda, com infraestrutura tecnológica de ponta e foco em formação acadêmica sólida.",
+            "category": "sites",
+            "year": "2024",
+            "desktopImage": null,
+            "mobileImage": null
+        },
+        {
+            "id": "dedotti-xperience",
+            "url": "https://dedotti-xperience.com/",
+            "title": "Dedotti Xperience",
+            "description": "Consultoria especializada em marketing digital e inteligência artificial para transformação de marcas em negócios de alta escala.",
+            "category": "sites",
+            "year": "2024",
+            "desktopImage": null,
+            "mobileImage": null
+        },
+        {
+            "id": "qodo-energia",
+            "url": "https://qodoenergia.com.br/",
+            "title": "Qodo Energia Sustentável",
+            "description": "Hub de inteligência focado em viabilizar programas de eficiência e transição energética para municípios e grandes corporações.",
+            "category": "sites",
+            "year": "2024",
+            "desktopImage": null,
+            "mobileImage": null
+        },
+        {
+            "id": "giraflow",
+            "url": "https://giraflow.pt/",
+            "title": "Gira Flow Mastermind",
+            "description": "Ecossistema exclusivo de networking e mentoria internacional fundamentado em alta performance corporativa.",
+            "category": "sites",
+            "year": "2024",
+            "desktopImage": null,
+            "mobileImage": null
+        },
+        {
+            "id": "hnambiental",
+            "url": "https://hnambiental.com.br/",
+            "title": "HN Ambiental",
+            "description": "Engenharia e consultoria ambiental de precisão, com foco em licenciamento estratégico para grandes projetos de infraestrutura.",
+            "category": "sites",
+            "year": "2024",
+            "desktopImage": null,
+            "mobileImage": null
+        },
+        {
+            "id": "anespp-portal",
+            "url": "https://anespp.org.br/",
+            "title": "ANESPP Institucional",
+            "description": "Plataforma oficial da Associação Nacional das Entidades de Previdência, oferecendo suporte técnico e fortalecimento setorial.",
+            "category": "sites",
+            "year": "2024",
+            "desktopImage": null,
+            "mobileImage": null
+        }
+    ]
+}

@@ -1,0 +1,110 @@
+<!-- 3. CASES SELECTED (DYNAMIC PORTFOLIO SYSTEM) -->
+<section id="cases" class="pt-20 pb-20 bg-slate-50 border-b border-gray-200">
+    <div class="max-w-grid mx-auto px-6">
+
+        <!-- Header + Filters -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-8">
+            <div>
+                <span
+                    class="font-mono text-xs text-brand-red font-bold tracking-widest uppercase mb-2 block">02_SELECTED_WORKS</span>
+                <h2 class="font-sans font-bold text-3xl md:text-4xl text-slate-900 tracking-tight">
+                    <div class="reveal-text"><span>Cases Recentes</span></div>
+                </h2>
+            </div>
+
+            <!-- Filter Tabs (Dynamic) -->
+            <div class="flex flex-wrap gap-2" id="portfolio-filters">
+                <!-- Filters will be rendered by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Projects Grid (Dynamic Container) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="portfolio-grid">
+            <!-- Cards will be rendered by JavaScript -->
+            <div class="col-span-full flex items-center justify-center py-20">
+                <div class="flex items-center gap-3 text-slate-400">
+                    <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    <span class="font-mono text-xs uppercase tracking-widest">Carregando cases...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination (Dynamic) -->
+        <div class="mt-12 flex justify-center gap-2 hidden" id="pagination-controls">
+            <!-- Pagination will be rendered by JavaScript if needed -->
+        </div>
+
+    </div>
+</section>
+
+<!-- Case Preview Modal -->
+<div id="case-modal" class="fixed inset-0 z-[200] hidden">
+    <!-- Backdrop with intense blur -->
+    <div class="absolute inset-0 bg-slate-950/85 backdrop-blur-lg" onclick="closeCaseModal()"></div>
+
+    <!-- Centered Modal Container -->
+    <div class="relative w-full h-full flex items-center justify-center p-4 md:p-8 pointer-events-none">
+        <!-- Modal Window -->
+        <div
+            class="pointer-events-auto w-full max-w-6xl h-[85vh] md:h-[80vh] bg-slate-900 rounded-2xl overflow-hidden shadow-2xl shadow-black/50 flex flex-col border border-white/10">
+
+            <!-- Header Bar -->
+            <div class="flex items-center justify-between px-6 py-4 bg-slate-950 border-b border-white/5 shrink-0">
+                <div class="flex items-center gap-4">
+                    <h3 id="modal-title" class="text-white/50 text-sm font-medium truncate tracking-tight"></h3>
+                </div>
+                <button onclick="closeCaseModal()"
+                    class="group flex items-center gap-2 text-slate-400 hover:text-white transition-all uppercase tracking-[0.2em] text-[10px] font-bold">
+                    <span>Fechar</span>
+                    <span class="text-lg leading-none opacity-60 group-hover:opacity-100 transition-opacity">×</span>
+                </button>
+            </div>
+
+            <!-- Iframe Container -->
+            <div class="flex-1 relative bg-white overflow-hidden">
+                <!-- Loading State -->
+                <div id="modal-loading" class="absolute inset-0 flex items-center justify-center bg-slate-50">
+                    <div class="flex flex-col items-center gap-4">
+                        <div class="w-10 h-10 border-2 border-slate-200 border-t-brand-red rounded-full animate-spin">
+                        </div>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-[0.2em]">Carregando preview</span>
+                    </div>
+                </div>
+
+                <!-- Sandboxed Iframe -->
+                <iframe id="modal-iframe" class="w-full h-full border-0 opacity-0 transition-opacity duration-500"
+                    sandbox="allow-scripts allow-same-origin" referrerpolicy="no-referrer"></iframe>
+            </div>
+
+            <!-- Footer Bar -->
+            <div class="px-6 py-5 bg-slate-950 border-t border-white/5 shrink-0 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="text-[10px] text-slate-500 uppercase tracking-widest">Desenvolvido por</span>
+                    <img src="/logo.png" alt="Ponto 1 Digital" class="h-4 brightness-0 invert">
+                </div>
+
+                <a href="#contact" onclick="closeCaseModal()"
+                    class="btn-premium cta-shine bg-white text-slate-700 px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-[0.15em] hover:bg-brand-red hover:text-white transition-all shadow-lg active:scale-95 flex items-center gap-2">
+                    <span class="arrow-slide">Realizar Projeto</span>
+                    <svg class="arrow-icon w-3 h-3" viewBox="0 0 16 16">
+                        <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            d="M1 8h13m0 0L10.5 4.5M14 8l-3.5 3.5" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blocked Action Toast -->
+    <div id="blocked-toast"
+        class="fixed bottom-6 left-1/2 -translate-x-1/2 px-6 py-3 bg-red-600 text-white text-sm font-bold rounded-full shadow-2xl opacity-0 pointer-events-none transition-all duration-300 translate-y-4 z-[210]">
+        ⚠️ Esta ação foi bloqueada. Você está em modo de demonstração.
+    </div>
+</div>
