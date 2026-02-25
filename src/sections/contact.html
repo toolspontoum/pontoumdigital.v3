@@ -95,14 +95,14 @@
                         <!-- Name & Company Row -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="group">
-                                <label
+                                <label for="input-name"
                                     class="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-2">Nome</label>
                                 <input type="text" id="input-name" required oninput="updateProgress()"
                                     class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-green focus:bg-slate-800 transition-all placeholder-slate-400"
                                     placeholder="Seu nome">
                             </div>
                             <div class="group">
-                                <label
+                                <label for="input-company"
                                     class="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-2">Empresa
                                     (Opcional)</label>
                                 <input type="text" id="input-company"
@@ -113,11 +113,11 @@
 
                         <!-- NEW: User Profile Type Selection -->
                         <div class="group">
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-3">Eu
+                            <label for="user-type-cliente" class="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-3">Eu
                                 sou:</label>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <label class="cursor-pointer">
-                                    <input type="radio" name="user-type" value="cliente" class="peer hidden" checked
+                                    <input type="radio" id="user-type-cliente" name="user-type" value="cliente" class="peer hidden" checked
                                         onchange="updateProgress()">
                                     <div
                                         class="h-full flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/30 text-slate-400 peer-checked:border-brand-green peer-checked:bg-brand-green/5 peer-checked:text-white transition-all text-center">
@@ -128,7 +128,7 @@
                                     </div>
                                 </label>
                                 <label class="cursor-pointer">
-                                    <input type="radio" name="user-type" value="agencia" class="peer hidden"
+                                    <input type="radio" id="user-type-agencia" name="user-type" value="agencia" class="peer hidden"
                                         onchange="updateProgress()">
                                     <div
                                         class="h-full flex flex-col items-center justify-center p-4 rounded-xl border border-slate-700 bg-slate-800/30 text-slate-400 peer-checked:border-brand-green peer-checked:bg-brand-green/5 peer-checked:text-white transition-all text-center">
@@ -170,7 +170,7 @@
 
                         <!-- Email -->
                         <div class="group">
-                            <label class="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-2">Email
+                            <label for="input-email" class="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-2">Email
                                 Corporativo</label>
                             <input type="email" id="input-email" required oninput="updateProgress()"
                                 class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-green focus:bg-slate-800 transition-all placeholder-slate-400"
@@ -179,7 +179,7 @@
 
                         <!-- Phone -->
                         <div class="group">
-                            <label
+                            <label for="input-phone"
                                 class="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-2">WhatsApp</label>
                             <input type="tel" id="input-phone" required oninput="updateProgress()"
                                 class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-green focus:bg-slate-800 transition-all placeholder-slate-400"

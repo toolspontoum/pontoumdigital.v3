@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHeroStaticBackground();
     initScrollAnimations();
     initScrollSpy();
-    initCookieConsent();
+    runWhenIdle(() => initCookieConsent(), 1500);
     initDynamicDates();
     initDeferredStackIcons();
 
@@ -59,11 +59,13 @@ function runWhenIdle(task, timeout = 1200) {
 }
 
 async function bootVisualEnhancements() {
-    const libsReady = await ensureAnimationLibs();
-    if (libsReady) {
-        initComboElite();
-    }
     initDigitalWave();
+    runWhenIdle(async () => {
+        const libsReady = await ensureAnimationLibs();
+        if (libsReady) {
+            initComboElite();
+        }
+    }, 2000);
 }
 
 function initHeroStaticBackground() {
@@ -104,8 +106,8 @@ function initDeferredStackIcons() {
         });
     };
 
-    hydrateIcons();
-    observeOnce('#stack', hydrateIcons, '350px');
+    observeOnce('#stack', hydrateIcons, '900px');
+    setTimeout(hydrateIcons, 1200);
 }
 
 async function ensureAnimationLibs() {

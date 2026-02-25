@@ -26,7 +26,7 @@ function initCookieConsent() {
     banner.innerHTML = `
         <!-- VIEW 1: SIMPLE -->
         <div id="cookie-simple" class="flex flex-col gap-4 relative">
-            <button id="btn-config" class="absolute -top-2 -right-2 p-2 text-slate-500 hover:text-white transition-colors" title="Configurar Preferências">
+            <button id="btn-config" type="button" aria-label="Configurar prefer�ncias de cookies" class="absolute -top-2 -right-2 p-2 text-slate-500 hover:text-white transition-colors" title="Configurar Preferências">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
             </button>
             
@@ -78,7 +78,7 @@ function initCookieConsent() {
                         <span class="text-[9px] text-slate-400">Métricas anônimas.</span>
                     </div>
                     <!-- Toggle Switch -->
-                    <button id="toggle-analytics" class="w-8 h-4 bg-slate-700 rounded-full relative transition-colors" data-active="false">
+                    <button id="toggle-analytics" type="button" role="switch" aria-label="Ativar ou desativar cookies de analytics" aria-checked="false" class="w-8 h-4 bg-slate-700 rounded-full relative transition-colors" data-active="false">
                         <div class="absolute left-0.5 top-0.5 w-3 h-3 bg-white rounded-full shadow-sm transition-transform duration-300"></div>
                     </button>
                 </div>
@@ -90,7 +90,7 @@ function initCookieConsent() {
                         <span class="text-[9px] text-slate-400">Ads personalizados.</span>
                     </div>
                     <!-- Toggle Switch -->
-                    <button id="toggle-marketing" class="w-8 h-4 bg-slate-700 rounded-full relative transition-colors" data-active="false">
+                    <button id="toggle-marketing" type="button" role="switch" aria-label="Ativar ou desativar cookies de marketing" aria-checked="false" class="w-8 h-4 bg-slate-700 rounded-full relative transition-colors" data-active="false">
                         <div class="absolute left-0.5 top-0.5 w-3 h-3 bg-white rounded-full shadow-sm transition-transform duration-300"></div>
                     </button>
                 </div>
@@ -130,11 +130,13 @@ function initCookieConsent() {
         const isActive = btn.getAttribute('data-active') === 'true';
         if (isActive) {
             btn.setAttribute('data-active', 'false');
+            btn.setAttribute('aria-checked', 'false');
             btn.classList.remove('bg-red-600');
             btn.classList.add('bg-slate-700');
             btn.querySelector('div').style.transform = 'translateX(0)';
         } else {
             btn.setAttribute('data-active', 'true');
+            btn.setAttribute('aria-checked', 'true');
             btn.classList.add('bg-red-600');
             btn.classList.remove('bg-slate-700');
             btn.querySelector('div').style.transform = 'translateX(100%)'; // Adjusted for w-8 (32px), dot w-3 (12px), needs ~16px move
