@@ -12,10 +12,17 @@ let scrollAnimationsInitialized = false;
 document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     initScrollSpy();
-    initHomeBlog();
     initCookieConsent();
-    initDynamicPortfolio();
     initDynamicDates();
+    initDeferredStackIcons();
+
+    observeOnce('#cases', () => {
+        initDynamicPortfolio();
+    }, '450px');
+
+    observeOnce('#latest-blog', () => {
+        initHomeBlog();
+    }, '450px');
 
     runWhenIdle(() => {
         initDigitalWave();
@@ -25,9 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const libsReady = await ensureAnimationLibs();
         if (libsReady) {
             initComboElite();
-            initHomeBlog();
         }
-    }, 2000);
+    }, 2600);
 });
 
 function runWhenIdle(task, timeout = 1200) {
@@ -36,6 +42,37 @@ function runWhenIdle(task, timeout = 1200) {
     } else {
         setTimeout(task, 1);
     }
+}
+
+function observeOnce(selector, callback, rootMargin = '300px') {
+    const element = document.querySelector(selector);
+    if (!element) return;
+
+    const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                callback();
+                obs.disconnect();
+            }
+        });
+    }, { rootMargin, threshold: 0.01 });
+
+    observer.observe(element);
+}
+
+function initDeferredStackIcons() {
+    const stack = document.getElementById('stack');
+    if (!stack) return;
+
+    const hydrateIcons = () => {
+        stack.querySelectorAll('img[data-icon-src]').forEach(img => {
+            if (!img.getAttribute('src') || img.getAttribute('src').startsWith('data:image/svg+xml')) {
+                img.setAttribute('src', img.getAttribute('data-icon-src'));
+            }
+        });
+    };
+
+    observeOnce('#stack', hydrateIcons, '350px');
 }
 
 async function ensureAnimationLibs() {

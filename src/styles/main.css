@@ -291,3 +291,14 @@ body {
         background-position: -200% 0;
     }
 }
+
+/* PERF: defer rendering for below-the-fold sections without UI changes */
+#cases,
+#clients,
+#process,
+#contact,
+#latest-blog,
+body > footer {
+    content-visibility: auto;
+    contain-intrinsic-size: 900px;
+}
