@@ -530,7 +530,15 @@ window.addEventListener('load', () => {
     // Re-run animation loop if needed for canvas (managed inside script.js usually)
 });
 
-// Contact Form Logic
+// Contact Form Logic: mostra/oculta campo "Fale mais sobre o projeto" quando um tipo de serviço é escolhido
+window.toggleProjectDetails = function () {
+    const select = document.getElementById('input-service-type');
+    const wrap = document.getElementById('project-details-wrap');
+    if (!select || !wrap) return;
+    const hasValue = select.value && select.value.trim() !== '';
+    wrap.classList.toggle('hidden', !hasValue);
+};
+
 window.updateProgress = function () {
     const name = document.getElementById('input-name');
     const email = document.getElementById('input-email');
@@ -564,6 +572,8 @@ window.handleFormSubmit = function (e) {
     const company = document.getElementById('input-company')?.value || 'N/A';
     const email = document.getElementById('input-email')?.value || 'N/A';
     const phone = document.getElementById('input-phone')?.value || 'N/A';
+    const serviceType = document.getElementById('input-service-type')?.value?.trim() || '';
+    const projectDetails = document.getElementById('input-project-details')?.value?.trim() || '';
 
     // Get selected radio
     const userTypeEl = document.querySelector('input[name="user-type"]:checked');
@@ -577,6 +587,8 @@ window.handleFormSubmit = function (e) {
     formData.append('perfil', userTypeLabel);
     formData.append('email', email);
     formData.append('telefone', phone);
+    if (serviceType) formData.append('tipo_servico', serviceType);
+    if (projectDetails) formData.append('detalhes_projeto', projectDetails);
 
     // FormSubmit Settings
     formData.append('_subject', `🚀 Novo Lead P1D: ${name}`);
@@ -596,15 +608,16 @@ window.handleFormSubmit = function (e) {
         .catch(error => console.error('Email failed:', error));
 
     // 4. Construct WhatsApp Message (Redundancy)
-    const text = `🚀 *Nova Solicitação via Site*
+    let text = `🚀 *Nova Solicitação via Site*
     
 👤 *Nome:* ${name}
 🏢 *Empresa:* ${company}
 🏷️ *Perfil:* ${userTypeLabel}
 📧 *Email:* ${email}
-📱 *Tel:* ${phone}
-
-Gostaria de solicitar uma proposta.`;
+📱 *Tel:* ${phone}`;
+    if (serviceType) text += `\n🛠️ *Tipo de serviço:* ${serviceType}`;
+    if (projectDetails) text += `\n📝 *Detalhes:* ${projectDetails}`;
+    text += `\n\nGostaria de solicitar uma proposta.`;
 
     // 5. Update Success Overlay Button
     const waLink = `https://wa.me/5513991014502?text=${encodeURIComponent(text)}`;

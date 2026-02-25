@@ -141,6 +141,33 @@
                             </div>
                         </div>
 
+                        <!-- Tipo de serviço (dropdown) -->
+                        <div class="group">
+                            <label for="input-service-type"
+                                class="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-2">Tipo de
+                                serviço (opcional)</label>
+                            <select id="input-service-type" name="service-type"
+                                onchange="toggleProjectDetails(); updateProgress();"
+                                class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-green focus:bg-slate-800 transition-all appearance-none cursor-pointer">
+                                <option value="">Selecione o tipo de serviço...</option>
+                                <option value="Softwares e Aplicativos">Softwares e Aplicativos</option>
+                                <option value="Sites e Plataformas">Sites e Plataformas</option>
+                                <option value="Devs Sob Demanda">Devs Sob Demanda</option>
+                                <option value="Inteligência Artificial">Inteligência Artificial</option>
+                            </select>
+                        </div>
+
+                        <!-- Detalhes do projeto (opcional, exibido ao escolher tipo de serviço) -->
+                        <div id="project-details-wrap" class="group hidden">
+                            <label for="input-project-details"
+                                class="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-2">Fale mais
+                                sobre o projeto (opcional)</label>
+                            <textarea id="input-project-details" name="project-details" rows="4"
+                                oninput="updateProgress()"
+                                placeholder="Descreva brevemente o que você precisa, prazos ou contexto..."
+                                class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-green focus:bg-slate-800 transition-all placeholder-slate-400 resize-y min-h-[100px]"></textarea>
+                        </div>
+
                         <!-- Email -->
                         <div class="group">
                             <label class="block text-xs font-bold text-slate-300 uppercase tracking-widest mb-2">Email
