@@ -5,162 +5,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Cookies | Ponto Um Digital</title>
-    <!-- Tailwind & Custom Styles -->
-    <link href="/src/styles/main.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="/favicon.png">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            color: #111111;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+        }
+        .policy-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+            background: rgba(255, 255, 255, 0.74);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            transition: background-color 0.25s ease, backdrop-filter 0.25s ease, box-shadow 0.25s ease;
+        }
+        .policy-header.is-scrolled {
+            background: rgba(255, 255, 255, 0.93);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        .header-wrap {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .header-wrap img { height: 28px; width: auto; display: block; }
+        .back-link {
+            color: #111111;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            padding: 8px 12px;
+            white-space: nowrap;
+        }
+        .back-link:hover { background: #f6f6f6; }
+        main {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 96px 20px 48px;
+        }
+        h1 {
+            margin: 0 0 8px;
+            font-size: 34px;
+            line-height: 1.2;
+            color: #000000;
+        }
+        .updated-at {
+            margin: 0 0 28px;
+            font-size: 14px;
+            color: #555555;
+        }
+        .lead {
+            margin: 0 0 24px;
+            font-size: 17px;
+            color: #222222;
+        }
+        .summary {
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            padding: 14px 16px;
+            background: #fcfcfc;
+            margin-bottom: 28px;
+        }
+        .summary-title { margin: 0 0 8px; font-size: 14px; font-weight: 700; }
+        .summary a { color: #111111; }
+        section { margin-bottom: 28px; }
+        h2 {
+            margin: 0 0 12px;
+            font-size: 21px;
+            line-height: 1.3;
+            color: #000000;
+        }
+        p { margin: 0 0 12px; font-size: 16px; }
+        ul { margin: 0 0 14px 18px; padding: 0; }
+        li { margin-bottom: 8px; font-size: 16px; }
+        .links-list a {
+            color: #111111;
+            word-break: break-word;
+        }
+        .contact-box {
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            padding: 14px 16px;
+            background: #fafafa;
+        }
+        .contact-box a { color: #111111; font-weight: 700; }
+        footer {
+            border-top: 1px solid #ececec;
+            padding: 20px;
+            text-align: center;
+            color: #666666;
+            font-size: 13px;
+        }
+        @media (max-width: 640px) {
+            h1 { font-size: 28px; }
+            h2 { font-size: 19px; }
+            p, li { font-size: 15px; }
+            .back-link { font-size: 12px; padding: 7px 10px; }
+        }
+    </style>
 </head>
 
-<body class="bg-slate-950 text-slate-400 font-sans antialiased leading-relaxed">
-
-    <!-- Simple Header -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-xl border-b border-white/5 py-8">
-        <div class="max-w-4xl mx-auto px-8 flex justify-between items-center">
-            <a href="/" class="flex items-center gap-4 group">
-                <img src="/logo.png" alt="P1D"
-                    class="h-10 w-auto brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity">
+<body>
+    <header class="policy-header" id="policy-header">
+        <div class="header-wrap">
+            <a href="/" aria-label="Página inicial da Ponto Um Digital">
+                <img src="/logo.png" alt="Ponto Um Digital">
             </a>
-            <a href="/"
-                class="text-[11px] font-bold uppercase tracking-[0.3em] text-slate-500 hover:text-white transition-all flex items-center gap-2">
-                <span class="w-6 h-px bg-slate-800"></span>
-                Voltar para Home
-            </a>
+            <a class="back-link" href="/">Voltar para Home</a>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-3xl mx-auto px-8 pt-32 pb-24">
+    <main>
+        <h1>Política de Cookies</h1>
+        <p class="updated-at">Última atualização: 01/02/2026</p>
 
-        <header class="mb-24 uppercase tracking-tighter italic">
-            <h1 class="text-4xl font-bold text-white mb-6 leading-tight">UTILIZAÇÃO DE COOKIES E TECNOLOGIA DE
-                MONITORAMENTO</h1>
-            <p class="text-slate-500 text-sm font-mono tracking-widest">Versão de: 01/04/2025</p>
-        </header>
+        <p class="lead">Esta política explica como utilizamos cookies e tecnologias semelhantes para melhorar a navegação e mensurar o desempenho do site.</p>
 
-        <div class="space-y-20 text-slate-400">
-
-            <section>
-                <p class="text-lg leading-relaxed mb-8 italic">
-                    Podemos utilizar certas tecnologias de monitoramento para coletar as informações das atividades
-                    realizadas em nosso site de forma automatizada.
-                </p>
-                <p class="mb-12">
-                    As informações coletadas por meio de tais tecnologias são utilizadas para realizar métricas de
-                    performance do site, identificar problemas no uso, captar o comportamento dos Usuários de forma
-                    geral e coletar dados de impressão de conteúdo.
-                </p>
-
-                <h2
-                    class="text-xs font-black text-red-600 mb-10 uppercase tracking-[0.4em] italic border-l-4 border-red-600 pl-6">
-                    TECNOLOGIAS UTILIZADAS</h2>
-
-                <div class="grid grid-cols-1 gap-8">
-                    <div class="p-8 bg-white/[0.02] border border-white/5 rounded-3xl">
-                        <h3 class="text-white font-bold text-lg mb-4 italic uppercase tracking-tight">Cookies</h3>
-                        <p class="text-sm leading-relaxed">Cookie é um pequeno arquivo adicionado ao dispositivo do
-                            Usuário para fornecer uma experiência personalizada de acesso à plataforma. Os cookies
-                            ajudam a analisar o tráfego de internet e nos permite saber quando o Usuário visitou um site
-                            específico. Um cookie não dá acesso a um computador ou revela informações além dos dados que
-                            o usuário escolhe compartilhar conosco.</p>
-                    </div>
-
-                    <div class="p-8 bg-white/[0.02] border border-white/5 rounded-3xl">
-                        <h3 class="text-white font-bold text-lg mb-4 italic uppercase tracking-tight">Pixels</h3>
-                        <p class="text-sm leading-relaxed">Pixels são partes do código JavaScript instalados adicionados
-                            em nosso website ou no corpo de um e-mail, com a finalidade de rastrear coletar informações
-                            sobre as atividades dos usuários, permitindo a identificação dos seus padrões de acesso,
-                            navegação, interesse e compras de produtos, e otimizando utilizados para otimizar o
-                            direcionamento de conteúdo.</p>
-                    </div>
-
-                    <div class="p-8 bg-white/[0.02] border border-white/5 rounded-3xl">
-                        <h3 class="text-white font-bold text-lg mb-4 italic uppercase tracking-tight">Analytics</h3>
-                        <p class="text-sm leading-relaxed">Essas ferramentas podem coletar informações sobre a forma
-                            como os Usuários visitam nosso site, quais páginas eles visitam e quando visitam tais
-                            páginas, outros sites que foram visitados antes, entre outras.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <h2
-                    class="text-xs font-black text-red-600 mb-10 uppercase tracking-[0.4em] italic border-l-4 border-red-600 pl-6">
-                    COMO REJEITAR COOKIES</h2>
-                <div class="space-y-8">
-                    <p>É possível que você gerencie preferências de Cookies e outras tecnologias semelhantes a partir da
-                        configuração de seu navegador, recusando ou excluindo alguns deles. No entanto, essa opção
-                        poderá comprometer os Serviços da <strong>“Ponto Um Digital”</strong> ou impedir o funcionamento
-                        de determinadas funcionalidades.</p>
-
-                    <div
-                        class="grid grid-cols-1 md:grid-cols-2 gap-6 italic text-[11px] uppercase tracking-widest text-slate-500">
-                        <div class="p-6 border border-white/5 rounded-2xl bg-white/[0.01]">
-                            <span class="text-white font-bold block mb-2 not-italic">Observação 1</span>
-                            Você pode desabilitar mudando as configurações do navegador, mas isso pode prejudicar o
-                            desempenho do site.
-                        </div>
-                        <div class="p-6 border border-white/5 rounded-2xl bg-white/[0.01]">
-                            <span class="text-white font-bold block mb-2 not-italic">Observação 2</span>
-                            Nossos Cookies são otimizados para: Chrome, Firefox, Edge/IE, Android e iOS.
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <h3 class="text-white font-bold mb-8 uppercase tracking-widest text-xs">Instruções por Navegador</h3>
-                <p class="mb-10 text-sm">Clique em ‘Ajuda’, nas configurações do seu navegador, para saber como
-                    geri-los. Abaixo você encontra detalhes específicos para desativar cookies nos navegadores mais
-                    populares:</p>
-
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 font-mono text-[10px] uppercase tracking-tighter">
-                    <a href="https://support.google.com/chrome/answer/95647?co=GENIE.Platform%3DDesktop&oco=1&hl=pt-BR"
-                        target="_blank"
-                        class="p-4 border border-white/10 rounded-xl hover:bg-white/5 hover:border-red-600 transition-all text-center">Google
-                        Chrome</a>
-                    <a href="https://support.mozilla.org/pt-BR/kb/gerencie-configuracoes-de-armazenamento-local-de-s"
-                        target="_blank"
-                        class="p-4 border border-white/10 rounded-xl hover:bg-white/5 hover:border-red-600 transition-all text-center">Mozilla
-                        Firefox</a>
-                    <a href="https://support.apple.com/pt-br/guide/safari/sfri11471/mac" target="_blank"
-                        class="p-4 border border-white/10 rounded-xl hover:bg-white/5 hover:border-red-600 transition-all text-center">Safari</a>
-                    <a href="https://support.microsoft.com/pt-br/windows/excluir-e-gerenciar-cookies-168dab11-0753-043d-7c16-ede5947fc64d"
-                        target="_blank"
-                        class="p-4 border border-white/10 rounded-xl hover:bg-white/5 hover:border-red-600 transition-all text-center">Internet
-                        Explorer</a>
-                    <a href="https://support.microsoft.com/pt-br/microsoft-edge/excluir-cookies-no-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09"
-                        target="_blank"
-                        class="p-4 border border-white/10 rounded-xl hover:bg-white/5 hover:border-red-600 transition-all text-center">Microsoft
-                        Edge</a>
-                    <a href="https://help.opera.com/en/latest/web-preferences/#cookies" target="_blank"
-                        class="p-4 border border-white/10 rounded-xl hover:bg-white/5 hover:border-red-600 transition-all text-center">Opera</a>
-                </div>
-            </section>
-
-            <!-- Final Support -->
-            <section class="border-t border-white/5 pt-20">
-                <div class="flex flex-col md:flex-row gap-8 items-center justify-between">
-                    <p class="text-sm italic">Qualquer desconformidade, informe-nos:</p>
-                    <a href="mailto:roberto@pontoumdigital.com.br"
-                        class="px-10 py-5 bg-white/5 border border-white/10 text-white font-black rounded-2xl transition-all hover:bg-red-600 hover:border-red-600 uppercase tracking-widest text-[11px] italic">
-                        roberto@pontoumdigital.com.br
-                    </a>
-                </div>
-                <div class="mt-12 text-center">
-                    <a href="/privacy.html"
-                        class="text-[10px] font-bold uppercase tracking-[0.4em] text-slate-600 hover:text-red-500 transition-colors">Acessar
-                        Política de Privacidade</a>
-                </div>
-            </section>
-
+        <div class="summary">
+            <p class="summary-title">Navegação rápida</p>
+            <ul>
+                <li><a href="#o-que-sao">1. O que são cookies</a></li>
+                <li><a href="#tipos">2. Tipos de tecnologias utilizadas</a></li>
+                <li><a href="#finalidades">3. Finalidades do uso</a></li>
+                <li><a href="#controle">4. Como controlar ou rejeitar</a></li>
+                <li><a href="#contato">5. Contato</a></li>
+            </ul>
         </div>
 
+        <section id="o-que-sao">
+            <h2>1. O que são cookies</h2>
+            <p>Cookies são pequenos arquivos armazenados no dispositivo do usuário para permitir funcionalidades essenciais, lembrar preferências e apoiar análises de uso do site.</p>
+        </section>
+
+        <section id="tipos">
+            <h2>2. Tecnologias utilizadas</h2>
+            <ul>
+                <li><strong>Cookies:</strong> guardam preferências e informações de sessão.</li>
+                <li><strong>Pixels:</strong> identificam interações em páginas e campanhas.</li>
+                <li><strong>Analytics:</strong> analisam tráfego, comportamento de navegação e desempenho.</li>
+            </ul>
+        </section>
+
+        <section id="finalidades">
+            <h2>3. Finalidades do uso</h2>
+            <ul>
+                <li>Garantir funcionamento técnico do site.</li>
+                <li>Entender padrões de acesso e melhorar experiência do usuário.</li>
+                <li>Medir resultados de conteúdo e canais de aquisição.</li>
+                <li>Identificar falhas e reforçar segurança operacional.</li>
+            </ul>
+        </section>
+
+        <section id="controle">
+            <h2>4. Como controlar ou rejeitar cookies</h2>
+            <p>Você pode alterar as permissões de cookies no navegador. Desativar determinados cookies pode afetar partes da experiência e alguns recursos do site.</p>
+            <p>Guias oficiais para gerenciamento de cookies:</p>
+            <ul class="links-list">
+                <li><a target="_blank" rel="noopener noreferrer" href="https://support.google.com/chrome/answer/95647?hl=pt-BR">Google Chrome</a></li>
+                <li><a target="_blank" rel="noopener noreferrer" href="https://support.mozilla.org/pt-BR/kb/gerencie-configuracoes-de-armazenamento-local-de-s">Mozilla Firefox</a></li>
+                <li><a target="_blank" rel="noopener noreferrer" href="https://support.apple.com/pt-br/guide/safari/sfri11471/mac">Safari</a></li>
+                <li><a target="_blank" rel="noopener noreferrer" href="https://support.microsoft.com/pt-br/microsoft-edge/excluir-cookies-no-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09">Microsoft Edge</a></li>
+                <li><a target="_blank" rel="noopener noreferrer" href="https://help.opera.com/en/latest/web-preferences/#cookies">Opera</a></li>
+            </ul>
+        </section>
+
+        <section id="contato">
+            <h2>5. Contato</h2>
+            <div class="contact-box">
+                <p>Para dúvidas sobre esta política, entre em contato pelo canal oficial:</p>
+                <p><a href="mailto:roberto@pontoumdigital.com.br">roberto@pontoumdigital.com.br</a></p>
+                <p><a href="/privacy.html">Ver Política de Privacidade</a></p>
+            </div>
+        </section>
     </main>
 
-    <footer class="border-t border-white/5 py-16 text-center bg-slate-950/80">
-        <p class="text-[9px] font-mono text-slate-800 uppercase tracking-[0.5em]">&copy; 2025 PONTO UM DIGITAL |
-            PROTOCOLO DE COOKIES ATIVO</p>
+    <footer>
+        © 2026 Ponto Um Digital. Todos os direitos reservados.
     </footer>
 
+    <script>
+        (function () {
+            const header = document.getElementById('policy-header');
+            const updateHeader = () => {
+                if (window.scrollY > 8) {
+                    header.classList.add('is-scrolled');
+                } else {
+                    header.classList.remove('is-scrolled');
+                }
+            };
+            updateHeader();
+            window.addEventListener('scroll', updateHeader, { passive: true });
+        })();
+    </script>
 </body>
 
 </html>

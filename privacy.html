@@ -5,290 +5,256 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política de Privacidade | Ponto Um Digital</title>
-    <!-- Tailwind & Custom Styles -->
-    <link href="/src/styles/main.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="/favicon.png">
+    <style>
+        :root { color-scheme: light; }
+        * { box-sizing: border-box; }
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #ffffff;
+            color: #111111;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+        }
+        .policy-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+            background: rgba(255, 255, 255, 0.74);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            transition: background-color 0.25s ease, backdrop-filter 0.25s ease, box-shadow 0.25s ease;
+        }
+        .policy-header.is-scrolled {
+            background: rgba(255, 255, 255, 0.93);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+        .header-wrap {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+        .header-wrap img { height: 28px; width: auto; display: block; }
+        .back-link {
+            color: #111111;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            padding: 8px 12px;
+            white-space: nowrap;
+        }
+        .back-link:hover { background: #f6f6f6; }
+        main {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 96px 20px 48px;
+        }
+        h1 {
+            margin: 0 0 8px;
+            font-size: 34px;
+            line-height: 1.2;
+            color: #000000;
+        }
+        .updated-at {
+            margin: 0 0 28px;
+            font-size: 14px;
+            color: #555555;
+        }
+        .lead {
+            margin: 0 0 24px;
+            font-size: 17px;
+            color: #222222;
+        }
+        .summary {
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            padding: 14px 16px;
+            background: #fcfcfc;
+            margin-bottom: 28px;
+        }
+        .summary-title { margin: 0 0 8px; font-size: 14px; font-weight: 700; }
+        .summary a { color: #111111; }
+        section { margin-bottom: 28px; }
+        h2 {
+            margin: 0 0 12px;
+            font-size: 21px;
+            line-height: 1.3;
+            color: #000000;
+        }
+        p { margin: 0 0 12px; font-size: 16px; }
+        ul { margin: 0 0 14px 18px; padding: 0; }
+        li { margin-bottom: 8px; font-size: 16px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            margin-bottom: 12px;
+        }
+        th, td {
+            border: 1px solid #dfdfdf;
+            text-align: left;
+            vertical-align: top;
+            padding: 10px;
+            font-size: 15px;
+        }
+        th { background: #f5f5f5; font-weight: 700; }
+        .contact-box {
+            border: 1px solid #e2e2e2;
+            border-radius: 8px;
+            padding: 14px 16px;
+            background: #fafafa;
+        }
+        .contact-box a { color: #111111; font-weight: 700; }
+        footer {
+            border-top: 1px solid #ececec;
+            padding: 20px;
+            text-align: center;
+            color: #666666;
+            font-size: 13px;
+        }
+        @media (max-width: 640px) {
+            h1 { font-size: 28px; }
+            h2 { font-size: 19px; }
+            p, li { font-size: 15px; }
+            .back-link { font-size: 12px; padding: 7px 10px; }
+        }
+    </style>
 </head>
 
-<body class="bg-slate-950 text-slate-400 font-sans antialiased leading-relaxed">
-
-    <!-- Simple Header -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-slate-950/80 backdrop-blur-xl border-b border-white/5 py-8">
-        <div class="max-w-4xl mx-auto px-8 flex justify-between items-center">
-            <a href="/" class="flex items-center gap-4 group">
-                <img src="/logo.png" alt="P1D"
-                    class="h-10 w-auto brightness-0 invert opacity-80 group-hover:opacity-100 transition-opacity">
+<body>
+    <header class="policy-header" id="policy-header">
+        <div class="header-wrap">
+            <a href="/" aria-label="Página inicial da Ponto Um Digital">
+                <img src="/logo.png" alt="Ponto Um Digital">
             </a>
-            <a href="/"
-                class="text-[11px] font-bold uppercase tracking-[0.3em] text-slate-500 hover:text-white transition-all flex items-center gap-2">
-                <span class="w-6 h-px bg-slate-800"></span>
-                Voltar para Home
-            </a>
+            <a class="back-link" href="/">Voltar para Home</a>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-3xl mx-auto px-8 pt-32 pb-24">
+    <main>
+        <h1>Política de Privacidade</h1>
+        <p class="updated-at">Última atualização: 01/02/2026</p>
 
-        <header class="mb-24 uppercase tracking-tighter italic">
-            <h1 class="text-5xl font-bold text-white mb-6 leading-none">Política de Privacidade</h1>
-            <p class="text-slate-500 text-sm font-mono tracking-widest">Versão de: 01/04/2025.</p>
-        </header>
+        <p class="lead">Esta política explica quais dados pessoais coletamos, para quais finalidades e quais são os seus direitos como titular de dados.</p>
 
-        <div class="space-y-24 text-slate-400">
-
-            <!-- Introdução -->
-            <section>
-                <p class="mb-8 font-bold text-white text-lg italic">Nossa Política de Privacidade explica:</p>
-                <ul class="list-disc pl-6 space-y-4 mb-10 text-slate-400">
-                    <li>Quais informações coletamos em nosso site e por que as coletamos.</li>
-                    <li>Como utilizamos essas informações.</li>
-                    <li>Por quanto tempo ficaremos com esses dados.</li>
-                </ul>
-                <p class="mb-6">Sua privacidade é importante para nós, portanto, sendo você um usuário, por favor
-                    reserve um tempo para conhecer nossas práticas.</p>
-                <p class="p-8 bg-white/[0.02] border border-white/5 rounded-2xl leading-loose">
-                    Fazemos referência à empresa/responsável através do uso de termos tais como <strong
-                        class="text-white">“Ponto Um Digital”</strong>, “site”, “nós”, “nosso”, “conosco”, palavras tais
-                    como “você”, “seu”, e expressões similares referem-se a nossos clientes, ou a usuários de nosso
-                    site. Ao visitar e usufruir do site, você automaticamente aceita as condições descritas a seguir,
-                    que compõem a nossa Política de Privacidade.
-                </p>
-            </section>
-
-            <!-- Informações que coletamos -->
-            <section>
-                <h2
-                    class="text-xs font-black text-red-600 mb-8 uppercase tracking-[0.4em] italic border-l-4 border-red-600 pl-6">
-                    INFORMAÇÕES QUE COLETAMOS</h2>
-
-                <div class="overflow-x-auto border border-white/10 rounded-2xl mb-12">
-                    <table class="w-full text-left">
-                        <thead>
-                            <tr
-                                class="bg-white/5 text-white text-[10px] uppercase font-black tracking-[0.2em] border-b border-white/10">
-                                <th class="px-8 py-6">DADOS</th>
-                                <th class="px-8 py-6">FINALIDADE</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-white/5">
-                            <tr class="hover:bg-white/[0.01] transition-colors">
-                                <td class="px-8 py-8 font-bold text-white text-sm italic">Nome</td>
-                                <td class="px-8 py-8 text-sm italic leading-relaxed">1) Viabilizar o contato e o
-                                    atendimento;<br>2) Envio de informativos sobre os nossos serviços;</td>
-                            </tr>
-                            <tr class="hover:bg-white/[0.01] transition-colors">
-                                <td class="px-8 py-8 font-bold text-white text-sm italic">E-mail</td>
-                                <td class="px-8 py-8 text-sm italic leading-relaxed">1) Viabilizar o contato e o
-                                    atendimento;<br>2) Envio de informativos sobre os nossos serviços;</td>
-                            </tr>
-                            <tr class="hover:bg-white/[0.01] transition-colors">
-                                <td class="px-8 py-8 font-bold text-white text-sm italic">Telefone/Whatsapp</td>
-                                <td class="px-8 py-8 text-sm italic leading-relaxed">1) Viabilizar o contato e o
-                                    atendimento;<br>2) Envio de informativos sobre os nossos serviços;</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="space-y-6">
-                    <p>
-                        <strong class="text-white">Importante:</strong> Você não é obrigado a conceder informações
-                        através de nosso site. Entretanto, sem conceder certas informações quando estas forem
-                        solicitadas, talvez não lhe seja permitido o acesso a algumas funcionalidades que deseje
-                        utilizar ou então não poderemos entrar em contato para realizar o atendimento desejado.
-                    </p>
-                    <p class="text-[11px] uppercase tracking-widest text-slate-600 border-t border-white/5 pt-8">Fluxo
-                        de Coleta:</p>
-                    <p>
-                        Nós poderemos coletar informações de identificação pessoal do usuário, tais como: Nome, email e
-                        telefone. A <strong class="text-white italic">“Ponto Um Digital”</strong> irá utilizar essas
-                        informações para entrar em contato com o usuário. Tais dados poderão ser armazenados e
-                        utilizados e de acordo com a Lei 13.709/2018 – LGPD e art. 7º, inciso VIII da Lei 12.965/2014
-                        (Marco Civil da Internet).
-                    </p>
-                </div>
-            </section>
-
-            <!-- Uso da sua informação pessoal -->
-            <section>
-                <h2
-                    class="text-xs font-black text-red-600 mb-8 uppercase tracking-[0.4em] italic border-l-4 border-red-600 pl-6">
-                    USO DA INFORMAÇÃO</h2>
-                <div class="space-y-8">
-                    <p>
-                        Sempre que você acessa e utiliza o nosso site, recebemos e armazenamos automaticamente, quando
-                        necessário ao desempenho do nosso trabalho, informações incluindo seu endereço IP e informações
-                        de cookies, que estão relacionadas com as informações pessoais que você fornece.
-                    </p>
-                    <p class="p-8 bg-white/[0.01] rounded-2xl border border-white/5 text-xs italic leading-loose">
-                        Somente iremos disponibilizar suas informações pessoais, sem aviso prévio, quando: (a) para fins
-                        de cumprimento de legislação, regulamentação, processo legal ou solicitação governamental
-                        aplicável; (b) para fins de investigação, de possíveis violações, por parte do Poder Público;
-                        (c) para fins de apuração de fraude ou por questões de segurança; ou (d) para fins de proteção
-                        contra dano aos direitos, a propriedade ou a segurança do nosso site, nossos usuários ou o
-                        público em geral, conforme solicitado e/ou permitido por lei, em especial, a Lei 13.709/2018.
-                    </p>
-                    <p>
-                        Armazenaremos estes dados em nosso sistema e os manteremos de forma segura até que seu cadastro
-                        seja excluído de nosso banco de dados, o que poderá ser solicitado pelo usuário a qualquer
-                        momento através de contato pelo e-mail <strong
-                            class="text-white">“roberto@pontoumdigital.com.br”</strong>.
-                    </p>
-                    <ul
-                        class="grid grid-cols-1 md:grid-cols-2 gap-4 list-none pl-0 text-[10px] font-mono uppercase tracking-wider text-slate-500 italic">
-                        <li class="p-3 border-b border-white/5">01. Confirmação de acesso</li>
-                        <li class="p-3 border-b border-white/5">02. Correção de dados</li>
-                        <li class="p-3 border-b border-white/5">03. Anonimização total</li>
-                        <li class="p-3 border-b border-white/5">04. Revogação de consentimento</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Compartilhamento -->
-            <section>
-                <h2
-                    class="text-xs font-black text-red-600 mb-8 uppercase tracking-[0.4em] italic border-l-4 border-red-600 pl-6">
-                    COMPARTILHAMENTO</h2>
-                <p class="mb-10 lg:pr-20">
-                    Esclarecemos que não iremos repassar os dados coletados para terceiros estranhos às atividades da
-                    <strong class="text-white">“Ponto Um Digital”</strong>, tampouco iremos compartilhar os seus dados
-                    sem uma justa finalidade e base legal.
-                </p>
-
-                <div class="overflow-x-auto border border-white/10 rounded-xl mb-10">
-                    <table class="w-full text-left">
-                        <thead
-                            class="bg-white/5 text-white text-[10px] uppercase font-black tracking-[0.2em] border-b border-white/10">
-                            <tr>
-                                <th class="px-8 py-5">DADOS</th>
-                                <th class="px-8 py-5">COMPARTILHAMENTO</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-white/5">
-                            <tr>
-                                <td class="px-8 py-6 font-bold text-white text-xs">nome, telefone e e-mail</td>
-                                <td class="px-8 py-6 text-xs italic text-slate-500">empresa de marketing</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <p
-                    class="font-black text-white italic uppercase text-[11px] tracking-[0.2em] pt-6 border-t border-white/5">
-                    Informamos que não iremos, em hipótese alguma, alugar ou vender seus dados.</p>
-            </section>
-
-            <!-- Prazo de armazenamento -->
-            <section>
-                <h2
-                    class="text-xs font-black text-red-600 mb-8 uppercase tracking-[0.4em] italic border-l-4 border-red-600 pl-6">
-                    PRAZOS DE RETENÇÃO</h2>
-                <div class="p-10 bg-white/[0.02] border border-white/5 rounded-[2rem]">
-                    <p class="italic text-slate-400 leading-loose m-0">
-                        Os dados coletados pela <strong class="text-white">“Ponto Um Digital”</strong> serão mantidos
-                        até que você solicite outro tratamento, assim, com a sua exclusão, ou quando não forem mais
-                        necessários para a finalidade proposta, salvo se houver outro motivo para a sua manutenção, como
-                        o cumprimento de uma obrigação legal.
-                    </p>
-                </div>
-            </section>
-
-            <!-- Segurança -->
-            <section>
-                <h2
-                    class="text-xs font-black text-red-600 mb-8 uppercase tracking-[0.4em] italic border-l-4 border-red-600 pl-6">
-                    PROTOCOLO DE SEGURANÇA</h2>
-                <p class="leading-relaxed">
-                    A <strong class="text-white">“Ponto Um Digital”</strong> dispõe de medidas de segurança em âmbitos
-                    físicos, eletrônicos e administrativos, que protegem os dados pessoais e suas informações. Essas
-                    medidas de proteção nos auxiliam na prevenção de fraudes e acessos não autorizados às informações,
-                    bem como na manutenção da integridade dos dados.
-                </p>
-            </section>
-
-            <!-- Direitos dos usuários e restrição de idade -->
-            <section>
-                <h2
-                    class="text-xs font-black text-red-600 mb-8 uppercase tracking-[0.4em] italic border-l-4 border-red-600 pl-6">
-                    DIREITOS & RESTRIÇÕES</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-[13px] mb-12">
-                    <div class="p-6 bg-white/[0.02] border border-white/5 rounded-2xl">
-                        <span class="text-white font-bold block mb-2 uppercase tracking-tight">Acesso &
-                            Retificação</span>
-                        <p class="italic text-slate-500">Solicite informações sobre dados armazenados ou peça a correção
-                            imediata.</p>
-                    </div>
-                    <div class="p-6 bg-white/[0.02] border border-white/5 rounded-2xl">
-                        <span class="text-white font-bold block mb-2 uppercase tracking-tight">Eliminação</span>
-                        <p class="italic text-slate-500">Peça a exclusão total quando os dados não forem mais
-                            necessários.</p>
-                    </div>
-                    <div class="p-6 bg-white/[0.02] border border-white/5 rounded-2xl">
-                        <span class="text-white font-bold block mb-2 uppercase tracking-tight">Compartilhamento</span>
-                        <p class="italic text-slate-500">Saiba com quem, como e por que compartilhamos seus dados
-                            pessoais.</p>
-                    </div>
-                    <div class="p-6 bg-white/[0.02] border border-white/5 rounded-2xl">
-                        <span class="text-white font-bold block mb-2 uppercase tracking-tight">Anonimização</span>
-                        <p class="italic text-slate-500">Torne impossível determinar quem é o titular dos dados
-                            armazenados.</p>
-                    </div>
-                </div>
-
-                <div class="p-8 bg-red-600/5 border border-red-600/10 rounded-2xl">
-                    <p class="text-[12px] leading-relaxed italic text-slate-400 m-0">
-                        <strong class="text-red-500 not-italic uppercase tracking-widest mr-2">Atenção:</strong> Se você
-                        tiver menos de 12 anos de idade, não deverá fornecer os seus dados em nossa plataforma sem a
-                        supervisão e o consentimento específico de um responsável legal. Caso identificado o
-                        fornecimento de dados em desacordo, os mesmos serão imediatamente eliminados.
-                    </p>
-                </div>
-            </section>
-
-            <!-- Encarregado de Dados (DPO) -->
-            <section>
-                <div class="bg-white/[0.03] border border-white/10 p-10 lg:p-12 rounded-[2rem]">
-                    <div class="flex flex-col md:flex-row gap-10 items-center justify-between">
-                        <div class="flex items-center gap-6">
-                            <div
-                                class="w-16 h-16 rounded-full bg-red-600 flex items-center justify-center font-black text-white italic text-2xl shadow-xl shadow-red-600/20 flex-shrink-0">
-                                RP</div>
-                            <div>
-                                <h3 class="text-white font-black italic text-xl uppercase tracking-tight">Roberto
-                                    Pereira</h3>
-                                <p class="text-[10px] text-slate-500 uppercase tracking-[0.3em] font-mono mt-1">Data
-                                    Protection Officer (DPO)</p>
-                            </div>
-                        </div>
-                        <a href="mailto:roberto@pontoumdigital.com.br"
-                            class="w-full md:w-auto text-center px-10 py-5 bg-white/5 border border-white/10 text-white font-black rounded-2xl transition-all hover:bg-red-600 hover:border-red-600 uppercase tracking-widest text-[11px] italic">
-                            Contatar Canal Oficial
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Resumo Final -->
-            <section class="text-center pt-20 border-t border-white/5">
-                <h2
-                    class="text-3xl font-black text-white italic uppercase tracking-tighter mb-8 underline decoration-red-600 underline-offset-8">
-                    RESUMO</h2>
-                <p class="max-w-2xl mx-auto italic text-slate-500 text-base leading-relaxed">
-                    "Em resumo, respeitamos a sua privacidade. As informações armazenadas nos ajudam a compreender
-                    melhor seus interesses e entregar o melhor serviço técnico possível. Nosso esforço em atendê-los
-                    nunca cessa."
-                </p>
-            </section>
-
+        <div class="summary">
+            <p class="summary-title">Navegação rápida</p>
+            <ul>
+                <li><a href="#dados-coletados">1. Dados coletados</a></li>
+                <li><a href="#uso-dados">2. Uso dos dados</a></li>
+                <li><a href="#compartilhamento">3. Compartilhamento</a></li>
+                <li><a href="#retencao">4. Retenção</a></li>
+                <li><a href="#direitos">5. Seus direitos</a></li>
+                <li><a href="#contato">6. Contato</a></li>
+            </ul>
         </div>
 
+        <section id="dados-coletados">
+            <h2>1. Dados coletados</h2>
+            <p>Podemos coletar dados de identificação e contato informados voluntariamente por você ao preencher formulários em nosso site.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dado</th>
+                        <th>Finalidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Nome</td>
+                        <td>Identificação e atendimento da solicitação enviada.</td>
+                    </tr>
+                    <tr>
+                        <td>E-mail</td>
+                        <td>Retorno de contato e envio de informações sobre serviços, quando aplicável.</td>
+                    </tr>
+                    <tr>
+                        <td>Telefone/WhatsApp</td>
+                        <td>Contato comercial e suporte relacionado ao atendimento solicitado.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Também podemos tratar informações técnicas de navegação, como endereço IP e identificadores de cookies, conforme descrito em nossa Política de Cookies.</p>
+        </section>
+
+        <section id="uso-dados">
+            <h2>2. Uso dos dados</h2>
+            <p>Utilizamos os dados para executar atividades de atendimento, comunicação com clientes e melhoria contínua dos serviços digitais prestados.</p>
+            <ul>
+                <li>Responder solicitações enviadas pelo site.</li>
+                <li>Realizar atendimento comercial ou técnico.</li>
+                <li>Enviar comunicações relacionadas aos serviços, quando houver base legal.</li>
+                <li>Manter segurança, prevenção a fraude e conformidade regulatória.</li>
+            </ul>
+            <p>O tratamento de dados observa a Lei Geral de Proteção de Dados (Lei nº 13.709/2018) e demais normas aplicáveis.</p>
+        </section>
+
+        <section id="compartilhamento">
+            <h2>3. Compartilhamento de dados</h2>
+            <p>Não vendemos nem alugamos dados pessoais. O compartilhamento ocorre apenas quando necessário para a operação dos serviços, cumprimento de obrigação legal ou exercício regular de direitos.</p>
+            <ul>
+                <li>Prestadores de serviço estritamente vinculados às atividades da empresa.</li>
+                <li>Autoridades públicas, quando exigido por lei ou ordem competente.</li>
+            </ul>
+        </section>
+
+        <section id="retencao">
+            <h2>4. Retenção e segurança</h2>
+            <p>Os dados são armazenados pelo tempo necessário para cumprir as finalidades informadas nesta política ou para atendimento de obrigações legais e regulatórias.</p>
+            <p>Adotamos medidas técnicas e administrativas para proteger os dados contra acessos não autorizados, perda, alteração ou divulgação indevida.</p>
+        </section>
+
+        <section id="direitos">
+            <h2>5. Seus direitos como titular</h2>
+            <p>Você pode solicitar, a qualquer momento e conforme a legislação aplicável:</p>
+            <ul>
+                <li>Confirmação da existência de tratamento.</li>
+                <li>Acesso aos dados.</li>
+                <li>Correção de dados incompletos, inexatos ou desatualizados.</li>
+                <li>Anonimização, bloqueio ou eliminação quando cabível.</li>
+                <li>Revogação de consentimento, quando essa for a base legal.</li>
+            </ul>
+        </section>
+
+        <section id="contato">
+            <h2>6. Contato e encarregado</h2>
+            <div class="contact-box">
+                <p>Para assuntos relacionados a privacidade e proteção de dados, entre em contato com nosso canal oficial:</p>
+                <p><a href="mailto:roberto@pontoumdigital.com.br">roberto@pontoumdigital.com.br</a></p>
+            </div>
+        </section>
     </main>
 
-    <footer class="border-t border-white/5 py-16 text-center bg-slate-950/80">
-        <p class="text-[9px] font-mono text-slate-800 uppercase tracking-[0.5em]">&copy; 2025 PONTO UM DIGITAL |
-            PROTOCOLO LGPD ATIVO</p>
+    <footer>
+        © 2026 Ponto Um Digital. Todos os direitos reservados.
     </footer>
 
+    <script>
+        (function () {
+            const header = document.getElementById('policy-header');
+            const updateHeader = () => {
+                if (window.scrollY > 8) {
+                    header.classList.add('is-scrolled');
+                } else {
+                    header.classList.remove('is-scrolled');
+                }
+            };
+            updateHeader();
+            window.addEventListener('scroll', updateHeader, { passive: true });
+        })();
+    </script>
 </body>
 
 </html>
