@@ -54,14 +54,14 @@
     }
 
     .arrow-icon {
-        opacity: 0;
-        transform: translateX(-10px);
-        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        opacity: 1;
+        transform: none;
+        transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
-    .btn-premium:hover .arrow-icon {
-        opacity: 1;
-        transform: translateX(4px);
+    .btn-premium:hover .arrow-icon,
+    .group:hover .arrow-icon {
+        transform: rotate(90deg);
     }
 
     .bg-gradient-red {
