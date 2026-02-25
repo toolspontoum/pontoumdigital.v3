@@ -8,6 +8,8 @@ export default defineConfig({
         rollupOptions: {
             input: {
                 main: resolve(__dirname, 'index.html'),
+                privacy: resolve(__dirname, 'privacy.html'),
+                cookies: resolve(__dirname, 'cookies.html'),
                 blog: resolve(__dirname, 'blog/index.html'),
                 blogPost: resolve(__dirname, 'blog/post.html'),
                 blogSearch: resolve(__dirname, 'blog/search.html'),
@@ -19,4 +21,3 @@ export default defineConfig({
         open: true
     }
 });
-
