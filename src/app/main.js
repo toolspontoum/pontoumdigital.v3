@@ -58,23 +58,8 @@ function runWhenIdle(task, timeout = 1200) {
 }
 
 async function bootVisualEnhancements() {
-    initDeferredDigitalWave();
+    initDigitalWave();
     initDeferredScrollEnhancements();
-}
-
-function initDeferredDigitalWave() {
-    let booted = false;
-    const boot = () => {
-        if (booted) return;
-        booted = true;
-        initDigitalWave();
-    };
-
-    ['scroll', 'touchstart', 'mousedown', 'keydown'].forEach(evt => {
-        window.addEventListener(evt, boot, { passive: true, once: true });
-    });
-
-    setTimeout(boot, 2600);
 }
 
 function initDeferredScrollEnhancements() {
