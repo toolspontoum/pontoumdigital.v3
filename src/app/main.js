@@ -11,6 +11,7 @@ let scrollAnimationsInitialized = false;
 let visualEnhancementsBooted = false;
 
 document.addEventListener('DOMContentLoaded', () => {
+    ensureCriticalContentVisible();
     initScrollAnimations();
     initScrollSpy();
     initCookieConsent();
@@ -27,6 +28,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initDeferredVisualEnhancements();
 });
+
+function ensureCriticalContentVisible() {
+    // Prevent clipped/hidden content before deferred animation libs boot.
+    document.querySelectorAll('.reveal-text').forEach(mask => {
+        mask.style.clipPath = 'none';
+        mask.style.paddingBottom = '0';
+        mask.style.marginBottom = '0';
+        mask.style.overflow = 'visible';
+    });
+
+    document.querySelectorAll('.reveal-text > span, .reveal-text > div').forEach(el => {
+        el.style.transform = 'none';
+        el.style.opacity = '1';
+    });
+
+    document.querySelectorAll('.reveal-card, .reveal-border').forEach(el => {
+        el.style.opacity = '1';
+        el.style.filter = 'none';
+        el.style.transform = 'none';
+    });
+}
 
 function runWhenIdle(task, timeout = 1200) {
     if ('requestIdleCallback' in window) {
