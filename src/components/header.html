@@ -74,7 +74,8 @@
         </div>
 
         <!-- Mobile Menu Toggle (Hamburger) -->
-        <button id="mobile-menu-btn" class="md:hidden relative z-50 p-2 text-slate-900 focus:outline-none">
+        <button id="mobile-menu-btn" class="md:hidden relative z-50 p-2 text-slate-900 focus:outline-none"
+            aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">
             <svg id="hamburger-icon" class="w-8 h-8 transition-all duration-300" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h16M4 16h16"></path>
@@ -190,11 +191,15 @@
             hamburgerIcon.classList.remove('hidden');
             closeIcon.classList.add('hidden');
             document.body.style.overflow = '';
+            menuBtn.setAttribute('aria-expanded', 'false');
+            menuBtn.setAttribute('aria-label', 'Abrir menu');
         } else {
             mobileMenu.classList.remove('translate-x-full');
             hamburgerIcon.classList.add('hidden');
             closeIcon.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
+            menuBtn.setAttribute('aria-expanded', 'true');
+            menuBtn.setAttribute('aria-label', 'Fechar menu');
         }
     }
 

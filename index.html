@@ -83,10 +83,15 @@
   <link rel="dns-prefetch" href="https://cdn.simpleicons.org">
   <link rel="dns-prefetch" href="https://formsubmit.co">
 
-  <!-- FONTS -->
-  <link
+  <!-- FONTS (non-blocking) -->
+  <link rel="preload"
     href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
-    rel="stylesheet">
+    as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap"
+      rel="stylesheet">
+  </noscript>
   <!-- STYLES -->
   <link rel="stylesheet" href="/src/styles/main.css">
 </head>

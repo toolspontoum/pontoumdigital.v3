@@ -1,28 +1,72 @@
-import * as THREE from 'three';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-import '../styles/main.css';
+﻿import '../styles/main.css';
 import { BlogStore } from '../modules/blog/blog-store.js';
 import '../modules/lgpd.js';
 
 console.log(">> X-APPS SYSTEM: V8.0 (MODULAR) INITIALIZING...");
 
-gsap.registerPlugin(ScrollTrigger);
-window.gsap = gsap;
-window.ScrollTrigger = ScrollTrigger;
+let THREE = null;
+let gsap = null;
+let ScrollTrigger = null;
+let scrollAnimationsInitialized = false;
 
 document.addEventListener('DOMContentLoaded', () => {
-    initDigitalWave();
     initScrollAnimations();
     initScrollSpy();
-    initComboElite();
     initHomeBlog();
     initCookieConsent();
-    initDynamicPortfolio(); // NEW: Dynamic Portfolio System
+    initDynamicPortfolio();
+    initDynamicDates();
+
+    runWhenIdle(() => {
+        initDigitalWave();
+    }, 1500);
+
+    runWhenIdle(async () => {
+        const libsReady = await ensureAnimationLibs();
+        if (libsReady) {
+            initComboElite();
+            initHomeBlog();
+        }
+    }, 2000);
 });
 
+function runWhenIdle(task, timeout = 1200) {
+    if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(task, { timeout });
+    } else {
+        setTimeout(task, 1);
+    }
+}
 
+async function ensureAnimationLibs() {
+    if (gsap && ScrollTrigger) return true;
+    try {
+        const [{ gsap: gsapLib }, { ScrollTrigger: scrollTriggerLib }] = await Promise.all([
+            import('gsap'),
+            import('gsap/ScrollTrigger'),
+        ]);
+        gsap = gsapLib;
+        ScrollTrigger = scrollTriggerLib;
+        gsap.registerPlugin(ScrollTrigger);
+        window.gsap = gsap;
+        window.ScrollTrigger = ScrollTrigger;
+        return true;
+    } catch (error) {
+        console.warn('>> ANIMATIONS: could not load gsap/ScrollTrigger', error);
+        return false;
+    }
+}
+
+async function ensureThreeLib() {
+    if (THREE) return true;
+    try {
+        THREE = await import('three');
+        return true;
+    } catch (error) {
+        console.warn('>> DIGITAL WAVE: could not load three.js', error);
+        return false;
+    }
+}
 
 /**
  * COMBO ELITE ANIMATIONS
@@ -30,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * PERFORMANCE: Respects prefers-reduced-motion
  */
 function initComboElite() {
+    if (!gsap) return;
     // PERFORMANCE: Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -217,7 +262,7 @@ function initScrollSpy() {
 /* -------------------------------------------------------------------------- */
 /* 1. DIGITAL WAVE (Round Dots Texture) - PERFORMANCE OPTIMIZED               */
 /* -------------------------------------------------------------------------- */
-function initDigitalWave() {
+async function initDigitalWave() {
     const container = document.getElementById('canvas-lattice');
     if (!container) return;
 
@@ -225,6 +270,12 @@ function initDigitalWave() {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
         // Show static gradient instead of animated wave
+        container.style.background = 'radial-gradient(ellipse at center, rgba(220, 38, 38, 0.1) 0%, transparent 70%)';
+        return;
+    }
+
+    const hasThree = await ensureThreeLib();
+    if (!hasThree) {
         container.style.background = 'radial-gradient(ellipse at center, rgba(220, 38, 38, 0.1) 0%, transparent 70%)';
         return;
     }
@@ -523,13 +574,6 @@ function initDynamicDates() {
     dateText.textContent = dateString.charAt(0).toUpperCase() + dateString.slice(1);
 }
 
-// Initialize everything on load
-window.addEventListener('load', () => {
-    initScrollAnimations();
-    initDynamicDates();
-    // Re-run animation loop if needed for canvas (managed inside script.js usually)
-});
-
 // Contact Form Logic: mostra/oculta campo "Fale mais sobre o projeto" quando um tipo de serviço é escolhido
 window.toggleProjectDetails = function () {
     const select = document.getElementById('input-service-type');
@@ -641,13 +685,22 @@ window.handleFormSubmit = function (e) {
 };
 
 function initScrollAnimations() {
+    if (scrollAnimationsInitialized) return;
+    scrollAnimationsInitialized = true;
     // Header Shadow on Scroll
     if (document.querySelector('#main-header')) {
-        ScrollTrigger.create({
-            start: 'top -50',
-            end: 99999,
-            toggleClass: { className: 'shadow-md', targets: '#main-header' }
-        });
+        if (ScrollTrigger) {
+            ScrollTrigger.create({
+                start: 'top -50',
+                end: 99999,
+                toggleClass: { className: 'shadow-md', targets: '#main-header' }
+            });
+        } else {
+            const header = document.getElementById('main-header');
+            const toggleShadow = () => header.classList.toggle('shadow-md', window.scrollY > 50);
+            toggleShadow();
+            window.addEventListener('scroll', toggleShadow, { passive: true });
+        }
     }
 
     // Progress Bar Logic - PERFORMANCE: Throttled with requestAnimationFrame
@@ -687,7 +740,7 @@ async function initHomeBlog() {
             return `
             <a href="/blog/post.html?slug=${post.slug}" class="blog-card-new group reveal-card opacity-0">
                 <div class="img-container">
-                    <img src="${post.featured_image.url}" alt="${post.title}">
+                    <img src="${post.featured_image.url}" alt="${post.title}" loading="lazy" decoding="async" fetchpriority="low">
                 </div>
                 <div class="flex items-center">
                     <span class="category">${post.category.name}</span>
@@ -767,7 +820,7 @@ async function initDynamicPortfolio() {
  */
 function renderFilters(container, categories) {
     container.innerHTML = categories.map((cat, index) => `
-        <button onclick="filterPortfolio('${cat.id}')"
+        <button onclick="filterPortfolio('${cat.id}', event)"
             class="filter-btn ${index === 0 ? 'active bg-slate-900 text-white border-slate-900' : 'text-slate-500 border-transparent hover:text-slate-900 hover:bg-white hover:border-slate-200'} px-4 py-1.5 text-[10px] font-bold uppercase tracking-wide rounded-full transition-all border">
             ${cat.label}
         </button>
@@ -777,7 +830,7 @@ function renderFilters(container, categories) {
 /**
  * Filter Portfolio by Category
  */
-window.filterPortfolio = function (category) {
+window.filterPortfolio = function (category, evt) {
     currentFilter = category;
     currentPage = 1;
 
@@ -795,9 +848,9 @@ window.filterPortfolio = function (category) {
         btn.classList.add('text-slate-500', 'border-transparent');
     });
     // Check if event exists (it might be called programmatically)
-    if (event && event.target) {
-        event.target.classList.remove('text-slate-500', 'border-transparent');
-        event.target.classList.add('bg-slate-900', 'text-white', 'border-slate-900', 'active');
+    if (evt && evt.target) {
+        evt.target.classList.remove('text-slate-500', 'border-transparent');
+        evt.target.classList.add('bg-slate-900', 'text-white', 'border-slate-900', 'active');
     }
 }
 
@@ -1092,3 +1145,6 @@ function showBlockedToast() {
         toast.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
     }, 3000);
 }
+
+
+
