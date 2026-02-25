@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollSpy();
     runWhenIdle(() => initCookieConsent(), 1500);
     initDynamicDates();
-    initDeferredStackIcons();
 
     observeOnce('#cases', () => {
         initDynamicPortfolio();
@@ -59,13 +58,41 @@ function runWhenIdle(task, timeout = 1200) {
 }
 
 async function bootVisualEnhancements() {
-    initDigitalWave();
-    runWhenIdle(async () => {
+    initDeferredDigitalWave();
+    initDeferredScrollEnhancements();
+}
+
+function initDeferredDigitalWave() {
+    let booted = false;
+    const boot = () => {
+        if (booted) return;
+        booted = true;
+        initDigitalWave();
+    };
+
+    ['scroll', 'touchstart', 'mousedown', 'keydown'].forEach(evt => {
+        window.addEventListener(evt, boot, { passive: true, once: true });
+    });
+
+    setTimeout(boot, 2600);
+}
+
+function initDeferredScrollEnhancements() {
+    let booted = false;
+    const boot = async () => {
+        if (booted) return;
+        booted = true;
         const libsReady = await ensureAnimationLibs();
         if (libsReady) {
             initComboElite();
         }
-    }, 2000);
+    };
+
+    ['scroll', 'touchstart', 'mousedown', 'keydown'].forEach(evt => {
+        window.addEventListener(evt, boot, { passive: true, once: true });
+    });
+
+    setTimeout(() => runWhenIdle(boot, 1000), 5000);
 }
 
 function initHeroStaticBackground() {
@@ -91,23 +118,6 @@ function observeOnce(selector, callback, rootMargin = '300px') {
     }, { rootMargin, threshold: 0.01 });
 
     observer.observe(element);
-}
-
-function initDeferredStackIcons() {
-    const stack = document.getElementById('stack');
-    if (!stack) return;
-
-    const hydrateIcons = () => {
-        stack.querySelectorAll('img[data-icon-src]').forEach(img => {
-            const currentSrc = img.getAttribute('src') || '';
-            if (!currentSrc || currentSrc.startsWith('data:image/')) {
-                img.setAttribute('src', img.getAttribute('data-icon-src'));
-            }
-        });
-    };
-
-    observeOnce('#stack', hydrateIcons, '900px');
-    setTimeout(hydrateIcons, 1200);
 }
 
 async function ensureAnimationLibs() {
