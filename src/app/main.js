@@ -89,7 +89,14 @@ async function bootVisualEnhancements() {
 function initHeroStaticBackground() {
     const container = document.getElementById('canvas-lattice');
     if (!container) return;
-    container.style.background = 'radial-gradient(ellipse at center, rgba(220, 38, 38, 0.12) 0%, transparent 72%)';
+    container.style.backgroundColor = '#f8fafc';
+    container.style.backgroundImage = [
+        'radial-gradient(ellipse at center, rgba(220, 38, 38, 0.14) 0%, rgba(220, 38, 38, 0.05) 38%, transparent 72%)',
+        'linear-gradient(rgba(15, 23, 42, 0.045) 1px, transparent 1px)',
+        'linear-gradient(90deg, rgba(15, 23, 42, 0.045) 1px, transparent 1px)',
+    ].join(',');
+    container.style.backgroundSize = '100% 100%, 28px 28px, 28px 28px';
+    container.style.backgroundPosition = 'center, 0 0, 14px 14px';
 }
 
 function observeOnce(selector, callback, rootMargin = '300px') {
