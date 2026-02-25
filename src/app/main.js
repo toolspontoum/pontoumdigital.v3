@@ -8,7 +8,6 @@ let THREE = null;
 let gsap = null;
 let ScrollTrigger = null;
 let scrollAnimationsInitialized = false;
-let visualEnhancementsBooted = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     ensureCriticalContentVisible();
@@ -27,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initHomeBlog();
     }, '450px');
 
-    initDeferredVisualEnhancements();
+    bootVisualEnhancements();
 });
 
 function ensureCriticalContentVisible() {
@@ -59,25 +58,6 @@ function runWhenIdle(task, timeout = 1200) {
     }
 }
 
-function initDeferredVisualEnhancements() {
-    const boot = () => {
-        if (visualEnhancementsBooted) return;
-        visualEnhancementsBooted = true;
-        bootVisualEnhancements();
-    };
-
-    const events = ['scroll', 'touchstart', 'mousedown', 'keydown'];
-    const onFirstInteraction = () => {
-        boot();
-        events.forEach(evt => window.removeEventListener(evt, onFirstInteraction, { passive: true }));
-    };
-
-    events.forEach(evt => window.addEventListener(evt, onFirstInteraction, { passive: true, once: true }));
-
-    // Fallback: boot visuals shortly after first paint if no interaction happens.
-    setTimeout(boot, 3000);
-}
-
 async function bootVisualEnhancements() {
     const libsReady = await ensureAnimationLibs();
     if (libsReady) {
@@ -90,13 +70,9 @@ function initHeroStaticBackground() {
     const container = document.getElementById('canvas-lattice');
     if (!container) return;
     container.style.backgroundColor = '#f8fafc';
-    container.style.backgroundImage = [
-        'radial-gradient(ellipse at center, rgba(220, 38, 38, 0.14) 0%, rgba(220, 38, 38, 0.05) 38%, transparent 72%)',
-        'linear-gradient(rgba(15, 23, 42, 0.045) 1px, transparent 1px)',
-        'linear-gradient(90deg, rgba(15, 23, 42, 0.045) 1px, transparent 1px)',
-    ].join(',');
-    container.style.backgroundSize = '100% 100%, 28px 28px, 28px 28px';
-    container.style.backgroundPosition = 'center, 0 0, 14px 14px';
+    container.style.backgroundImage = 'radial-gradient(ellipse at center, rgba(220, 38, 38, 0.12) 0%, transparent 72%)';
+    container.style.backgroundSize = '100% 100%';
+    container.style.backgroundPosition = 'center';
 }
 
 function observeOnce(selector, callback, rootMargin = '300px') {
@@ -121,12 +97,14 @@ function initDeferredStackIcons() {
 
     const hydrateIcons = () => {
         stack.querySelectorAll('img[data-icon-src]').forEach(img => {
-            if (!img.getAttribute('src') || img.getAttribute('src').startsWith('data:image/svg+xml')) {
+            const currentSrc = img.getAttribute('src') || '';
+            if (!currentSrc || currentSrc.startsWith('data:image/')) {
                 img.setAttribute('src', img.getAttribute('data-icon-src'));
             }
         });
     };
 
+    hydrateIcons();
     observeOnce('#stack', hydrateIcons, '350px');
 }
 
