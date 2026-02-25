@@ -12,6 +12,7 @@ let visualEnhancementsBooted = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     ensureCriticalContentVisible();
+    initHeroStaticBackground();
     initScrollAnimations();
     initScrollSpy();
     initCookieConsent();
@@ -73,8 +74,8 @@ function initDeferredVisualEnhancements() {
 
     events.forEach(evt => window.addEventListener(evt, onFirstInteraction, { passive: true, once: true }));
 
-    // Fallback: even without interaction, boot visuals after core content settles.
-    setTimeout(boot, 7000);
+    // Fallback: boot visuals shortly after first paint if no interaction happens.
+    setTimeout(boot, 3000);
 }
 
 async function bootVisualEnhancements() {
@@ -83,6 +84,12 @@ async function bootVisualEnhancements() {
         initComboElite();
     }
     initDigitalWave();
+}
+
+function initHeroStaticBackground() {
+    const container = document.getElementById('canvas-lattice');
+    if (!container) return;
+    container.style.background = 'radial-gradient(ellipse at center, rgba(220, 38, 38, 0.12) 0%, transparent 72%)';
 }
 
 function observeOnce(selector, callback, rootMargin = '300px') {
