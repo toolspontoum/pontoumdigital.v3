@@ -8,6 +8,7 @@ let THREE = null;
 let gsap = null;
 let ScrollTrigger = null;
 let scrollAnimationsInitialized = false;
+let visualEnhancementsBooted = false;
 
 document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
@@ -24,16 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initHomeBlog();
     }, '450px');
 
-    runWhenIdle(() => {
-        initDigitalWave();
-    }, 1500);
-
-    runWhenIdle(async () => {
-        const libsReady = await ensureAnimationLibs();
-        if (libsReady) {
-            initComboElite();
-        }
-    }, 2600);
+    initDeferredVisualEnhancements();
 });
 
 function runWhenIdle(task, timeout = 1200) {
@@ -42,6 +34,33 @@ function runWhenIdle(task, timeout = 1200) {
     } else {
         setTimeout(task, 1);
     }
+}
+
+function initDeferredVisualEnhancements() {
+    const boot = () => {
+        if (visualEnhancementsBooted) return;
+        visualEnhancementsBooted = true;
+        bootVisualEnhancements();
+    };
+
+    const events = ['scroll', 'touchstart', 'mousedown', 'keydown'];
+    const onFirstInteraction = () => {
+        boot();
+        events.forEach(evt => window.removeEventListener(evt, onFirstInteraction, { passive: true }));
+    };
+
+    events.forEach(evt => window.addEventListener(evt, onFirstInteraction, { passive: true, once: true }));
+
+    // Fallback: even without interaction, boot visuals after core content settles.
+    setTimeout(boot, 7000);
+}
+
+async function bootVisualEnhancements() {
+    const libsReady = await ensureAnimationLibs();
+    if (libsReady) {
+        initComboElite();
+    }
+    initDigitalWave();
 }
 
 function observeOnce(selector, callback, rootMargin = '300px') {
